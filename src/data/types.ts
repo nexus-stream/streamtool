@@ -1,5 +1,6 @@
-export interface Runner {
-  name: string;
+export interface Participant {
+  user: string;
+  displayName: string;
   pronouns: string;
   avatar: string;
 }
@@ -16,14 +17,32 @@ interface StoppedTimer {
 
 export type TimerInfo = RunningTimer | StoppedTimer;
 
-export interface Stage {
-  id: string;
-  name: string;
-  title: string;
-  runners: Runner[];
+export interface RaceInfo {
+  game: string;
+  category: string;
+  participants: Participant[];
   timerInfo: TimerInfo;
+}
 
-  // When defined, lock manual editing and automatically keep the above
-  // values updated from the docked page.
-  theRunGGId?: string;
+export interface RaceInfoOverrides {
+  game?: string;
+  category?: string;
+  participantPatches?: { [user: string]: Partial<Participant> };
+  timerInfo?: TimerInfo;
+}
+
+export interface Stage extends RaceInfo {
+  // guid for internal purposes - lets multiple stages for the same
+  // run get added, which feels like it could be useful.
+  id: string;
+
+  // therun.gg race id
+  raceId: string;
+  // Friendly name to make the stage listing readable.
+  name: string;
+
+  // Race information automatically pulled and updated from therun.gg
+  raceInfo: RaceInfo;
+  // Manual overrides of the automatically updated data
+  raceInfoOverrides: RaceInfoOverrides;
 }

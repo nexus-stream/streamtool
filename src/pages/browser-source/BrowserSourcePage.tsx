@@ -1,43 +1,36 @@
 import { useParams, useSearchParams } from "react-router";
-import { NameFrame } from "./frames/NameFrame";
-import { TimerFrame } from "./frames/TimerFrame";
 import { useSelector } from "react-redux";
-import { selectCurrentStage } from "../../data/selectors";
-import { FrameProps } from "./frameProps";
-
-const FRAME_MAPPING: { [frameId: string]: React.FC<FrameProps> } = {
-  name: NameFrame,
-  timer: TimerFrame,
-};
+import { selectCurrentRace } from "../../data/selectors";
+import { FRAMES } from "./frames";
 
 export function BrowserSourcePage() {
   const { frameId } = useParams();
-  const runnerIndex = useRunnerIndexFromUrl();
-  const Frame = FRAME_MAPPING[frameId ?? ""];
-  const currentStage = useSelector(selectCurrentStage);
+  const participantIndex = useParticipantIndexFromUrl();
+  const frame = FRAMES.find((frame) => frame.frameId === frameId);
+  const currentRace = useSelector(selectCurrentRace);
 
-  if (!Frame) {
+  if (!frame) {
     return <p>Invalid frame!</p>;
   }
 
-  if (!currentStage) {
+  if (!currentRace) {
     return null;
   }
 
-  return <Frame stage={currentStage} runnerIndex={runnerIndex} />;
+  return <frame.fc race={currentRace} participantIndex={participantIndex} />;
 }
 
-function useRunnerIndexFromUrl() {
+function useParticipantIndexFromUrl() {
   const [searchParams] = useSearchParams();
-  const runnerIndexParam = searchParams.get("runnerIndex");
-  if (!runnerIndexParam) {
+  const participantIndexParam = searchParams.get("participantIndex");
+  if (!participantIndexParam) {
     return undefined;
   }
 
-  const runnerIndex = parseInt(runnerIndexParam);
-  if (isNaN(runnerIndex)) {
+  const participantIndex = parseInt(participantIndexParam);
+  if (isNaN(participantIndex)) {
     return undefined;
   }
 
-  return runnerIndex;
+  return participantIndex;
 }

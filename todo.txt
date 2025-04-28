@@ -1,7 +1,9 @@
-- Figure out how to set stream title and game from WS api
-- Set up two RunInfos to switch between
-- See if things work
-- Set up basic overlay style
-- Set up basic cpanel style
-- Get hosted on http server (not https)
-- Add simple tutorial when not connected
+- Build docked page
+- Build therun.gg connector
+- Verify things work in OBS
+- Build editor to display sync'd info
+- Build override system
+- Build override timer system
+- Add override injection tab
+- Make things a little pretty
+- Connect to Twitch
