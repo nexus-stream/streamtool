@@ -15,10 +15,11 @@ export function useOBSSocket(port?: number, password?: string) {
 
     const asyncWork = async () => {
       try {
+        console.log("TRYING CONNECT", port, password);
         await newSocket.connect(`ws://localhost:${port}`, password);
 
         if (isCurrentRun) {
-          setSocket(socket);
+          setSocket(newSocket);
         }
       } catch {
         if (isCurrentRun) {

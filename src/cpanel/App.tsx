@@ -1,17 +1,20 @@
-import { Flex, Text, Button } from "@radix-ui/themes";
-import { useCallback } from "react";
-import { OBSAdapter } from "../adapter/OBSAdapter";
+import { Flex, Text } from "@radix-ui/themes";
+import { ConnectWrapper } from "./ConnectWrapper";
+import { RunInfo } from "../types";
 
 export default function MyApp() {
-  const updateName = useCallback(async () => {
-    const adapter = await OBSAdapter.create(4455, "Pikachu1");
-    await adapter.updateSceneName("Scene", "KyleWasHere");
-  }, []);
+  const runInfo: RunInfo = {
+    runners: [],
+    commentators: [],
+    category: "",
+    game: "Super Mario Galaxy",
+    streamTitle: "Kyle Was Here!",
+  };
 
   return (
     <Flex direction="column" gap="2">
       <Text>Hello from Radix Themes :)</Text>
-      <Button onClick={updateName}>Let's go</Button>
+      <ConnectWrapper runInfo={runInfo} />
     </Flex>
   );
 }
