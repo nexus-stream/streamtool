@@ -16,12 +16,17 @@
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-redux": "^9.2.0",
-    "react-router": "^7.5.2"
+    "react-router": "^7.5.2",
+    "redux-persist": "^6.0.0",
+    "redux-state-sync": "^3.1.4",
+    "uuid": "^11.1.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.21.0",
     "@types/react": "^19.0.10",
     "@types/react-dom": "^19.0.4",
+    "@types/redux-persist": "^4.0.0",
+    "@types/redux-state-sync": "^3.1.10",
     "@vitejs/plugin-react": "^4.3.4",
     "eslint": "^9.21.0",
     "eslint-plugin-react-hooks": "^5.1.0",
@@ -30,5 +35,8 @@
     "typescript": "~5.7.2",
     "typescript-eslint": "^8.24.1",
     "vite": "^6.2.0"
+  },
+  "overrides": {
+    "redux": "^5.0.0"
   }
 }

@@ -8,19 +8,22 @@ import { DockedPage } from "./pages/docked/DockedPage";
 import { EditorPage } from "./pages/editor/EditorPage";
 import { BrowserSourcePage } from "./pages/browser-source/BrowserSourcePage";
 import { Provider } from "react-redux";
-import store from "./data/store";
+import store, { persistor } from "./data/store";
+import { PersistGate } from "redux-persist/integration/react";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <Theme appearance="dark">
       <Provider store={store}>
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<DockedPage />} />
-            <Route path="edit" element={<EditorPage />} />
-            <Route path="frame" element={<BrowserSourcePage />} />
-          </Routes>
-        </BrowserRouter>
+        <PersistGate loading={null} persistor={persistor}>
+          <BrowserRouter>
+            <Routes>
+              <Route path="/" element={<DockedPage />} />
+              <Route path="edit" element={<EditorPage />} />
+              <Route path="frame" element={<BrowserSourcePage />} />
+            </Routes>
+          </BrowserRouter>
+        </PersistGate>
       </Provider>
     </Theme>
   </StrictMode>
