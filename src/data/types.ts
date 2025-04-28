@@ -22,4 +22,8 @@ export interface Stage {
   title: string;
   runners: Runner[];
   timerInfo: TimerInfo;
+
+  // When defined, lock manual editing and automatically keep the above
+  // values updated from the docked page.
+  theRunGGId?: string;
 }

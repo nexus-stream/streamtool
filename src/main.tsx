@@ -19,8 +19,8 @@ createRoot(document.getElementById("root")!).render(
           <BrowserRouter>
             <Routes>
               <Route path="/" element={<DockedPage />} />
-              <Route path="edit" element={<EditorPage />} />
-              <Route path="frame" element={<BrowserSourcePage />} />
+              <Route path="/edit" element={<EditorPage />} />
+              <Route path="/frame/:frameId" element={<BrowserSourcePage />} />
             </Routes>
           </BrowserRouter>
         </PersistGate>
