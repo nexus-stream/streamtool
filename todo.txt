@@ -7,3 +7,10 @@
 - Add override injection tab
 - Make things a little pretty
 - Connect to Twitch
+
+------------
+
+- Change how the store works. Instead use the types from
+    therun and have slices for races and users
+- Build our local types and handle overrides in selectors
+    rather than on fetch / insertion

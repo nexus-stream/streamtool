@@ -11,3 +11,7 @@ export function useRaceInfo(_raceId: string): RaceInfo | undefined {
 
   return raceInfo;
 }
+
+function buildWebsocketEndpoint(raceId: string): string {
+  return `wss://ws.therun.gg?race=${raceId}`;
+}

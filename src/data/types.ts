@@ -1,9 +1,12 @@
+import { RaceParticipantStatus } from "../therun/types";
+
 export interface Participant {
   user: string;
   twitchUser: string;
   displayName: string;
   pronouns: string;
   avatar: string;
+  status: RaceParticipantStatus;
 }
 
 interface RunningTimer {
