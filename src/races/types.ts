@@ -333,12 +333,3 @@ export interface RaceRanking<T extends "mmr" | "time" | "timeMonth"> {
   rank: number;
   type: T;
 }
-
-export interface User {
-  bio: string;
-  user: string;
-  picture: string;
-  login: string;
-  prounouns: string;
-  searchName: string;
-}

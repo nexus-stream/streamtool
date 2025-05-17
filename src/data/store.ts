@@ -1,5 +1,7 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
-import stagesReducer from "./stageSlice";
+import stageReducer from "../stages/stageSlice";
+import raceReducer from "../races/raceSlice";
+import userReducer from "../users/userSlice";
 import {
   createStateSyncMiddleware,
   initMessageListener,
@@ -13,7 +15,9 @@ const persistConfig = {
 };
 
 const rootReducer = combineReducers({
-  stages: stagesReducer,
+  stages: stageReducer,
+  races: raceReducer,
+  users: userReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
