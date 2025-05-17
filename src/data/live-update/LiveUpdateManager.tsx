@@ -1,7 +1,7 @@
 import { createSelector } from "@reduxjs/toolkit";
 import { stageSelectors } from "../stages/selectors";
-import { useSelector } from "react-redux";
 import { RaceLiveUpdater } from "./RaceLiveUpdater";
+import { useAppSelector } from "../hooks";
 
 // Builds a live updater for every race that we want to actively pull updates for
 // (all races that belong to a stage). This lets us leverage React's lifecycle
@@ -10,7 +10,7 @@ import { RaceLiveUpdater } from "./RaceLiveUpdater";
 // This could also be a good place to clean up unattached races / users from as
 // well.
 export function LiveUpdateManager() {
-  const raceIds = useSelector(selectActiveRaceIds);
+  const raceIds = useAppSelector(selectActiveRaceIds);
 
   return (
     <>

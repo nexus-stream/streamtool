@@ -1,7 +1,7 @@
-import { RaceInfo } from "../../data/types";
+import { DisplayRace } from "../../data/stages/types";
 
 export interface FrameProps {
-  race: RaceInfo;
+  race: DisplayRace;
   participantIndex?: number;
 }
 

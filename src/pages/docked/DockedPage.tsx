@@ -1,8 +1,8 @@
 import { useSelector } from "react-redux";
-import { stagesSelectors } from "../../data/stageSlice";
+import { stageSelectors } from "../../data/stages/selectors";
 
 export function DockedPage() {
-  const stages = useSelector(stagesSelectors.selectAll);
+  const stages = useSelector(stageSelectors.selectAll);
 
   // Add link to open editor in new window
   // Add link to open frame builder in new window

@@ -1,15 +1,15 @@
-import { useSelector } from "react-redux";
 import { DisplayRace, RaceOverrides } from "./types";
 import { stageSelectors } from "./selectors";
 import { raceSelectors } from "../races/selectors";
 import { userSelectors } from "../users/selectors";
 import { useMemo } from "react";
 import { buildDisplayRace } from "./displayRaceBuilder";
+import { useAppSelector } from "../hooks";
 
 export function useDisplayRace(stageId: string): DisplayRace {
-  const stage = useSelector(stageSelectors.selectEntities)[stageId];
-  const race = useSelector(raceSelectors.selectEntities)[stage.raceId];
-  const users = useSelector(userSelectors.selectEntities);
+  const stage = useAppSelector(stageSelectors.selectEntities)[stageId];
+  const race = useAppSelector(raceSelectors.selectEntities)[stage.raceId];
+  const users = useAppSelector(userSelectors.selectEntities);
 
   return useMemo(
     () => buildDisplayRace(race, stage.overrides, users),
@@ -18,9 +18,9 @@ export function useDisplayRace(stageId: string): DisplayRace {
 }
 
 export function useDisplayRaceWithoutOverrides(stageId: string): DisplayRace {
-  const stage = useSelector(stageSelectors.selectEntities)[stageId];
-  const race = useSelector(raceSelectors.selectEntities)[stage.raceId];
-  const users = useSelector(userSelectors.selectEntities);
+  const stage = useAppSelector(stageSelectors.selectEntities)[stageId];
+  const race = useAppSelector(raceSelectors.selectEntities)[stage.raceId];
+  const users = useAppSelector(userSelectors.selectEntities);
 
   return useMemo(
     () => buildDisplayRace(race, { participantOverrides: {} }, users),
@@ -29,6 +29,6 @@ export function useDisplayRaceWithoutOverrides(stageId: string): DisplayRace {
 }
 
 export function useStageOverrides(stageId: string): RaceOverrides {
-  const stage = useSelector(stageSelectors.selectEntities)[stageId];
+  const stage = useAppSelector(stageSelectors.selectEntities)[stageId];
   return stage.overrides;
 }

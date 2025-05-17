@@ -1,13 +1,13 @@
 import { useParams, useSearchParams } from "react-router";
-import { useSelector } from "react-redux";
-import { selectCurrentRace } from "../../data/selectors";
 import { FRAMES } from "./frames";
+import { useAppSelector } from "../../data/hooks";
+import { selectCurrentDisplayRace } from "../../data/stages/selectors";
 
 export function BrowserSourcePage() {
   const { frameId } = useParams();
   const participantIndex = useParticipantIndexFromUrl();
   const frame = FRAMES.find((frame) => frame.frameId === frameId);
-  const currentRace = useSelector(selectCurrentRace);
+  const currentRace = useAppSelector(selectCurrentDisplayRace);
 
   if (!frame) {
     return <p>Invalid frame!</p>;
