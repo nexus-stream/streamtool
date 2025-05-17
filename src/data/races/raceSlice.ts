@@ -3,7 +3,7 @@ import {
   createSlice,
   PayloadAction,
 } from "@reduxjs/toolkit";
-import { RootState } from "../data/store";
+import { RootState } from "../store";
 import { Race, RaceParticipant } from "./types";
 
 export const raceAdapter = createEntityAdapter({

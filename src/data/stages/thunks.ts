@@ -4,8 +4,8 @@ import { v4 as uuidv4 } from "uuid";
 import { addRaceFromId } from "../races/thunks";
 import { upsertStage } from "./stageSlice";
 
-export const addStageWithRaceId = createAsyncThunk(
-  "addStageWithRaceId",
+export const createStageForRace = createAsyncThunk(
+  "createStageForRace",
   async ({ raceId, name }: { raceId: string; name: string }, { dispatch }) => {
     await dispatch(addRaceFromId(raceId)).unwrap();
 

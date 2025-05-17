@@ -4,7 +4,7 @@ import {
   PayloadAction,
 } from "@reduxjs/toolkit";
 import { DisplayParticipant, RaceOverrides, Stage } from "./types";
-import { RootState } from "../data/store";
+import { RootState } from "../store";
 
 export const stageAdapter = createEntityAdapter<Stage>();
 

@@ -1,7 +1,7 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
-import stageReducer from "../stages/stageSlice";
-import raceReducer from "../races/raceSlice";
-import userReducer from "../users/userSlice";
+import stageReducer from "./stages/stageSlice";
+import raceReducer from "./races/raceSlice";
+import userReducer from "./users/userSlice";
 import {
   createStateSyncMiddleware,
   initMessageListener,
