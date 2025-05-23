@@ -10,6 +10,7 @@ import { BrowserSourcePage } from "./pages/browser-source/BrowserSourcePage";
 import { Provider } from "react-redux";
 import store, { persistor } from "./data/store";
 import { PersistGate } from "redux-persist/integration/react";
+import { DumpPage } from "./pages/dump/DumpPage";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
@@ -21,6 +22,7 @@ createRoot(document.getElementById("root")!).render(
               <Route path="/" element={<DockedPage />} />
               <Route path="/edit" element={<EditorPage />} />
               <Route path="/frame/:frameId" element={<BrowserSourcePage />} />
+              <Route path="/dump/:raceId" element={<DumpPage />} />
             </Routes>
           </BrowserRouter>
         </PersistGate>
