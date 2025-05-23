@@ -1,3 +1,6 @@
+// Types copied from therun.gg's repository. Should come up with a better
+// way to version and share them.
+
 /* eslint-disable @typescript-eslint/no-empty-object-type */
 export interface PaginatedData<T> {
   pageSize: number;
