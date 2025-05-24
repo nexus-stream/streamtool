@@ -1,15 +1,14 @@
-import { Frame, FrameProps } from "../frame";
+import { z } from "zod/v4";
+import { buildFrameComponent } from "../frame";
 
-function NameFrame({ race, participantIndex }: FrameProps) {
-  if (!participantIndex) {
-    return null;
+const Params = z.object({
+  participantIndex: z.coerce.number(),
+});
+
+export const nameFrame = buildFrameComponent(
+  "Participant Name",
+  Params,
+  ({ race, participantIndex }) => {
+    return <p>{race.participants[participantIndex].displayName}</p>;
   }
-
-  return <p>{race.participants[participantIndex].displayName}</p>;
-}
-
-export const nameFrame: Frame = {
-  fc: NameFrame,
-  frameId: "name",
-  displayName: "Participant Name",
-};
+);

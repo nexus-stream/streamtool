@@ -1,11 +1,5 @@
-import { Frame, FrameProps } from "../frame";
+import { buildFrameComponent } from "../frame";
 
-function TimerFrame({ race }: FrameProps) {
+export const timerFrame = buildFrameComponent("Race Timer", ({ race }) => {
   return <p>{JSON.stringify(race.startTime)}</p>;
-}
-
-export const timerFrame: Frame = {
-  fc: TimerFrame,
-  frameId: "timer",
-  displayName: "Race Timer",
-};
+});

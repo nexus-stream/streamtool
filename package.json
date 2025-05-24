@@ -24,7 +24,8 @@
     "redux-state-sync": "^3.1.4",
     "tailwindcss": "^4.1.7",
     "unique-names-generator": "^4.7.1",
-    "uuid": "^11.1.0"
+    "uuid": "^11.1.0",
+    "zod": "^3.25.28"
   },
   "devDependencies": {
     "@eslint/js": "^9.21.0",

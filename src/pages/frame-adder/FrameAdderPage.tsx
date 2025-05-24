@@ -1,3 +1,3 @@
-export function FrameAdderPage() {
+export function EditorPage() {
   return null;
 }
