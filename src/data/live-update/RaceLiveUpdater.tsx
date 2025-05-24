@@ -1,6 +1,8 @@
 import { useEffect } from "react";
 import { useAppDispatch } from "../hooks";
 import { addRaceFromId } from "../races/thunks";
+import { LiveUpdateMessage } from "./types";
+import { updateParticipant, upsertRace } from "../races/raceSlice";
 
 interface Props {
   raceId: string;
@@ -21,7 +23,15 @@ export function RaceLiveUpdater({ raceId }: Props) {
   useEffect(() => {
     const ws = new WebSocket(buildWebsocketEndpoint(raceId));
     ws.addEventListener("message", (event) => {
-      console.log(event.data);
+      const message: LiveUpdateMessage = event.data;
+      switch (message.type) {
+        case "raceUpdate":
+          dispatch(upsertRace(message.data));
+          break;
+        case "participantUpdate":
+          dispatch(updateParticipant(message.data));
+          break;
+      }
     });
 
     return () => {

@@ -14,11 +14,8 @@ const stageSlice = createSlice({
     currentStageId: undefined as string | undefined,
   }),
   reducers: {
-    setCurrentStageId(state, action: PayloadAction<string>) {
+    setCurrentStageId(state, action: PayloadAction<string | undefined>) {
       state.currentStageId = action.payload;
-    },
-    clearCurrentStageId(state) {
-      state.currentStageId = undefined;
     },
     upsertStage(state, action: PayloadAction<Stage>) {
       stageAdapter.upsertOne(state, action.payload);
@@ -95,7 +92,6 @@ const stageSlice = createSlice({
 
 export const {
   setCurrentStageId,
-  clearCurrentStageId,
   upsertStage,
   patchRaceOverrides,
   clearRaceOverrideFields,

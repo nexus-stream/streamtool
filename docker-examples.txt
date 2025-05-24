@@ -1,0 +1,33 @@
+$ docker run --detach \
+    --name nginx-proxy \
+    --publish 80:80 \
+    --publish 443:443 \
+    --volume certs:/etc/nginx/certs \
+    --volume html:/usr/share/nginx/html \
+    --volume /var/run/docker.sock:/tmp/docker.sock:ro \
+    nginxproxy/nginx-proxy
+
+
+    docker run --detach \
+    --name nginx-proxy-acme \
+    --volumes-from nginx-proxy \
+    --volume /var/run/docker.sock:/var/run/docker.sock:ro \
+    --volume acme:/etc/acme.sh \
+    --env "DEFAULT_EMAIL=kyle.owsen@gmail.com" \
+    nginxproxy/acme-companion
+
+
+    docker run --rm -it -p 80:80 strm/helloworld-http
+
+
+docker run --detach \
+    --name helloworld-test-app \
+    --env "VIRTUAL_HOST=helloworldtest.kyle.soy" \
+    --env "LETSENCRYPT_HOST=helloworldtest.kyle.soy" \
+    strm/helloworld-http
+
+docker run --detach \
+    --name therun-proxy \
+    --env "VIRTUAL_HOST=therun.kyle.soy" \
+    --env "LETSENCRYPT_HOST=therun.kyle.soy" \
+    kowsen/nexus-therun-proxy:main

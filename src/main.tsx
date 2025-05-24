@@ -1,8 +1,6 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";
-import "@radix-ui/themes/styles.css";
-import { Theme } from "@radix-ui/themes";
 import { BrowserRouter, Route, Routes } from "react-router";
 import { DockedPage } from "./pages/docked/DockedPage";
 import { EditorPage } from "./pages/editor/EditorPage";
@@ -11,22 +9,41 @@ import { Provider } from "react-redux";
 import store, { persistor } from "./data/store";
 import { PersistGate } from "redux-persist/integration/react";
 import { DumpPage } from "./pages/dump/DumpPage";
+import {
+  ThemeProvider,
+  createTheme,
+  StyledEngineProvider,
+} from "@mui/material/styles";
+import CssBaseline from "@mui/material/CssBaseline";
+import GlobalStyles from "@mui/material/GlobalStyles";
+import { FrameAdderPage } from "./pages/frame-adder/FrameAdderPage";
+
+const darkTheme = createTheme({
+  palette: {
+    mode: "dark",
+  },
+});
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <Theme appearance="dark">
-      <Provider store={store}>
-        <PersistGate loading={null} persistor={persistor}>
-          <BrowserRouter>
-            <Routes>
-              <Route path="/" element={<DockedPage />} />
-              <Route path="/edit" element={<EditorPage />} />
-              <Route path="/frame/:frameId" element={<BrowserSourcePage />} />
-              <Route path="/dump/:raceId" element={<DumpPage />} />
-            </Routes>
-          </BrowserRouter>
-        </PersistGate>
-      </Provider>
-    </Theme>
+    <StyledEngineProvider enableCssLayer>
+      <GlobalStyles styles="@layer theme, base, mui, components, utilities;" />
+      <ThemeProvider theme={darkTheme}>
+        <CssBaseline />
+        <Provider store={store}>
+          <PersistGate loading={null} persistor={persistor}>
+            <BrowserRouter>
+              <Routes>
+                <Route path="/" element={<DockedPage />} />
+                <Route path="/edit" element={<EditorPage />} />
+                <Route path="/frame" element={<FrameAdderPage />} />
+                <Route path="/frame/:frameId" element={<BrowserSourcePage />} />
+                <Route path="/dump/:raceId" element={<DumpPage />} />
+              </Routes>
+            </BrowserRouter>
+          </PersistGate>
+        </Provider>
+      </ThemeProvider>
+    </StyledEngineProvider>
   </StrictMode>
 );
