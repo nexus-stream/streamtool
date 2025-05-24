@@ -39,3 +39,10 @@ function DebugStageAdder() {
     </div>
   );
 }
+
+// Left pane to select stage
+// Right pane shows each field in displayrace
+// can expand any field to get an override input and activation
+
+// Button + modal to add new stage. Set name and raceId
+// Button + modal confirmation to delete a stage. Be sure to clear current id if it's current.
