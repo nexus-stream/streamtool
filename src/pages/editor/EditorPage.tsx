@@ -46,3 +46,5 @@ function DebugStageAdder() {
 
 // Button + modal to add new stage. Set name and raceId
 // Button + modal confirmation to delete a stage. Be sure to clear current id if it's current.
+
+// put these buttons at the bottom of the left panel (+ and -)
