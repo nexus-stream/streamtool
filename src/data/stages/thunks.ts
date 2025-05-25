@@ -3,6 +3,7 @@ import { Stage } from "./types";
 import { v4 as uuidv4 } from "uuid";
 import { addRaceFromId } from "../races/thunks";
 import { upsertStage } from "./stageSlice";
+import { setCurrentEditorStageId } from "../editor/editorSlice";
 
 export const createStageForRace = createAsyncThunk(
   "createStageForRace",
@@ -19,5 +20,6 @@ export const createStageForRace = createAsyncThunk(
     };
 
     dispatch(upsertStage(stage));
+    dispatch(setCurrentEditorStageId(stage.id));
   }
 );

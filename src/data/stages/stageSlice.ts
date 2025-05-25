@@ -93,6 +93,7 @@ const stageSlice = createSlice({
 export const {
   setCurrentStageId,
   upsertStage,
+  removeStage,
   patchRaceOverrides,
   clearRaceOverrideFields,
   patchRaceOverrideParticipant,

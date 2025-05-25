@@ -38,5 +38,9 @@ export function OBSInsertButton({ url, name, width, height }: Props) {
     });
   }, [height, name, obsSocket, url, width]);
 
-  return <Button onClick={onClick}>Insert to Current Scene</Button>;
+  return (
+    <Button variant="outlined" onClick={onClick}>
+      Insert to Current Scene
+    </Button>
+  );
 }

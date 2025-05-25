@@ -2,6 +2,7 @@ import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import stageReducer from "./stages/stageSlice";
 import raceReducer from "./races/raceSlice";
 import userReducer from "./users/userSlice";
+import editorReducer from "./editor/editorSlice";
 import {
   createStateSyncMiddleware,
   initMessageListener,
@@ -9,18 +10,21 @@ import {
 import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage"; // defaults to localStorage for web
 
-const persistConfig = {
-  key: "root",
-  storage,
-};
-
 const rootReducer = combineReducers({
   stages: stageReducer,
   races: raceReducer,
   users: userReducer,
+  editor: editorReducer,
 });
 
-const persistedReducer = persistReducer(persistConfig, rootReducer);
+const persistedReducer = persistReducer(
+  {
+    key: "root",
+    storage,
+    blacklist: ["editor"],
+  },
+  rootReducer
+);
 
 const store = configureStore({
   reducer: persistedReducer,
