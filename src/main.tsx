@@ -17,6 +17,10 @@ import {
 import CssBaseline from "@mui/material/CssBaseline";
 import GlobalStyles from "@mui/material/GlobalStyles";
 import { FrameAdderPage } from "./pages/frame-adder/FrameAdderPage";
+import "@fontsource/roboto/300.css";
+import "@fontsource/roboto/400.css";
+import "@fontsource/roboto/500.css";
+import "@fontsource/roboto/700.css";
 
 const darkTheme = createTheme({
   palette: {
