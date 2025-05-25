@@ -10,6 +10,8 @@ import { useCallback, useState } from "react";
 import { FRAMES } from "../browser-source/frames";
 import { FrameParamControls } from "./components/FrameParamControls";
 import { useSearchParams } from "react-router";
+import { OBSConnectionWrapper } from "./components/OBSConnectionWrapper";
+import { OBSInsertButton } from "./components/OBSInsertButton";
 
 // This page is loaded from a separate origin in production. All pages that communicate with
 // outside services like therun need to be hosted on https, while anything that needs to
@@ -18,6 +20,7 @@ import { useSearchParams } from "react-router";
 // be available here.
 export function FrameAdderPage() {
   const [frameId, setFrameId] = useState("");
+  const [name, setName] = useState("");
   const [frameParams, setFrameParams] = useState<object>({});
   const [searchParams] = useSearchParams();
   const origin = searchParams.get("origin");
@@ -52,27 +55,28 @@ export function FrameAdderPage() {
       </Select>
       {currentFrame && (
         <>
+          <TextField
+            label="Name"
+            value={name}
+            onChange={(event) => setName(event.target.value)}
+          />
           <FrameParamControls
             schema={currentFrame.zodProps}
             params={frameParams}
             setParams={setFrameParams}
           />
-          <TextField
-            label="OBS Overlay URL"
-            value={buildOBSOverlayURL(
-              frameId,
-              frameParams,
-              origin ?? undefined
-            )}
-          />
-          <TextField
-            label="width"
-            value={currentFrame.displayProperties.width}
-          />
-          <TextField
-            label="height"
-            value={currentFrame.displayProperties.height}
-          />
+          <OBSConnectionWrapper>
+            <OBSInsertButton
+              url={buildOBSOverlayURL(
+                frameId,
+                frameParams,
+                origin ?? undefined
+              )}
+              name={name}
+              width={currentFrame.displayProperties.width}
+              height={currentFrame.displayProperties.height}
+            />
+          </OBSConnectionWrapper>
         </>
       )}
     </FormControl>
