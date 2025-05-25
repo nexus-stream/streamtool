@@ -38,6 +38,7 @@ export function StageSelector() {
         value={currentStageId ?? ""}
         label="Current Stage"
         onChange={onChange}
+        size="small"
       >
         <MenuItem value={""}>None</MenuItem>
         {stages.map((stage) => (

@@ -38,21 +38,31 @@ export function FrameAdderPage() {
       >
         {Object.entries(FRAMES).map(([id, frame]) => (
           <MenuItem key={id} value={id}>
-            {frame.displayName}
+            {frame.displayProperties.displayName}
           </MenuItem>
         ))}
       </Select>
       {currentFrame && (
-        <FrameParamControls
-          schema={currentFrame.zodProps}
-          params={frameParams}
-          setParams={setFrameParams}
-        />
+        <>
+          <FrameParamControls
+            schema={currentFrame.zodProps}
+            params={frameParams}
+            setParams={setFrameParams}
+          />
+          <TextField
+            label="OBS Overlay URL"
+            value={buildOBSOverlayURL(frameId, frameParams)}
+          />
+          <TextField
+            label="width"
+            value={currentFrame.displayProperties.width}
+          />
+          <TextField
+            label="height"
+            value={currentFrame.displayProperties.height}
+          />
+        </>
       )}
-      <TextField
-        label="OBS Overlay URL"
-        value={buildOBSOverlayURL(frameId, frameParams)}
-      />
     </FormControl>
   );
 }

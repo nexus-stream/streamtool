@@ -8,13 +8,13 @@ export function DockedPage() {
       <StageSelector />
 
       <div className="flex justify-center gap-4 pt-4 flex-wrap">
-        <Button variant="outlined" href="/edit" target="_blank">
-          Edit
+        <Button variant="outlined" href="/edit" target="_blank" size="small">
+          Edit Stages
         </Button>
-        <Button variant="outlined" href="/frame" target="_blank">
-          Insert
+        <Button variant="outlined" href="/frame" target="_blank" size="small">
+          Insert Frame
         </Button>
-        <Button variant="outlined">Connect</Button>
+        {/* <Button variant="outlined" size="small">Connect</Button> */}
       </div>
 
       {/* Handles listening for race updates from therun.gg. Should only ever be running in one place. */}

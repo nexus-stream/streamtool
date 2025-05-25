@@ -36,7 +36,7 @@ function useFrameWithParsedParams() {
     return {
       frame: errorFrame,
       params: {
-        message: `Invalid parameters in URL for the frame: ${frame.displayName}`,
+        message: `Invalid parameters in URL for the frame: ${frame.displayProperties.displayName}`,
       },
     };
   }

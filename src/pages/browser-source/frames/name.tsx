@@ -6,7 +6,11 @@ const Params = z.object({
 });
 
 export const nameFrame = buildFrameComponent(
-  "Participant Name",
+  {
+    displayName: "Participant Name",
+    width: 320,
+    height: 100,
+  },
   Params,
   ({ race, participantIndex }) => {
     return <p>{race.participants[participantIndex].displayName}</p>;

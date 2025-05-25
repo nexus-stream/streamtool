@@ -11,12 +11,18 @@ import { z } from "zod/v4";
 // We do some type shenanigans here so we can make the zod object optional for frames that
 // don't need additional properties in an ergonomic way.
 
+interface DisplayProperties {
+  displayName: string;
+  width: number;
+  height: number;
+}
+
 export type FrameComponent<
   TZodType extends Readonly<{
     [k: string]: z.core.$ZodType<unknown, unknown>;
   }> = Readonly<{ [k: string]: z.core.$ZodType<unknown, unknown> }>
 > = {
-  displayName: string;
+  displayProperties: DisplayProperties;
   zodProps: z.ZodObject<TZodType>;
   fc: (
     props: {
@@ -28,7 +34,7 @@ export type FrameComponent<
 export function buildFrameComponent<
   TZodType extends Readonly<{ [k: string]: z.core.$ZodType<unknown, unknown> }>
 >(
-  displayName: string,
+  displayProperties: DisplayProperties,
   zodProps: z.ZodObject<TZodType>,
   fc: (
     props: { race: DisplayRace } & z.infer<z.ZodObject<TZodType>>
@@ -36,18 +42,18 @@ export function buildFrameComponent<
 ): FrameComponent<TZodType>;
 
 export function buildFrameComponent(
-  displayName: string,
+  displayProperties: DisplayProperties,
   fc: (props: { race: DisplayRace }) => ReactNode
 ): FrameComponent;
 
 export function buildFrameComponent(
-  displayName: string,
+  displayProperties: DisplayProperties,
   zodPropsOrFC: unknown,
   fc?: unknown
 ) {
   if (typeof zodPropsOrFC === "function") {
-    return { displayName, zodProps: z.object({}), fc: zodPropsOrFC };
+    return { displayProperties, zodProps: z.object({}), fc: zodPropsOrFC };
   }
 
-  return { displayName, zodProps: zodPropsOrFC, fc };
+  return { displayProperties, zodProps: zodPropsOrFC, fc };
 }
