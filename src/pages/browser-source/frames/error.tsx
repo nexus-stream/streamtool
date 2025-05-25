@@ -6,7 +6,11 @@ const Params = z.object({
 });
 
 export const errorFrame = buildFrameComponent(
-  "Error Fallback",
+  {
+    displayName: "Error Fallback",
+    width: 320,
+    height: 240,
+  },
   Params,
   ({ message }) => {
     return <p>{message}</p>;
