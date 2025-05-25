@@ -3,8 +3,6 @@ import { Button } from "@mui/material";
 import { StageSelector } from "./components/StageSelector";
 
 export function DockedPage() {
-  const frameHref = import.meta.env.VITE_FRAME_ADDER_URL_OVERRIDE ?? "/frame";
-
   return (
     <div className="h-full w-full flex items-center justify-center flex-col">
       <StageSelector />
@@ -15,7 +13,7 @@ export function DockedPage() {
         </Button>
         <Button
           variant="outlined"
-          href={frameHref}
+          href={getFrameHref()}
           target="_blank"
           size="small"
         >
@@ -28,4 +26,15 @@ export function DockedPage() {
       <LiveUpdateManager />
     </div>
   );
+}
+
+function getFrameHref() {
+  const override = import.meta.env.VITE_FRAME_ADDER_URL_OVERRIDE;
+  if (override) {
+    return `${import.meta.env.VITE_FRAME_ADDER_URL_OVERRIDE}?origin=${
+      window.location.origin
+    }`;
+  }
+
+  return "/frame";
 }

@@ -9,10 +9,18 @@ import {
 import { useCallback, useState } from "react";
 import { FRAMES } from "../browser-source/frames";
 import { FrameParamControls } from "./components/FrameParamControls";
+import { useSearchParams } from "react-router";
 
+// This page is loaded from a separate origin in production. All pages that communicate with
+// outside services like therun need to be hosted on https, while anything that needs to
+// communicate with OBS's websocket server (like this page) needs to be hosted on http.
+// That means you should not expect any of the data that gets shared between other pages will
+// be available here.
 export function FrameAdderPage() {
   const [frameId, setFrameId] = useState("");
   const [frameParams, setFrameParams] = useState<object>({});
+  const [searchParams] = useSearchParams();
+  const origin = searchParams.get("origin");
 
   const currentFrame = FRAMES[frameId];
 
@@ -51,7 +59,11 @@ export function FrameAdderPage() {
           />
           <TextField
             label="OBS Overlay URL"
-            value={buildOBSOverlayURL(frameId, frameParams)}
+            value={buildOBSOverlayURL(
+              frameId,
+              frameParams,
+              origin ?? undefined
+            )}
           />
           <TextField
             label="width"
@@ -67,17 +79,21 @@ export function FrameAdderPage() {
   );
 }
 
-function buildOBSOverlayURL(frameId: string, params: object): string {
+function buildOBSOverlayURL(
+  frameId: string,
+  params: object,
+  originOverride?: string
+): string {
   if (!frameId) {
     return "";
   }
 
-  const url = new URL(`/frame/${frameId}`, window.location.origin);
+  const url = new URL(
+    `/frame/${frameId}`,
+    originOverride ?? window.location.origin
+  );
   for (const [key, value] of Object.entries(params)) {
     url.searchParams.append(key, value);
   }
   return url.toString();
 }
-
-// Form to select frame type
-// Form controls for each item in params

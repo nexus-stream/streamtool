@@ -1,4 +1,3 @@
-- Set up http proxy for production https page
 - Set up browser source OBS injection
 - Build edit page
 - Build some frames that look good
