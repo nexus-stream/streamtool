@@ -8,6 +8,5 @@ export async function getUser(user: string): Promise<User> {
 }
 
 function buildUserEndpoint(user: string): string {
-  return `https://therun.gg/api/users/${user}/global`;
-  // return `https://therun.kyle.soy/api/users/${user}/global`;
+  return `${import.meta.env.VITE_THERUN_API_ENDPOINT}/users/${user}/global`;
 }

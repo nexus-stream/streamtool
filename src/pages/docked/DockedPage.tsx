@@ -29,11 +29,10 @@ export function DockedPage() {
 }
 
 function getFrameHref() {
-  const override = import.meta.env.VITE_FRAME_ADDER_URL_OVERRIDE;
-  if (override) {
-    return `${import.meta.env.VITE_FRAME_ADDER_URL_OVERRIDE}?origin=${
-      window.location.origin
-    }`;
+  const httpOverrideOrigin = import.meta.env.VITE_HTTP_PROXY_MIRROR_ORIGIN;
+
+  if (httpOverrideOrigin) {
+    return `${httpOverrideOrigin}/frame?origin=${window.location.origin}`;
   }
 
   return "/frame";

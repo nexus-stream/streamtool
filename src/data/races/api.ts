@@ -8,6 +8,5 @@ export async function getRace(raceId: string): Promise<Race> {
 }
 
 function buildRaceEndpoint(raceId: string): string {
-  // return `https://races.therun.gg/${raceId}`;
-  return `https://therun.kyle.soy/races/${raceId}`;
+  return `${import.meta.env.VITE_THERUN_RACES_ENDPOINT}/${raceId}`;
 }
