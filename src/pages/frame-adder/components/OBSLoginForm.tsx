@@ -42,7 +42,15 @@ export function OBSLoginForm({
           onChange={(event) => setPassword(event.target.value)}
         />
 
-        {isError && <FormHelperText>Login failed, try again.</FormHelperText>}
+        {isError && (
+          <FormHelperText>
+            Login failed. Make sure{" "}
+            <a className="text-blue-500" href="/guide.png" target="_blank">
+              the WebSocket server is enabled
+            </a>{" "}
+            and try again.
+          </FormHelperText>
+        )}
 
         <Button
           variant="outlined"

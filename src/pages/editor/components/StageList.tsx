@@ -23,7 +23,7 @@ export function StageList() {
   }, [currentEditorStage, dispatch, stages]);
 
   return (
-    <div className="w-76 shrink-0 bg-neutral-900 rounded-md h-full">
+    <div className="w-76 shrink-0 bg-neutral-900 rounded-md h-full pt-4 pb-4">
       <List component={TestComponent}>
         {stages.map((stage) => {
           return (
@@ -40,7 +40,7 @@ export function StageList() {
             </ListItem>
           );
         })}
-        <ListItem className="mt-auto">
+        <ListItem className="mt-auto" disablePadding>
           {currentEditorStage && (
             <ListItemButton
               component="a"

@@ -17,7 +17,7 @@ export function StageEditorContent({ stage }: { stage: Stage }) {
   const displayRace = useDisplayRaceWithoutOverrides(stage.id);
 
   return (
-    <div className="grow bg-neutral-900 rounded-md h-full overflow-y-scroll">
+    <div className="grow bg-neutral-900 rounded-md h-full overflow-y-scroll p-4">
       <p>{JSON.stringify(displayRace)?.split(",").join(", ")}</p>
       <p>{JSON.stringify(stage.overrides)?.split(",").join(", ")}</p>
     </div>
