@@ -3,6 +3,8 @@ import { Button } from "@mui/material";
 import { StageSelector } from "./components/StageSelector";
 
 export function DockedPage() {
+  const frameHref = import.meta.env.VITE_FRAME_ADDER_URL_OVERRIDE ?? "/frame";
+
   return (
     <div className="h-full w-full flex items-center justify-center flex-col">
       <StageSelector />
@@ -11,7 +13,12 @@ export function DockedPage() {
         <Button variant="outlined" href="/edit" target="_blank" size="small">
           Edit Stages
         </Button>
-        <Button variant="outlined" href="/frame" target="_blank" size="small">
+        <Button
+          variant="outlined"
+          href={frameHref}
+          target="_blank"
+          size="small"
+        >
           Insert Frame
         </Button>
         {/* <Button variant="outlined" size="small">Connect</Button> */}
