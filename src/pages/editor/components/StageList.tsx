@@ -4,7 +4,7 @@ import { stageSelectors } from "../../../data/stages/selectors";
 import { List, ListItem, ListItemButton, ListItemText } from "@mui/material";
 import { setCurrentEditorStageId } from "../../../data/editor/editorSlice";
 import { selectCurrentEditorStage } from "../../../data/editor/selectors";
-import { useEffect, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import { StageDeleteModal } from "./StageDeleteModal";
 import { StageCreateModal } from "./StageCreateModal";
 
@@ -18,14 +18,13 @@ export function StageList() {
 
   useEffect(() => {
     if (!currentEditorStage) {
-      console.log(stages[0].id);
-      dispatch(setCurrentEditorStageId(stages[0].id));
+      dispatch(setCurrentEditorStageId(stages[0]?.id));
     }
   }, [currentEditorStage, dispatch, stages]);
 
   return (
-    <div className="w-sm shrink-0 bg-neutral-900 rounded-md">
-      <List>
+    <div className="w-76 shrink-0 bg-neutral-900 rounded-md h-full">
+      <List component={TestComponent}>
         {stages.map((stage) => {
           return (
             <ListItem key={stage.id} disablePadding>
@@ -41,7 +40,7 @@ export function StageList() {
             </ListItem>
           );
         })}
-        <ListItem disablePadding>
+        <ListItem className="mt-auto">
           {currentEditorStage && (
             <ListItemButton
               component="a"
@@ -49,7 +48,7 @@ export function StageList() {
                 setIsDeleting(true);
               }}
             >
-              <ListItemText className="text-center" primary="-" />
+              <ListItemText className="text-center" primary="Delete" />
             </ListItemButton>
           )}
           <ListItemButton
@@ -58,7 +57,7 @@ export function StageList() {
               setIsCreating(true);
             }}
           >
-            <ListItemText className="text-center" primary="+" />
+            <ListItemText className="text-center" primary="Create" />
           </ListItemButton>
         </ListItem>
       </List>
@@ -67,4 +66,8 @@ export function StageList() {
       {isDeleting && <StageDeleteModal onClose={() => setIsDeleting(false)} />}
     </div>
   );
+}
+
+function TestComponent({ children }: { children: ReactNode }) {
+  return <ul className="flex flex-col h-full">{children}</ul>;
 }

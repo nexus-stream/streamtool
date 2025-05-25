@@ -3,7 +3,7 @@ import { StageEditor } from "./components/StageEditor";
 
 export function EditorPage() {
   return (
-    <div className="flex gap-8 flex-wrap">
+    <div className="flex gap-8 h-full">
       <StageList />
       <StageEditor />
     </div>

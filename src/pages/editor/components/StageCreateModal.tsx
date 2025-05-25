@@ -61,7 +61,10 @@ export function StageCreateModal({ onClose }: Props) {
           <Button disabled={status === "loading"} onClick={onClose}>
             Cancel
           </Button>
-          <Button disabled={status === "loading"} onClick={onConfirm}>
+          <Button
+            disabled={status === "loading" || !name.trim()}
+            onClick={onConfirm}
+          >
             {status === "loading" ? "Loading..." : "Confirm"}
           </Button>
         </div>
