@@ -1,4 +1,9 @@
+import { z } from "zod/v4";
 import { buildFrameComponent } from "../frame";
+
+const Params = z.object({
+  enumType: z.enum(["first", "second", "third"]).default("first"),
+});
 
 export const debugFrame = buildFrameComponent(
   {
@@ -6,7 +11,13 @@ export const debugFrame = buildFrameComponent(
     width: 400,
     height: 400,
   },
-  ({ race }) => {
-    return <p>{JSON.stringify(race)}</p>;
+  Params,
+  ({ race, enumType }) => {
+    return (
+      <div>
+        <p>{JSON.stringify(race)}</p>
+        <p>{enumType}</p>
+      </div>
+    );
   }
 );

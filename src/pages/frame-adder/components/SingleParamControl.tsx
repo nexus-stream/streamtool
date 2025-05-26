@@ -1,6 +1,7 @@
 import { z } from "zod/v4";
 import { NumberParamControl } from "./NumberParamControl";
 import { StringParamControl } from "./StringParamControl";
+import { EnumParamControl } from "./EnumParamControl";
 
 interface Props {
   name: string;
@@ -16,9 +17,8 @@ export function SingleParamControl({
   setParams,
 }: Props) {
   let baseType = schemaValue;
-  console.log(schemaValue);
   if (schemaValue instanceof z.ZodDefault) {
-    baseType = schemaValue._def.innerType;
+    baseType = schemaValue.def.innerType;
   }
 
   if (baseType instanceof z.ZodString) {
@@ -30,6 +30,18 @@ export function SingleParamControl({
   if (baseType instanceof z.ZodNumber) {
     return (
       <NumberParamControl name={name} params={params} setParams={setParams} />
+    );
+  }
+
+  if (baseType instanceof z.ZodEnum) {
+    const options = baseType.options.map((option) => option.toString());
+    return (
+      <EnumParamControl
+        name={name}
+        options={options}
+        params={params}
+        setParams={setParams}
+      />
     );
   }
 

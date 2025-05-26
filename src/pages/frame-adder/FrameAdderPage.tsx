@@ -79,6 +79,7 @@ export function FrameAdderPage() {
           <OBSConnectionWrapper>
             <OBSInsertButton
               url={overlayUrl}
+              frameName={currentFrame.displayProperties.displayName}
               name={name}
               width={currentFrame.displayProperties.width}
               height={currentFrame.displayProperties.height}

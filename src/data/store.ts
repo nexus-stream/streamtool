@@ -29,7 +29,15 @@ const persistedReducer = persistReducer(
 const store = configureStore({
   reducer: persistedReducer,
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(
+    getDefaultMiddleware({
+      serializableCheck: {
+        ignoredActions: [
+          "persist/PERSIST",
+          "persist/PURGE",
+          "persist/REHYDRATE",
+        ],
+      },
+    }).concat(
       // We share data between the docked page and the pop-out editor / overlays by syncing our
       // redux store between all of the pages. It's a bit ugly, but it keeps things very simple
       // and gives us a lot of flexibility.
