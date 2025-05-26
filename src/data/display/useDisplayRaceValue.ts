@@ -6,13 +6,13 @@ import { raceSelectors } from "../races/selectors";
 import { userSelectors } from "../users/selectors";
 import { DISPLAY_RACE_FIELDS } from "./displayRaceFields";
 
-export function useDisplayRaceValue<TKey extends keyof DisplayRace>(
-  key: TKey,
+export function useDisplayRaceValue<TParam extends keyof DisplayRace>(
+  param: TParam,
   stageId: string
-): DisplayRace[TKey] {
+): DisplayRace[TParam] {
   const stage = useSelector(stageSelectors.selectEntities)[stageId];
   const race = useAppSelector(raceSelectors.selectEntities)[stage.raceId];
   const users = useAppSelector(userSelectors.selectEntities);
 
-  return DISPLAY_RACE_FIELDS[key](race, users);
+  return DISPLAY_RACE_FIELDS[param](race, users);
 }

@@ -5,23 +5,29 @@ import { stageSelectors } from "../stages/selectors";
 import { patchRaceOverrides } from "../stages/stageSlice";
 import { DisplayRace } from "./types";
 
-export function useRaceOverrideState<TKey extends keyof DisplayRace>(
-  key: TKey,
+// Gets a useState like interface for reading and updating the override state for
+// a race value for a given stage. This lets us easily define components meant to
+// edit these values by just passing in a stage id and the parameter that we want
+// to edit.
+export function useRaceOverrideState<TParam extends keyof DisplayRace>(
+  param: TParam,
   stageId: string
 ): [
-  DisplayRace[TKey] | undefined,
-  (newValue: DisplayRace[TKey] | undefined) => void
+  DisplayRace[TParam] | undefined,
+  (newValue: DisplayRace[TParam] | undefined) => void
 ] {
   const dispatch = useAppDispatch();
 
   const override = useSelector(stageSelectors.selectEntities)[stageId]
-    ?.raceOverrides?.[key];
+    ?.raceOverrides?.[param];
 
   const setOverride = useCallback(
-    (newValue: DisplayRace[TKey] | undefined) => {
-      dispatch(patchRaceOverrides({ id: stageId, patch: { [key]: newValue } }));
+    (newValue: DisplayRace[TParam] | undefined) => {
+      dispatch(
+        patchRaceOverrides({ id: stageId, patch: { [param]: newValue } })
+      );
     },
-    [dispatch, key, stageId]
+    [dispatch, param, stageId]
   );
 
   return [override, setOverride];

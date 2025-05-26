@@ -6,31 +6,31 @@ import { patchRaceOverrideParticipant } from "../stages/stageSlice";
 import { DisplayParticipant } from "./types";
 
 export function useParticipantOverrideState<
-  TKey extends keyof DisplayParticipant
+  TParam extends keyof DisplayParticipant
 >(
-  key: TKey,
+  param: TParam,
   stageId: string,
   user: string
 ): [
-  DisplayParticipant[TKey] | undefined,
-  (newValue: DisplayParticipant[TKey] | undefined) => void
+  DisplayParticipant[TParam] | undefined,
+  (newValue: DisplayParticipant[TParam] | undefined) => void
 ] {
   const dispatch = useAppDispatch();
 
   const override = useSelector(stageSelectors.selectEntities)[stageId]
-    ?.participantOverrides?.[user]?.[key];
+    ?.participantOverrides?.[user]?.[param];
 
   const setOverride = useCallback(
-    (newValue: DisplayParticipant[TKey] | undefined) => {
+    (newValue: DisplayParticipant[TParam] | undefined) => {
       dispatch(
         patchRaceOverrideParticipant({
           id: stageId,
           user,
-          patch: { [key]: newValue },
+          patch: { [param]: newValue },
         })
       );
     },
-    [dispatch, key, stageId, user]
+    [dispatch, param, stageId, user]
   );
 
   return [override, setOverride];

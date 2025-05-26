@@ -7,8 +7,8 @@ import { userSelectors } from "../users/selectors";
 import { DISPLAY_PARTICIPANT_FIELDS } from "./displayParticipantFields";
 
 export function useDisplayParticipantValue<
-  TKey extends keyof DisplayParticipant
->(key: TKey, stageId: string, user: string): DisplayParticipant[TKey] {
+  TParam extends keyof DisplayParticipant
+>(param: TParam, stageId: string, user: string): DisplayParticipant[TParam] {
   const stage = useSelector(stageSelectors.selectEntities)[stageId];
   const race = useAppSelector(raceSelectors.selectEntities)[stage.raceId];
   const users = useAppSelector(userSelectors.selectEntities);
@@ -21,5 +21,5 @@ export function useDisplayParticipantValue<
     throw new Error(`Tried displaying invalid participant ${user}`);
   }
 
-  return DISPLAY_PARTICIPANT_FIELDS[key](participant, users[user] ?? {});
+  return DISPLAY_PARTICIPANT_FIELDS[param](participant, users[user] ?? {});
 }

@@ -6,20 +6,20 @@ import { OverrideEditorProps } from "./DefaultOverrideEditor";
 import { ValueVisualizerProps } from "./DefaultValueVisualizer";
 import { ValueEditor } from "./ValueEditor";
 
-interface Props<TKey extends keyof DisplayRace> {
-  param: TKey;
+interface Props<TParam extends keyof DisplayRace> {
+  param: TParam;
   stageId: string;
 
-  ValueVisualizer?: FC<ValueVisualizerProps<DisplayRace[TKey]>>;
-  OverrideEditor?: FC<OverrideEditorProps<DisplayRace[TKey]>>;
+  ValueVisualizer?: FC<ValueVisualizerProps<DisplayRace[TParam]>>;
+  OverrideEditor?: FC<OverrideEditorProps<DisplayRace[TParam]>>;
 }
 
-export function RaceValueEditor<TKey extends keyof DisplayRace>({
+export function RaceValueEditor<TParam extends keyof DisplayRace>({
   param,
   stageId,
   ValueVisualizer,
   OverrideEditor,
-}: Props<TKey>) {
+}: Props<TParam>) {
   const value = useDisplayRaceValue(param, stageId);
   const [override, setOverride] = useRaceOverrideState(param, stageId);
 

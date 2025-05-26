@@ -6,22 +6,18 @@ import { ValueEditor } from "./ValueEditor";
 import { useDisplayParticipantValue } from "../../../../data/display/useDisplayParticipantValue";
 import { useParticipantOverrideState } from "../../../../data/display/useParticipantOverrideState";
 
-interface Props<TKey extends keyof DisplayParticipant> {
-  param: TKey;
+interface Props<TParam extends keyof DisplayParticipant> {
+  param: TParam;
   stageId: string;
   user: string;
 
-  ValueVisualizer?: FC<ValueVisualizerProps<DisplayParticipant[TKey]>>;
-  OverrideEditor?: FC<OverrideEditorProps<DisplayParticipant[TKey]>>;
+  ValueVisualizer?: FC<ValueVisualizerProps<DisplayParticipant[TParam]>>;
+  OverrideEditor?: FC<OverrideEditorProps<DisplayParticipant[TParam]>>;
 }
 
-export function ParticipantValueEditor<TKey extends keyof DisplayParticipant>({
-  param,
-  stageId,
-  user,
-  ValueVisualizer,
-  OverrideEditor,
-}: Props<TKey>) {
+export function ParticipantValueEditor<
+  TParam extends keyof DisplayParticipant
+>({ param, stageId, user, ValueVisualizer, OverrideEditor }: Props<TParam>) {
   const value = useDisplayParticipantValue(param, stageId, user);
   const [override, setOverride] = useParticipantOverrideState(
     param,
