@@ -1,10 +1,12 @@
 import { Typography } from "@mui/material";
 
-interface Props<TValue> {
+export interface ValueVisualizerProps<TValue> {
   value: TValue;
 }
 
-export function DefaultValueVisualizer<TValue>({ value }: Props<TValue>) {
+export function DefaultValueVisualizer<TValue>({
+  value,
+}: ValueVisualizerProps<TValue>) {
   if (typeof value !== "string") {
     return <p>Default value visualizer only supports strings!</p>;
   }

@@ -3,6 +3,7 @@ import { selectCurrentEditorStage } from "../../../data/editor/selectors";
 import { Stage } from "../../../data/stages/types";
 import { useDisplayRaceValue } from "../../../data/display/useDisplayRaceValue";
 import { RaceValueEditor } from "./values/RaceValueEditor";
+import { ParticipantValueEditor } from "./values/ParticipantValueEditor";
 
 export function StageEditor() {
   const currentEditorStage = useSelector(selectCurrentEditorStage);
@@ -24,6 +25,11 @@ export function StageEditorContent({ stage }: { stage: Stage }) {
       <p>{JSON.stringify(participants)?.split(",").join(", ")}</p>
       <p>{JSON.stringify(stage.raceOverrides)?.split(",").join(", ")}</p>
       <RaceValueEditor param="game" stageId={stage.id} />
+      <ParticipantValueEditor
+        param="twitchUser"
+        stageId={stage.id}
+        user={participants[0].user}
+      />
     </div>
   );
 }

@@ -6,6 +6,9 @@ import {
 } from "../races/types";
 import { User } from "../users/types";
 
+// Because we use `undefined` to mean there is no available override for
+// any of these fields, we should avoid undefined fields in this object.
+// Use `null` instead.
 export interface DisplayRace {
   game: string;
   category: string;
@@ -15,6 +18,9 @@ export interface DisplayRace {
   endTime: string | null;
 }
 
+// Because we use `undefined` to mean there is no available override for
+// any of these fields, we should avoid undefined fields in this object.
+// Use `null` instead.
 export interface DisplayParticipant {
   user: string;
   twitchUser: string;
