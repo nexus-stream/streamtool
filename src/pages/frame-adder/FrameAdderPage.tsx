@@ -5,6 +5,7 @@ import {
   Select,
   MenuItem,
   TextField,
+  Button,
 } from "@mui/material";
 import { useCallback, useState } from "react";
 import { FRAMES } from "../browser-source/frames";
@@ -37,6 +38,12 @@ export function FrameAdderPage() {
     }
   }, []);
 
+  const overlayUrl = buildOBSOverlayURL(
+    frameId,
+    frameParams,
+    origin ?? undefined
+  );
+
   return (
     <FormControl fullWidth className="flex flex-col gap-8">
       <InputLabel id="frame-id-select-label">Frame</InputLabel>
@@ -65,13 +72,13 @@ export function FrameAdderPage() {
             params={frameParams}
             setParams={setFrameParams}
           />
+          <Button variant="outlined" href={overlayUrl} target="_blank">
+            Preview Frame
+          </Button>
+
           <OBSConnectionWrapper>
             <OBSInsertButton
-              url={buildOBSOverlayURL(
-                frameId,
-                frameParams,
-                origin ?? undefined
-              )}
+              url={overlayUrl}
               name={name}
               width={currentFrame.displayProperties.width}
               height={currentFrame.displayProperties.height}

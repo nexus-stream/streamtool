@@ -36,21 +36,23 @@ export function EditorValue<TValue>({
         <ToggleButton
           value="check"
           selected={isEditOpen}
-          onChange={() => setIsEditOpen((old) => !old)}
+          onChange={() => setIsEditOpen((old) => overrideEnabled || !old)}
         >
           <EditIcon />
         </ToggleButton>
       </div>
-      <div className="flex">
-        <OverrideEditor override={override} setOverride={setOverride} />
-        <ToggleButton
-          value="check"
-          selected={overrideEnabled}
-          onChange={() => setOverrideEnabled(!overrideEnabled)}
-        >
-          <CheckIcon />
-        </ToggleButton>
-      </div>
+      {isEditOpen && (
+        <div className="flex">
+          <OverrideEditor override={override} setOverride={setOverride} />
+          <ToggleButton
+            value="check"
+            selected={overrideEnabled}
+            onChange={() => setOverrideEnabled(!overrideEnabled)}
+          >
+            <CheckIcon />
+          </ToggleButton>
+        </div>
+      )}
     </div>
   );
 }
@@ -64,7 +66,7 @@ function useLocalValueWithOptionalBacking<TValue>(
   boolean,
   (newUseBacking: boolean) => void
 ] {
-  const [useBacking, setUseBacking] = useState(false);
+  const [useBacking, setUseBacking] = useState(!!value);
   const [localValue, setLocalValue] = useState(value);
 
   const setUseBackingAndUpdate = useCallback(

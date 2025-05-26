@@ -2,6 +2,7 @@ import { useSelector } from "react-redux";
 import { selectCurrentEditorStage } from "../../../data/editor/selectors";
 import { Stage } from "../../../data/stages/types";
 import { useDisplayRaceValue } from "../../../data/display/useDisplayRaceValue";
+import { RaceValueEditor } from "./values/RaceValueEditor";
 
 export function StageEditor() {
   const currentEditorStage = useSelector(selectCurrentEditorStage);
@@ -22,6 +23,7 @@ export function StageEditorContent({ stage }: { stage: Stage }) {
       <p>{JSON.stringify(game)?.split(",").join(", ")}</p>
       <p>{JSON.stringify(participants)?.split(",").join(", ")}</p>
       <p>{JSON.stringify(stage.raceOverrides)?.split(",").join(", ")}</p>
+      <RaceValueEditor param="game" stageId={stage.id} />
     </div>
   );
 }

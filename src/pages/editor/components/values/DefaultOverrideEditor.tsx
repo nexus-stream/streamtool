@@ -9,7 +9,7 @@ export function DefaultOverrideEditor<TValue>({
   override,
   setOverride,
 }: Props<TValue>) {
-  if (typeof override !== "string") {
+  if (override && typeof override !== "string") {
     return <p>Default override editor only supports strings!</p>;
   }
 
