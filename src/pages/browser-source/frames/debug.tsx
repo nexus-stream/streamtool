@@ -1,7 +1,10 @@
 import { z } from "zod/v4";
 import { buildFrameComponent } from "../frame";
 import { DisplayParticipant, DisplayRace } from "../../../data/display/types";
-import { useParticipantTime, useRaceTime } from "../../../components/useTimer";
+import {
+  useDisplayRaceParticipantTimer,
+  useDisplayRaceTimer,
+} from "../../../data/display/displayTimerHooks";
 
 const Params = z.object({
   enumType: z.enum(["first", "second", "third"]).default("first"),
@@ -15,7 +18,7 @@ export const debugFrame = buildFrameComponent(
   },
   Params,
   ({ race, enumType }) => {
-    const raceTimer = useRaceTime(race);
+    const raceTimer = useDisplayRaceTimer(race);
 
     return (
       <div>
@@ -43,7 +46,7 @@ function ParticipantTimer({
   participant: DisplayParticipant;
   race: DisplayRace;
 }) {
-  const time = useParticipantTime(participant, race);
+  const time = useDisplayRaceParticipantTimer(participant, race);
 
   return (
     <p>

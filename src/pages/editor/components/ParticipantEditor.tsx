@@ -8,6 +8,7 @@ import { DisplayParticipant } from "../../../data/display/types";
 import { ParticipantValueEditor } from "./values/ParticipantValueEditor";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { ParticipantValueViewer } from "./values/ParticipantValueViewer";
+import { ParticipantTimerVisualizer } from "./values/ParticipantTimerVisualizer";
 
 interface Props {
   stageId: string;
@@ -21,6 +22,16 @@ export function ParticipantEditor({ stageId, participant }: Props) {
         <Typography component="span">{participant.user}</Typography>
       </AccordionSummary>
       <AccordionDetails className="flex flex-col gap-8">
+        <ParticipantValueViewer
+          label="Runner Status"
+          param="status"
+          stageId={stageId}
+          user={participant.user}
+        />
+        <ParticipantTimerVisualizer
+          participant={participant}
+          stageId={stageId}
+        />
         <ParticipantValueEditor
           label="Twitch Username"
           param="twitchUser"
@@ -42,18 +53,6 @@ export function ParticipantEditor({ stageId, participant }: Props) {
         <ParticipantValueEditor
           label="Avatar"
           param="avatar"
-          stageId={stageId}
-          user={participant.user}
-        />
-        <ParticipantValueViewer
-          label="Runner Status"
-          param="status"
-          stageId={stageId}
-          user={participant.user}
-        />
-        <ParticipantValueViewer
-          label="Final Time"
-          param="finalTime"
           stageId={stageId}
           user={participant.user}
         />
