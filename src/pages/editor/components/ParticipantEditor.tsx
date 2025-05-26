@@ -51,6 +51,12 @@ export function ParticipantEditor({ stageId, participant }: Props) {
           stageId={stageId}
           user={participant.user}
         />
+        <ParticipantValueViewer
+          label="Final Time"
+          param="finalTime"
+          stageId={stageId}
+          user={participant.user}
+        />
       </AccordionDetails>
     </Accordion>
   );

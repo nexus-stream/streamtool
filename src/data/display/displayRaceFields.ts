@@ -4,6 +4,7 @@ import { DisplayRace, RaceDisplayFieldGetter } from "./types";
 export const DISPLAY_RACE_FIELDS: {
   [K in keyof DisplayRace]: RaceDisplayFieldGetter<DisplayRace[K]>;
 } = {
+  raceId: (race) => race.raceId,
   game: (race) => race.displayGame,
   category: (race) => race.displayCategory,
   participants: (race, userEntities) => {

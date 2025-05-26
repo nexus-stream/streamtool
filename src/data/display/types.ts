@@ -10,6 +10,7 @@ import { User } from "../users/types";
 // any of these fields, we should avoid undefined fields in this object.
 // Use `null` instead.
 export interface DisplayRace {
+  raceId: string;
   game: string;
   category: string;
   participants: DisplayParticipant[];
@@ -28,6 +29,7 @@ export interface DisplayParticipant {
   pronouns: string | null;
   avatar: string | null;
   status: RaceParticipantStatus;
+  finalTime: number | null;
 }
 
 export type RaceDisplayFieldGetter<TValue> = (

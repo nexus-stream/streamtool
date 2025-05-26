@@ -1,8 +1,8 @@
-- Build edit page
 - Build some frames that look good
   - Background
   - Race timer
-  - Runner name
+  - Runner namecard
   - Runner stream
   - Game and category
+  - Full single runner page
 - Add twitch integration

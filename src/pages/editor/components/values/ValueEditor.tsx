@@ -53,7 +53,7 @@ export function ValueEditor<TValue>({
       {(isOverrideSynced || isEditOpen) && (
         <div
           className={classNames("flex gap-4 pl-8", {
-            "opacity-50": !isOverrideSynced,
+            "opacity-70": !isOverrideSynced,
           })}
         >
           <OverrideEditor

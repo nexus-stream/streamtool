@@ -11,4 +11,5 @@ export const DISPLAY_PARTICIPANT_FIELDS: {
   pronouns: (_, profile) => profile.pronouns ?? null,
   avatar: (_, profile) => profile.picture ?? null,
   status: (participant) => participant.status,
+  finalTime: (participant) => participant.finalTime,
 };

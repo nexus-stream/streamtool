@@ -21,6 +21,7 @@ export function StageEditorContent({ stage }: { stage: Stage }) {
 
   return (
     <div className="grow bg-neutral-900 rounded-md h-full overflow-y-scroll p-4 flex flex-col gap-8">
+      <RaceValueViewer label="Race ID" param="raceId" stageId={stage.id} />
       <RaceValueEditor label="Game" param="game" stageId={stage.id} />
       <RaceValueEditor label="Category" param="category" stageId={stage.id} />
       <RaceValueViewer label="Race Status" param="status" stageId={stage.id} />
@@ -31,7 +32,11 @@ export function StageEditorContent({ stage }: { stage: Stage }) {
       />
       <div>
         {participants.map((participant) => (
-          <ParticipantEditor stageId={stage.id} participant={participant} />
+          <ParticipantEditor
+            key={participant.user}
+            stageId={stage.id}
+            participant={participant}
+          />
         ))}
       </div>
     </div>
