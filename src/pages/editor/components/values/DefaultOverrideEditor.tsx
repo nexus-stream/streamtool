@@ -24,7 +24,10 @@ export function DefaultOverrideEditor<TValue>({
 
   return (
     <TextField
+      className="w-md"
       value={override ?? ""}
+      size="small"
+      label="Override"
       onChange={(event) => setTypedOverride(event.target.value)}
     />
   );

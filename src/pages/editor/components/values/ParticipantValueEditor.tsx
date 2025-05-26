@@ -7,6 +7,7 @@ import { useDisplayParticipantValue } from "../../../../data/display/useDisplayP
 import { useParticipantOverrideState } from "../../../../data/display/useParticipantOverrideState";
 
 interface Props<TParam extends keyof DisplayParticipant> {
+  label: string;
   param: TParam;
   stageId: string;
   user: string;
@@ -17,7 +18,14 @@ interface Props<TParam extends keyof DisplayParticipant> {
 
 export function ParticipantValueEditor<
   TParam extends keyof DisplayParticipant
->({ param, stageId, user, ValueVisualizer, OverrideEditor }: Props<TParam>) {
+>({
+  label,
+  param,
+  stageId,
+  user,
+  ValueVisualizer,
+  OverrideEditor,
+}: Props<TParam>) {
   const value = useDisplayParticipantValue(param, stageId, user);
   const [override, setOverride] = useParticipantOverrideState(
     param,
@@ -27,6 +35,7 @@ export function ParticipantValueEditor<
 
   return (
     <ValueEditor
+      label={label}
       value={value}
       override={override}
       setOverride={setOverride}

@@ -7,6 +7,7 @@ import { ValueVisualizerProps } from "./DefaultValueVisualizer";
 import { ValueEditor } from "./ValueEditor";
 
 interface Props<TParam extends keyof DisplayRace> {
+  label: string;
   param: TParam;
   stageId: string;
 
@@ -15,6 +16,7 @@ interface Props<TParam extends keyof DisplayRace> {
 }
 
 export function RaceValueEditor<TParam extends keyof DisplayRace>({
+  label,
   param,
   stageId,
   ValueVisualizer,
@@ -25,6 +27,7 @@ export function RaceValueEditor<TParam extends keyof DisplayRace>({
 
   return (
     <ValueEditor
+      label={label}
       value={value}
       override={override}
       setOverride={setOverride}

@@ -9,10 +9,10 @@ import {
 } from "./DefaultOverrideEditor";
 import { ToggleButton } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
-import CheckIcon from "@mui/icons-material/Check";
 import { useSyncableLocalState } from "./useSyncableLocalState";
 
 interface Props<TValue> {
+  label: string;
   value: TValue;
   override: TValue | undefined;
   setOverride: (value: TValue | undefined) => void;
@@ -22,6 +22,7 @@ interface Props<TValue> {
 }
 
 export function ValueEditor<TValue>({
+  label,
   value,
   override: backingOverride,
   setOverride: setBackingOverride,
@@ -34,10 +35,11 @@ export function ValueEditor<TValue>({
   const [isEditOpen, setIsEditOpen] = useState(false);
 
   return (
-    <div>
-      <div className="flex">
-        <ValueVisualizer value={value} />
+    <div className="flex flex-col gap-2">
+      <div className="flex gap-4">
+        <ValueVisualizer label={label} value={value} />
         <ToggleButton
+          size="small"
           value="check"
           selected={isOverrideSynced || isEditOpen}
           onChange={() => setIsEditOpen((old) => isOverrideSynced || !old)}
@@ -46,14 +48,15 @@ export function ValueEditor<TValue>({
         </ToggleButton>
       </div>
       {(isOverrideSynced || isEditOpen) && (
-        <div className="flex">
+        <div className="flex gap-4 pl-8">
           <OverrideEditor override={override} setOverride={setOverride} />
           <ToggleButton
+            size="small"
             value="check"
             selected={isOverrideSynced}
             onChange={() => setIsOverrideSynced(!isOverrideSynced)}
           >
-            <CheckIcon />
+            {isOverrideSynced ? "Disable" : "Enable"}
           </ToggleButton>
         </div>
       )}
