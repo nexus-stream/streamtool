@@ -35,7 +35,7 @@ export function useSyncableLocalState<TValue>(
         setLocalValue(backingValue ?? localValue);
         setBackingValue(backingValue ?? localValue);
       } else {
-        setLocalValue(backingValue);
+        setLocalValue(undefined);
         setBackingValue(undefined);
       }
     },

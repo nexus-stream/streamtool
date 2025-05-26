@@ -9,7 +9,7 @@ export function DefaultValueVisualizer<TValue>({
   label,
   value,
 }: ValueVisualizerProps<TValue>) {
-  if (typeof value !== "string") {
+  if (value && typeof value !== "string") {
     return <p>Default value visualizer only supports strings!</p>;
   }
 
@@ -17,7 +17,7 @@ export function DefaultValueVisualizer<TValue>({
     <TextField
       fullWidth
       label={label}
-      value={value}
+      value={value ?? "*empty*"}
       size="small"
       slotProps={{
         input: {

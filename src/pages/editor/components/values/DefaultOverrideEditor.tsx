@@ -2,11 +2,13 @@ import { TextField } from "@mui/material";
 import { useCallback } from "react";
 
 export interface OverrideEditorProps<TValue> {
+  label: string;
   override: TValue | undefined;
   setOverride: (value: TValue | undefined) => void;
 }
 
 export function DefaultOverrideEditor<TValue>({
+  label,
   override,
   setOverride,
 }: OverrideEditorProps<TValue>) {
@@ -27,7 +29,7 @@ export function DefaultOverrideEditor<TValue>({
       className="w-md"
       value={override ?? ""}
       size="small"
-      label="Override"
+      label={label}
       onChange={(event) => setTypedOverride(event.target.value)}
     />
   );

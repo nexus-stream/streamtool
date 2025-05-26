@@ -10,6 +10,7 @@ import {
 import { ToggleButton } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import { useSyncableLocalState } from "./useSyncableLocalState";
+import classNames from "classnames";
 
 interface Props<TValue> {
   label: string;
@@ -36,7 +37,9 @@ export function ValueEditor<TValue>({
 
   return (
     <div className="flex flex-col gap-2">
-      <div className="flex gap-4">
+      <div
+        className={classNames("flex gap-4", { "opacity-30": isOverrideSynced })}
+      >
         <ValueVisualizer label={label} value={value} />
         <ToggleButton
           size="small"
@@ -48,15 +51,23 @@ export function ValueEditor<TValue>({
         </ToggleButton>
       </div>
       {(isOverrideSynced || isEditOpen) && (
-        <div className="flex gap-4 pl-8">
-          <OverrideEditor override={override} setOverride={setOverride} />
+        <div
+          className={classNames("flex gap-4 pl-8", {
+            "opacity-50": !isOverrideSynced,
+          })}
+        >
+          <OverrideEditor
+            label={`${label} Override`}
+            override={override}
+            setOverride={setOverride}
+          />
           <ToggleButton
             size="small"
             value="check"
             selected={isOverrideSynced}
             onChange={() => setIsOverrideSynced(!isOverrideSynced)}
           >
-            {isOverrideSynced ? "Disable" : "Enable"}
+            {isOverrideSynced ? "Clear" : "Enable"}
           </ToggleButton>
         </div>
       )}
