@@ -2,8 +2,8 @@ import { createSelector } from "@reduxjs/toolkit";
 import { stageAdapter, stageRootSelector } from "./stageSlice";
 import { raceSelectors } from "../races/selectors";
 import { userSelectors } from "../users/selectors";
-import { DisplayRace } from "./types";
-import { buildDisplayRace } from "./displayRaceBuilder";
+import { DisplayRace } from "../display/types";
+import { buildDisplayRace } from "../display/buildDisplayRace";
 
 export const stageSelectors = stageAdapter.getSelectors(stageRootSelector);
 
@@ -36,22 +36,28 @@ const selectCurrentRace = createSelector(
   }
 );
 
-const selectCurrentRaceOverrides = createSelector(
+export const selectCurrentPatchedDisplayRace = createSelector(
   selectCurrentStage,
-  (stage) => {
-    return stage?.overrides;
-  }
-);
-
-export const selectCurrentDisplayRace = createSelector(
   selectCurrentRace,
-  selectCurrentRaceOverrides,
   userSelectors.selectEntities,
-  (race, overrides, userEntities): DisplayRace | undefined => {
-    if (!race || !overrides) {
+  (stage, race, userEntities): DisplayRace | undefined => {
+    if (!stage || !race) {
       return;
     }
 
-    return buildDisplayRace(race, overrides, userEntities);
+    const displayRace = buildDisplayRace(race, userEntities);
+    for (let i = 0; i < displayRace.participants.length; i++) {
+      if (stage.participantOverrides[displayRace.participants[i].user]) {
+        displayRace.participants[i] = {
+          ...displayRace.participants[i],
+          ...stage.participantOverrides[displayRace.participants[i].user],
+        };
+      }
+    }
+
+    return {
+      ...displayRace,
+      ...stage.raceOverrides,
+    };
   }
 );

@@ -3,8 +3,9 @@ import {
   createSlice,
   PayloadAction,
 } from "@reduxjs/toolkit";
-import { DisplayParticipant, RaceOverrides, Stage } from "./types";
+import { Stage } from "./types";
 import { RootState } from "../store";
+import { DisplayRace, DisplayParticipant } from "../display/types";
 
 export const stageAdapter = createEntityAdapter<Stage>();
 
@@ -25,31 +26,21 @@ const stageSlice = createSlice({
     },
     patchRaceOverrides(
       state,
-      action: PayloadAction<{ id: string; patch: Partial<RaceOverrides> }>
+      action: PayloadAction<{ id: string; patch: Partial<DisplayRace> }>
     ) {
       const stage = state.entities[action.payload.id];
       if (!stage) {
         return;
       }
-      stage.overrides = {
-        ...stage.overrides,
+      stage.raceOverrides = {
+        ...stage.raceOverrides,
         ...action.payload.patch,
       };
-    },
-    clearRaceOverrideFields(
-      state,
-      action: PayloadAction<{
-        id: string;
-        fields: Array<keyof RaceOverrides>;
-      }>
-    ) {
-      const stage = state.entities[action.payload.id];
-      if (!stage) {
-        return;
-      }
 
-      for (const field of action.payload.fields) {
-        delete stage.overrides[field];
+      for (const [key, value] of Object.entries(stage.raceOverrides)) {
+        if (value === undefined) {
+          delete stage.raceOverrides[key as keyof DisplayRace];
+        }
       }
     },
     patchRaceOverrideParticipant(
@@ -65,26 +56,19 @@ const stageSlice = createSlice({
         return;
       }
 
-      stage.overrides.participantOverrides[action.payload.user] = {
-        ...stage.overrides.participantOverrides[action.payload.user],
+      stage.participantOverrides[action.payload.user] = {
+        ...stage.participantOverrides[action.payload.user],
         ...action.payload.patch,
       };
-    },
-    clearRaceOverrideParticipantFields(
-      state,
-      action: PayloadAction<{
-        id: string;
-        user: string;
-        fields: Array<keyof DisplayParticipant>;
-      }>
-    ) {
-      const stage = state.entities[action.payload.id];
-      if (!stage) {
-        return;
-      }
 
-      for (const field of action.payload.fields) {
-        delete stage.overrides.participantOverrides[action.payload.user][field];
+      for (const [key, value] of Object.entries(
+        stage.participantOverrides[action.payload.user]
+      )) {
+        if (value === undefined) {
+          delete stage.participantOverrides[action.payload.user][
+            key as keyof DisplayParticipant
+          ];
+        }
       }
     },
   },
@@ -95,9 +79,7 @@ export const {
   upsertStage,
   removeStage,
   patchRaceOverrides,
-  clearRaceOverrideFields,
   patchRaceOverrideParticipant,
-  clearRaceOverrideParticipantFields,
 } = stageSlice.actions;
 export default stageSlice.reducer;
 

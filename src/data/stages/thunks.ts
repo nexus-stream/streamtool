@@ -14,9 +14,8 @@ export const createStageForRace = createAsyncThunk(
       id: uuidv4(),
       raceId,
       name,
-      overrides: {
-        participantOverrides: {},
-      },
+      raceOverrides: {},
+      participantOverrides: {},
     };
 
     dispatch(upsertStage(stage));

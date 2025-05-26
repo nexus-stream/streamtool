@@ -1,28 +1,4 @@
-import { RaceParticipantStatus, RaceStatus } from "../races/types";
-
-export interface DisplayParticipant {
-  user: string;
-  twitchUser: string;
-  displayName: string;
-  pronouns: string | null;
-  avatar: string | null;
-  status: RaceParticipantStatus;
-}
-
-export interface DisplayRace {
-  game: string;
-  category: string;
-  participants: DisplayParticipant[];
-  status: RaceStatus;
-  startTime: string | null;
-  endTime: string | null;
-}
-
-export interface RaceOverrides {
-  game?: string;
-  category?: string;
-  participantOverrides: { [user: string]: Partial<DisplayParticipant> };
-}
+import { DisplayRace, DisplayParticipant } from "../display/types";
 
 export interface Stage {
   // guid for internal purposes - lets multiple stages for the same
@@ -36,7 +12,8 @@ export interface Stage {
   name: string;
 
   // Manual overrides of the automatically updated data.
-  overrides: RaceOverrides;
+  raceOverrides: Partial<DisplayRace>;
+  participantOverrides: { [user: string]: Partial<DisplayParticipant> };
 }
 
 export interface StageWithPopulatedRace extends Stage {

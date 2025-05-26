@@ -1,12 +1,12 @@
 import { useParams, useSearchParams } from "react-router";
 import { FRAMES } from "./frames";
 import { useAppSelector } from "../../data/hooks";
-import { selectCurrentDisplayRace } from "../../data/stages/selectors";
+import { selectCurrentPatchedDisplayRace } from "../../data/stages/selectors";
 import { useMemo } from "react";
 import { errorFrame } from "./frames/error";
 
 export function BrowserSourcePage() {
-  const currentRace = useAppSelector(selectCurrentDisplayRace);
+  const currentRace = useAppSelector(selectCurrentPatchedDisplayRace);
   const { frame, params } = useFrameWithParsedParams();
 
   if (!currentRace) {

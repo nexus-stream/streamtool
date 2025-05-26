@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
-import { DisplayRace } from "../../data/stages/types";
 import { z } from "zod/v4";
+import { DisplayRace } from "../../data/display/types";
 
 // Frames package a functional component along with a Zod object representing the type of
 // additional props that should be sent to the frame along with the race information. We
