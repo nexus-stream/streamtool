@@ -12,4 +12,13 @@ export const DISPLAY_PARTICIPANT_FIELDS: {
   avatar: (_, profile) => profile.picture ?? null,
   status: (participant) => participant.status,
   finalTime: (participant) => participant.finalTime,
+  startTime: (participant) => {
+    if (!participant.liveData) {
+      return null;
+    }
+
+    return (
+      participant.liveData.splitStartedAt - participant.liveData.currentTime
+    );
+  },
 };

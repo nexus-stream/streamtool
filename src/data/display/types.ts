@@ -29,6 +29,7 @@ export interface DisplayParticipant {
   pronouns: string | null;
   avatar: string | null;
   status: RaceParticipantStatus;
+  startTime: number | null;
   finalTime: number | null;
 }
 
