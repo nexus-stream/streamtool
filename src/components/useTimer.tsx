@@ -21,12 +21,14 @@ export function useParticipantTime(
     return formatTimer(participant.finalTime);
   }
 
-  if (participant.startTime) {
-    return formatTimer(currentTime - participant.startTime);
-  }
+  if (participant.status === "started") {
+    if (participant.startTime) {
+      return formatTimer(currentTime - participant.startTime);
+    }
 
-  if (participant.status === "started" && race.startTime) {
-    return formatTimer(currentTime - new Date(race.startTime).getTime());
+    if (race.startTime) {
+      return formatTimer(currentTime - new Date(race.startTime).getTime());
+    }
   }
 
   return formatTimer(0);
