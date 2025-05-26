@@ -1,6 +1,9 @@
 import { useSelector } from "react-redux";
 import { useAppDispatch } from "../../../data/hooks";
-import { stageSelectors } from "../../../data/stages/selectors";
+import {
+  selectCurrentStageId,
+  stageSelectors,
+} from "../../../data/stages/selectors";
 import { List, ListItem, ListItemButton, ListItemText } from "@mui/material";
 import { setCurrentEditorStageId } from "../../../data/editor/editorSlice";
 import { selectCurrentEditorStage } from "../../../data/editor/selectors";
@@ -15,12 +18,13 @@ export function StageList() {
   const dispatch = useAppDispatch();
   const stages = useSelector(stageSelectors.selectAll);
   const currentEditorStage = useSelector(selectCurrentEditorStage);
+  const activeStageId = useSelector(selectCurrentStageId);
 
   useEffect(() => {
     if (!currentEditorStage) {
-      dispatch(setCurrentEditorStageId(stages[0]?.id));
+      dispatch(setCurrentEditorStageId(activeStageId));
     }
-  }, [currentEditorStage, dispatch, stages]);
+  }, [activeStageId, currentEditorStage, dispatch]);
 
   return (
     <div className="w-76 shrink-0 bg-neutral-800 rounded-md h-full pt-4 pb-4 overflow-y-auto ">

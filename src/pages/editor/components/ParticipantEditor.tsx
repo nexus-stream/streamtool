@@ -1,14 +1,10 @@
-import {
-  Accordion,
-  AccordionSummary,
-  Typography,
-  AccordionDetails,
-} from "@mui/material";
+import { Accordion, AccordionSummary, AccordionDetails } from "@mui/material";
 import { DisplayParticipant } from "../../../data/display/types";
 import { ParticipantValueEditor } from "./values/ParticipantValueEditor";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { ParticipantValueViewer } from "./values/ParticipantValueViewer";
 import { ParticipantTimerVisualizer } from "./values/ParticipantTimerVisualizer";
+import { ParticipantEditorSummary } from "./ParticipantEditorSummary";
 
 interface Props {
   stageId: string;
@@ -19,7 +15,7 @@ export function ParticipantEditor({ stageId, participant }: Props) {
   return (
     <Accordion key={participant.user}>
       <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-        <Typography component="span">{participant.user}</Typography>
+        <ParticipantEditorSummary participant={participant} stageId={stageId} />
       </AccordionSummary>
       <AccordionDetails className="flex flex-col gap-8">
         <ParticipantValueViewer
