@@ -1,4 +1,4 @@
-import { Race } from "../races/types";
+import { Race, RaceParticipantWithLiveData } from "../races/types";
 import { User } from "../users/types";
 import { DisplayParticipant, DisplayRace, RaceOverrides } from "./types";
 
@@ -22,11 +22,32 @@ export function buildDisplayRace(
           user: participant.user,
           twitchUser: participant.user,
           displayName: participant.user,
-          pronouns: profile.pronouns,
-          avatar: profile.picture,
+          pronouns: profile.pronouns ?? null,
+          avatar: profile.picture ?? null,
           status: participant.status,
           ...participantOverrides,
         };
       }) ?? [],
+  };
+}
+
+interface RaceDisplayField<TValue> {
+  getValue: (race: Race) => TValue;
+  override?: {
+    getOverride: (overrides: RaceOverrides) => TValue | undefined;
+    buildOverridePatch: (value: TValue | undefined) => Partial<RaceOverrides>;
+  };
+}
+
+interface ParticipantDisplayField<TValue> {
+  getValue: (
+    participant: RaceParticipantWithLiveData,
+    profile: Partial<User>
+  ) => TValue;
+  override?: {
+    getOverride: (overrides: DisplayParticipant) => TValue | undefined;
+    buildOverridePatch: (
+      value: TValue | undefined
+    ) => Partial<DisplayParticipant>;
   };
 }

@@ -4,8 +4,8 @@ export interface DisplayParticipant {
   user: string;
   twitchUser: string;
   displayName: string;
-  pronouns?: string;
-  avatar?: string;
+  pronouns: string | null;
+  avatar: string | null;
   status: RaceParticipantStatus;
 }
 
