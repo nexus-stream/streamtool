@@ -1,7 +1,6 @@
 - Build some frames that look good
   - Background
-  - Race timer
-  - Runner namecard
+  - Runner namecard + pronouns + timer + avatar
   - Runner stream
   - Game and category
   - Full single runner page

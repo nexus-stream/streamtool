@@ -1,12 +1,15 @@
 import { StageList } from "./components/StageList";
 import { StageEditor } from "./components/StageEditor";
+import { Page } from "../../components/Page";
 
 export function EditorPage() {
   return (
-    <div className="flex gap-4 h-full">
-      <StageList />
-      <StageEditor />
-    </div>
+    <Page>
+      <div className="flex gap-4 h-full">
+        <StageList />
+        <StageEditor />
+      </div>
+    </Page>
   );
 }
 

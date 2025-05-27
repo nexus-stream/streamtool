@@ -1,10 +1,7 @@
 import { z } from "zod/v4";
 import { buildFrameComponent } from "../frame";
-import { DisplayParticipant, DisplayRace } from "../../../data/display/types";
-import {
-  useDisplayRaceParticipantTimer,
-  useDisplayRaceTimer,
-} from "../../../data/display/displayTimerHooks";
+import { useDisplayRaceTimer } from "../../../data/display/displayTimerHooks";
+import { ParticipantNameplate } from "../components/ParticipantNameplate";
 
 const Params = z.object({
   enumType: z.enum(["first", "second", "third"]).default("first"),
@@ -26,7 +23,12 @@ export const debugFrame = buildFrameComponent(
         <p>{enumType}</p>
         {race.participants.map((participant) => {
           return (
-            <ParticipantTimer
+            // <ParticipantTimerWrapper
+            //   key={participant.user}
+            //   participant={participant}
+            //   race={race}
+            // />
+            <ParticipantNameplate
               key={participant.user}
               participant={participant}
               race={race}
@@ -38,20 +40,3 @@ export const debugFrame = buildFrameComponent(
     );
   }
 );
-
-// eslint-disable-next-line react-refresh/only-export-components
-function ParticipantTimer({
-  participant,
-  race,
-}: {
-  participant: DisplayParticipant;
-  race: DisplayRace;
-}) {
-  const time = useDisplayRaceParticipantTimer(participant, race);
-
-  return (
-    <p>
-      {participant.user}: {time}
-    </p>
-  );
-}

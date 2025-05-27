@@ -1,10 +1,14 @@
 import { FrameComponent } from "../frame";
+import { backgroundFrame } from "./background";
 import { debugFrame } from "./debug";
-import { nameFrame } from "./name";
-import { timerFrame } from "./timer";
+import { gameAndCategoryFrame } from "./gameAndCategory";
+import { participantNameplateFrame } from "./namePlate";
+import { participantStreamFrame } from "./stream";
 
 export const FRAMES: { [frameId: string]: FrameComponent } = {
-  participantName: nameFrame,
-  raceTimer: timerFrame,
+  gameAndCategory: gameAndCategoryFrame,
+  participantStream: participantStreamFrame,
+  participantNameplate: participantNameplateFrame,
+  background: backgroundFrame,
   debug: debugFrame,
 };

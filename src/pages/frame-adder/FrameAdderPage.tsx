@@ -13,6 +13,7 @@ import { FrameParamControls } from "./components/FrameParamControls";
 import { useSearchParams } from "react-router";
 import { OBSConnectionWrapper } from "./components/OBSConnectionWrapper";
 import { OBSInsertButton } from "./components/OBSInsertButton";
+import { Page } from "../../components/Page";
 
 // This page is loaded from a separate origin in production. All pages that communicate with
 // outside services like therun need to be hosted on https, while anything that needs to
@@ -45,49 +46,51 @@ export function FrameAdderPage() {
   );
 
   return (
-    <FormControl fullWidth className="flex flex-col gap-8">
-      <InputLabel id="frame-id-select-label">Frame</InputLabel>
-      <Select
-        labelId="frame-id-select-label"
-        id="frame-id-select"
-        value={frameId}
-        label="Frame"
-        onChange={onChange}
-      >
-        {Object.entries(FRAMES).map(([id, frame]) => (
-          <MenuItem key={id} value={id}>
-            {frame.displayProperties.displayName}
-          </MenuItem>
-        ))}
-      </Select>
-      {currentFrame && (
-        <>
-          <TextField
-            label="Name"
-            value={name}
-            onChange={(event) => setName(event.target.value)}
-          />
-          <FrameParamControls
-            schema={currentFrame.zodProps}
-            params={frameParams}
-            setParams={setFrameParams}
-          />
-          <Button variant="outlined" href={overlayUrl} target="_blank">
-            Preview Frame
-          </Button>
-
-          <OBSConnectionWrapper>
-            <OBSInsertButton
-              url={overlayUrl}
-              frameName={currentFrame.displayProperties.displayName}
-              name={name}
-              width={currentFrame.displayProperties.width}
-              height={currentFrame.displayProperties.height}
+    <Page>
+      <FormControl fullWidth className="flex flex-col gap-8">
+        <InputLabel id="frame-id-select-label">Frame</InputLabel>
+        <Select
+          labelId="frame-id-select-label"
+          id="frame-id-select"
+          value={frameId}
+          label="Frame"
+          onChange={onChange}
+        >
+          {Object.entries(FRAMES).map(([id, frame]) => (
+            <MenuItem key={id} value={id}>
+              {frame.displayProperties.displayName}
+            </MenuItem>
+          ))}
+        </Select>
+        {currentFrame && (
+          <>
+            <TextField
+              label="Name"
+              value={name}
+              onChange={(event) => setName(event.target.value)}
             />
-          </OBSConnectionWrapper>
-        </>
-      )}
-    </FormControl>
+            <FrameParamControls
+              schema={currentFrame.zodProps}
+              params={frameParams}
+              setParams={setFrameParams}
+            />
+            <Button variant="outlined" href={overlayUrl} target="_blank">
+              Preview Frame
+            </Button>
+
+            <OBSConnectionWrapper>
+              <OBSInsertButton
+                url={overlayUrl}
+                frameName={currentFrame.displayProperties.displayName}
+                name={name}
+                width={currentFrame.displayProperties.width}
+                height={currentFrame.displayProperties.height}
+              />
+            </OBSConnectionWrapper>
+          </>
+        )}
+      </FormControl>
+    </Page>
   );
 }
 
