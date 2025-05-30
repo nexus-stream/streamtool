@@ -9,7 +9,6 @@ import { RaceTimerVisualizer } from "./values/RaceTimerVisualizer";
 import { css } from "@emotion/react";
 import {
   fullHeight,
-  fullWidth,
   padded,
   roundedCorners,
   spacedFlex,
