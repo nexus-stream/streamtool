@@ -1,11 +1,14 @@
 import {
   Button,
   Card,
+  css,
   FormControl,
   FormHelperText,
   TextField,
 } from "@mui/material";
 import { useState } from "react";
+import { padded, spacedFlex } from "../../../components/primitives";
+import { COLORS } from "../../../style/theme";
 
 interface Props {
   initialPort: number;
@@ -24,8 +27,8 @@ export function OBSLoginForm({
   const [password, setPassword] = useState(initialPassword);
 
   return (
-    <Card className="p-8">
-      <FormControl fullWidth className="flex flex-col gap-8">
+    <Card>
+      <FormControl fullWidth css={containerStyle}>
         <h2>Log in to OBS Websocket Server</h2>
 
         <TextField
@@ -45,7 +48,7 @@ export function OBSLoginForm({
         {isError && (
           <FormHelperText>
             Login failed. Make sure{" "}
-            <a className="text-blue-500" href="/guide.png" target="_blank">
+            <a css={linkStyle} href="/guide.png" target="_blank">
               the WebSocket server is enabled
             </a>{" "}
             and try again.
@@ -64,3 +67,13 @@ export function OBSLoginForm({
     </Card>
   );
 }
+
+const containerStyle = css`
+  ${spacedFlex};
+  ${padded};
+  flex-direction: column;
+`;
+
+const linkStyle = css`
+  color: ${COLORS.link};
+`;

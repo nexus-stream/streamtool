@@ -6,6 +6,15 @@ import { RaceValueEditor } from "./values/RaceValueEditor";
 import { ParticipantEditor } from "./ParticipantEditor";
 import { RaceValueViewer } from "./values/RaceValueViewer";
 import { RaceTimerVisualizer } from "./values/RaceTimerVisualizer";
+import { css } from "@emotion/react";
+import {
+  fullHeight,
+  fullWidth,
+  padded,
+  roundedCorners,
+  spacedFlex,
+} from "../../../components/primitives";
+import { COLORS } from "../../../style/theme";
 
 export function StageEditor() {
   const currentEditorStage = useSelector(selectCurrentEditorStage);
@@ -21,7 +30,7 @@ export function StageEditorContent({ stage }: { stage: Stage }) {
   const participants = useDisplayRaceValue("participants", stage.id);
 
   return (
-    <div className="grow bg-neutral-800 rounded-md h-full overflow-y-scroll p-4 flex flex-col gap-8">
+    <div css={containerStyle}>
       <RaceValueViewer label="Race ID" param="raceId" stageId={stage.id} />
       <RaceValueEditor label="Game" param="game" stageId={stage.id} />
       <RaceValueEditor label="Category" param="category" stageId={stage.id} />
@@ -43,3 +52,14 @@ export function StageEditorContent({ stage }: { stage: Stage }) {
 export function EmptyStageEditor() {
   return null;
 }
+
+const containerStyle = css`
+  ${spacedFlex};
+  ${roundedCorners};
+  ${fullHeight};
+  ${padded};
+  flex-direction: column;
+  flex-grow: 1;
+  background-color: ${COLORS.bgLight};
+  overflow-y: scroll;
+`;

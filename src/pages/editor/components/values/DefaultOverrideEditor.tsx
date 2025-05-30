@@ -26,7 +26,6 @@ export function DefaultOverrideEditor<TValue>({
 
   return (
     <TextField
-      className="w-md"
       value={override ?? ""}
       size="small"
       label={label}

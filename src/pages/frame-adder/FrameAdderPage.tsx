@@ -6,6 +6,7 @@ import {
   MenuItem,
   TextField,
   Button,
+  css,
 } from "@mui/material";
 import { useCallback, useState } from "react";
 import { FRAMES } from "../browser-source/frames";
@@ -13,7 +14,8 @@ import { FrameParamControls } from "./components/FrameParamControls";
 import { useSearchParams } from "react-router";
 import { OBSConnectionWrapper } from "./components/OBSConnectionWrapper";
 import { OBSInsertButton } from "./components/OBSInsertButton";
-import { Page } from "../../components/Page";
+import { Page } from "../../components/Layout";
+import { spacedFlex } from "../../components/primitives";
 
 // This page is loaded from a separate origin in production. All pages that communicate with
 // outside services like therun need to be hosted on https, while anything that needs to
@@ -47,7 +49,7 @@ export function FrameAdderPage() {
 
   return (
     <Page>
-      <FormControl fullWidth className="flex flex-col gap-8">
+      <FormControl fullWidth css={containerStyle}>
         <InputLabel id="frame-id-select-label">Frame</InputLabel>
         <Select
           labelId="frame-id-select-label"
@@ -112,3 +114,8 @@ function buildOBSOverlayURL(
   }
   return url.toString();
 }
+
+const containerStyle = css`
+  ${spacedFlex};
+  flex-direction: column;
+`;

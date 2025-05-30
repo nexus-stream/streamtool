@@ -1,7 +1,48 @@
-- Build some frames that look good
-  - Background
-  - Runner namecard + pronouns + timer + avatar
-  - Runner stream
-  - Game and category
-  - Full single runner page
+- Add frame browser source resizer
+  - On SceneItemTransformChanged, SetInputSettings
+  - First use GetInputSettings to verify the origin of the url is for our frames
 - Add twitch integration
+
+
+- Build tailwind theme for frames
+- Reorganize directories
+- Add tailwind / import ordering lint
+- Add documentation
+- Add auto / manual reordering of participants
+- Add layouts to combine and place frames
+
+
+
+
+
+- Combine into a big styled layout
+  - Font: Teko Bold
+  - PB becomes final time when done
+- Hook up http wrapping frame and postMessage-based websocket communication
+- Way to set a focused player, with stable ordering
+- Nice fading transitions
+- Way to order stages so they're easy to switch between
+- Way to hold the current scene on the previous stage
+- Set up Discord connection to populate voice channel info
+- Seperate mode to queue VODs
+- Hook up to Tournament backend
+- Hook up to live backend
+
+"Freeze current scene stage"
+  send action
+  browser source pages listen for that and freeze the stage id if they're the current scene
+  If the current scene changes, unfreeze
+
+
+Results screen
+chatis.is2511.com
+reactive.fuji.tech
+
+
+Tournament mode - alternative mode
+
+Get video backgrounds
+Screenshots of layouts that you'd want
+
+DuplicateSceneItem
+SetSceneItemTransform

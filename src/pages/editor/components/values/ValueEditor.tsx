@@ -7,10 +7,12 @@ import {
   DefaultOverrideEditor,
   OverrideEditorProps,
 } from "./DefaultOverrideEditor";
-import { ToggleButton } from "@mui/material";
+import { css, ToggleButton } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import { useSyncableLocalState } from "./useSyncableLocalState";
 import classNames from "classnames";
+import { spacedFlex } from "../../../../components/primitives";
+import { spacing } from "../../../../style/theme";
 
 interface Props<TValue> {
   label: string;
@@ -36,9 +38,10 @@ export function ValueEditor<TValue>({
   const [isEditOpen, setIsEditOpen] = useState(false);
 
   return (
-    <div className="flex flex-col gap-2">
+    <div css={containerStyle}>
       <div
-        className={classNames("flex gap-4", { "opacity-30": isOverrideSynced })}
+        className={classNames({ deemphasized: isOverrideSynced })}
+        css={valueContainerStyle}
       >
         <ValueVisualizer label={label} value={value} />
         <ToggleButton
@@ -52,9 +55,8 @@ export function ValueEditor<TValue>({
       </div>
       {(isOverrideSynced || isEditOpen) && (
         <div
-          className={classNames("flex gap-4 pl-8", {
-            "opacity-70": !isOverrideSynced,
-          })}
+          className={classNames({ deemphasized: !isOverrideSynced })}
+          css={overrideContainerStyle}
         >
           <OverrideEditor
             label={`${label} Override`}
@@ -74,3 +76,25 @@ export function ValueEditor<TValue>({
     </div>
   );
 }
+
+const containerStyle = css`
+  ${spacedFlex};
+  flex-direction: column;
+`;
+
+const valueContainerStyle = css`
+  ${spacedFlex};
+
+  &.deemphasized {
+    opacity: 30%;
+  }
+`;
+
+const overrideContainerStyle = css`
+  ${spacedFlex};
+  padding-left: ${spacing(8)};
+
+  &.deemphasized {
+    opacity: 70%;
+  }
+`;

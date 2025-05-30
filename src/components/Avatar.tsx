@@ -1,5 +1,7 @@
-import classNames from "classnames";
 import AvatarFallback from "../assets/avatar-fallback.png";
+import { css } from "@emotion/react";
+import { spacing } from "../style/theme";
+import { roundedCorners } from "./primitives";
 
 interface Props {
   src: string | null | undefined;
@@ -9,12 +11,27 @@ interface Props {
 export function Avatar({ src, size }: Props) {
   return (
     <img
-      className={classNames("rounded-md", {
-        "w-8 h-8": size === "small",
-        "w-12 h-12": size === "medium",
-        "w-16 h-16": size === "large",
-      })}
+      css={[baseAvatarStyle, sizedAvatarStyles[size]]}
       src={src ?? AvatarFallback}
     />
   );
 }
+
+const baseAvatarStyle = css`
+  ${roundedCorners};
+`;
+
+const sizedAvatarStyles = {
+  small: css`
+    width: ${spacing(8)};
+    height: ${spacing(8)};
+  `,
+  medium: css`
+    width: ${spacing(12)};
+    height: ${spacing(12)};
+  `,
+  large: css`
+    width: ${spacing(16)};
+    height: ${spacing(16)};
+  `,
+};

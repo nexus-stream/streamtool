@@ -17,7 +17,6 @@
     "@mui/icons-material": "^7.1.0",
     "@mui/material": "^7.1.0",
     "@reduxjs/toolkit": "^2.7.0",
-    "@tailwindcss/vite": "^4.1.7",
     "@uidotdev/usehooks": "^2.4.1",
     "classnames": "^2.5.1",
     "obs-websocket-js": "^5.0.6",
@@ -27,7 +26,6 @@
     "react-router": "^7.5.2",
     "redux-persist": "^6.0.0",
     "redux-state-sync": "^3.1.4",
-    "tailwindcss": "^4.1.7",
     "unique-names-generator": "^4.7.1",
     "uuid": "^11.1.0",
     "zod": "^3.25.28"

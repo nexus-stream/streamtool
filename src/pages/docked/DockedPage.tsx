@@ -1,15 +1,14 @@
 import { LiveUpdateManager } from "../../data/live-update/LiveUpdateManager";
 import { Button } from "@mui/material";
 import { StageSelector } from "./components/StageSelector";
-import { Page } from "../../components/Page";
+import { ButtonBar, CenteredStack, Page } from "../../components/Layout";
 
 export function DockedPage() {
   return (
     <Page>
-      <div className="h-full w-full flex items-center justify-center flex-col">
+      <CenteredStack>
         <StageSelector />
-
-        <div className="flex justify-center gap-4 pt-4 flex-wrap">
+        <ButtonBar>
           <Button variant="outlined" href="/edit" target="_blank" size="small">
             Edit Stages
           </Button>
@@ -22,11 +21,11 @@ export function DockedPage() {
             Insert Frame
           </Button>
           {/* <Button variant="outlined" size="small">Connect</Button> */}
-        </div>
+        </ButtonBar>
 
         {/* Handles listening for race updates from therun.gg. Should only ever be running in one place. */}
         <LiveUpdateManager />
-      </div>
+      </CenteredStack>
     </Page>
   );
 }

@@ -4,12 +4,20 @@ import {
   selectCurrentStageId,
   stageSelectors,
 } from "../../../data/stages/selectors";
-import { List, ListItem, ListItemButton, ListItemText } from "@mui/material";
+import {
+  css,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemText,
+} from "@mui/material";
 import { setCurrentEditorStageId } from "../../../data/editor/editorSlice";
 import { selectCurrentEditorStage } from "../../../data/editor/selectors";
-import { ReactNode, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { StageDeleteModal } from "./StageDeleteModal";
 import { StageCreateModal } from "./StageCreateModal";
+import { COLORS, SIZES } from "../../../style/theme";
+import { fullHeight, roundedCorners } from "../../../components/primitives";
 
 export function StageList() {
   const [isCreating, setIsCreating] = useState(false);
@@ -27,8 +35,8 @@ export function StageList() {
   }, [activeStageId, currentEditorStage, dispatch]);
 
   return (
-    <div className="w-76 shrink-0 bg-neutral-800 rounded-md h-full pt-4 pb-4 overflow-y-auto ">
-      <List component={TestComponent}>
+    <div css={containerStyle}>
+      <List css={listStyle}>
         {stages.map((stage) => {
           return (
             <ListItem key={stage.id} disablePadding>
@@ -45,7 +53,7 @@ export function StageList() {
           );
         })}
 
-        <ListItem className="mt-auto" disablePadding>
+        <ListItem css={listControlsStyle} disablePadding>
           {currentEditorStage && (
             <ListItemButton
               component="a"
@@ -53,7 +61,7 @@ export function StageList() {
                 setIsDeleting(true);
               }}
             >
-              <ListItemText className="text-center" primary="Delete" />
+              <ListItemText css={listControlTextStyle} primary="Delete" />
             </ListItemButton>
           )}
           <ListItemButton
@@ -62,7 +70,7 @@ export function StageList() {
               setIsCreating(true);
             }}
           >
-            <ListItemText className="text-center" primary="Create" />
+            <ListItemText css={listControlTextStyle} primary="Create" />
           </ListItemButton>
         </ListItem>
       </List>
@@ -73,6 +81,25 @@ export function StageList() {
   );
 }
 
-function TestComponent({ children }: { children: ReactNode }) {
-  return <ul className="flex flex-col h-full">{children}</ul>;
-}
+const containerStyle = css`
+  ${fullHeight};
+  ${roundedCorners};
+  width: ${SIZES.lg};
+  flex-shrink: 0;
+  background-color: ${COLORS.bgLight};
+  overflow-y: auto;
+`;
+
+const listStyle = css`
+  ${fullHeight};
+  display: flex;
+  flex-direction: column;
+`;
+
+const listControlsStyle = css`
+  margin-top: auto;
+`;
+
+const listControlTextStyle = css`
+  text-align: center;
+`;
