@@ -4,7 +4,7 @@ import { Avatar } from "../../../components/Avatar";
 import { useParticipantOverrideState } from "../../../data/display/useParticipantOverrideState";
 import { useStageParticipantTimer } from "../../../data/display/displayTimerHooks";
 import { TitleBar } from "../../../components/Layout";
-import { COLORS, spacing } from "../../../style/theme";
+import { COLORS, size } from "../../../style/theme";
 
 interface Props {
   stageId: string;
@@ -34,5 +34,5 @@ export function ParticipantEditorSummary({ stageId, participant }: Props) {
 
 const smallTextStyle = css`
   color: ${COLORS.textDim};
-  font-size: ${spacing(3)};
+  font-size: ${size(3)};
 `;

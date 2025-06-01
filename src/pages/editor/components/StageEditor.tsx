@@ -7,12 +7,7 @@ import { ParticipantEditor } from "./ParticipantEditor";
 import { RaceValueViewer } from "./values/RaceValueViewer";
 import { RaceTimerVisualizer } from "./values/RaceTimerVisualizer";
 import { css } from "@emotion/react";
-import {
-  fullHeight,
-  padded,
-  roundedCorners,
-  spacedFlex,
-} from "../../../components/primitives";
+import { STYLES } from "../../../components/styles";
 import { COLORS } from "../../../style/theme";
 
 export function StageEditor() {
@@ -53,10 +48,10 @@ export function EmptyStageEditor() {
 }
 
 const containerStyle = css`
-  ${spacedFlex};
-  ${roundedCorners};
-  ${fullHeight};
-  ${padded};
+  ${STYLES.spacedFlex};
+  ${STYLES.roundedCorners};
+  ${STYLES.fullHeight};
+  ${STYLES.padded};
   flex-direction: column;
   flex-grow: 1;
   background-color: ${COLORS.bgLight};

@@ -15,7 +15,7 @@ import { useSearchParams } from "react-router";
 import { OBSConnectionWrapper } from "./components/OBSConnectionWrapper";
 import { OBSInsertButton } from "./components/OBSInsertButton";
 import { Page } from "../../components/Layout";
-import { spacedFlex } from "../../components/primitives";
+import { STYLES } from "../../components/styles";
 
 // This page is loaded from a separate origin in production. All pages that communicate with
 // outside services like therun need to be hosted on https, while anything that needs to
@@ -116,6 +116,6 @@ function buildOBSOverlayURL(
 }
 
 const containerStyle = css`
-  ${spacedFlex};
+  ${STYLES.spacedFlex};
   flex-direction: column;
 `;

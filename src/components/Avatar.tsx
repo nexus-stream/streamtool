@@ -1,7 +1,7 @@
 import AvatarFallback from "../assets/avatar-fallback.png";
 import { css } from "@emotion/react";
-import { spacing } from "../style/theme";
-import { roundedCorners } from "./primitives";
+import { size } from "../style/theme";
+import { STYLES } from "./styles";
 
 interface Props {
   src: string | null | undefined;
@@ -18,20 +18,20 @@ export function Avatar({ src, size }: Props) {
 }
 
 const baseAvatarStyle = css`
-  ${roundedCorners};
+  ${STYLES.roundedCorners};
 `;
 
 const sizedAvatarStyles = {
   small: css`
-    width: ${spacing(8)};
-    height: ${spacing(8)};
+    width: ${size(8)};
+    height: ${size(8)};
   `,
   medium: css`
-    width: ${spacing(12)};
-    height: ${spacing(12)};
+    width: ${size(12)};
+    height: ${size(12)};
   `,
   large: css`
-    width: ${spacing(16)};
-    height: ${spacing(16)};
+    width: ${size(16)};
+    height: ${size(16)};
   `,
 };

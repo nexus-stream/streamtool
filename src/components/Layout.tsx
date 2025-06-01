@@ -1,38 +1,38 @@
 import { styled } from "@mui/material";
-import { fullSize, padded, spacedFlex } from "./primitives";
+import { STYLES } from "./styles";
 
 export const Page = styled("div")`
-  ${fullSize};
-  ${spacedFlex};
-  ${padded};
+  ${STYLES.fullSize};
+  ${STYLES.spacedFlex};
+  ${STYLES.padded};
 `;
 
 export const HorizontalContent = styled("div")`
-  ${fullSize};
-  ${spacedFlex};
+  ${STYLES.fullSize};
+  ${STYLES.spacedFlex};
 `;
 
 export const VerticalContent = styled("div")`
-  ${fullSize};
-  ${spacedFlex};
+  ${STYLES.fullSize};
+  ${STYLES.spacedFlex};
   flex-direction: column;
 `;
 
 export const TitleBar = styled("div")`
-  ${spacedFlex};
+  ${STYLES.spacedFlex};
   align-items: center;
 `;
 
 export const CenteredStack = styled("div")`
-  ${fullSize};
-  ${spacedFlex};
+  ${STYLES.fullSize};
+  ${STYLES.spacedFlex};
   flex-direction: column;
   align-items: center;
   justify-content: center;
 `;
 
 export const ButtonBar = styled("div")`
-  ${spacedFlex};
+  ${STYLES.spacedFlex};
   justify-content: center;
   flex-wrap: wrap;
 `;

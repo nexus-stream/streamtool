@@ -31,6 +31,7 @@ export interface DisplayParticipant {
   status: RaceParticipantStatus;
   startTime: number | null;
   finalTime: number | null;
+  pb: string | null;
 }
 
 export type RaceDisplayFieldGetter<TValue> = (

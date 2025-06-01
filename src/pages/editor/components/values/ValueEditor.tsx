@@ -11,8 +11,8 @@ import { css, ToggleButton } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import { useSyncableLocalState } from "./useSyncableLocalState";
 import classNames from "classnames";
-import { spacedFlex } from "../../../../components/primitives";
-import { spacing } from "../../../../style/theme";
+import { STYLES } from "../../../../components/styles";
+import { size } from "../../../../style/theme";
 
 interface Props<TValue> {
   label: string;
@@ -78,12 +78,12 @@ export function ValueEditor<TValue>({
 }
 
 const containerStyle = css`
-  ${spacedFlex};
+  ${STYLES.spacedFlex};
   flex-direction: column;
 `;
 
 const valueContainerStyle = css`
-  ${spacedFlex};
+  ${STYLES.spacedFlex};
 
   &.deemphasized {
     opacity: 30%;
@@ -91,8 +91,8 @@ const valueContainerStyle = css`
 `;
 
 const overrideContainerStyle = css`
-  ${spacedFlex};
-  padding-left: ${spacing(8)};
+  ${STYLES.spacedFlex};
+  padding-left: ${size(8)};
 
   &.deemphasized {
     opacity: 70%;

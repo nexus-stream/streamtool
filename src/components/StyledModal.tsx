@@ -1,6 +1,6 @@
 import { Modal, Box, css, styled } from "@mui/material";
 import { ReactNode } from "react";
-import { COLORS, SIZES, spacing } from "../style/theme";
+import { COLORS, size, SIZES } from "../style/theme";
 
 interface Props {
   onClose: () => void;
@@ -18,8 +18,8 @@ export function StyledModal({ onClose, children }: Props) {
 export const ModalButtons = styled("div")`
   display: flex;
   justify-content: end;
-  padding-top: ${spacing(4)};
-  gap: ${spacing(2)};
+  padding-top: ${size(4)};
+  gap: ${size(2)};
 `;
 
 const modalContentsStyle = css`
@@ -33,5 +33,5 @@ const modalContentsStyle = css`
   border-color: ${COLORS.bg};
   box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
     0 4px 6px -2px rgba(0, 0, 0, 0.05); /* shadow-lg */
-  padding: ${spacing(4)};
+  padding: ${size(4)};
 `;

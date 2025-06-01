@@ -7,7 +7,7 @@ import {
   TextField,
 } from "@mui/material";
 import { useState } from "react";
-import { padded, spacedFlex } from "../../../components/primitives";
+import { STYLES } from "../../../components/styles";
 import { COLORS } from "../../../style/theme";
 
 interface Props {
@@ -69,8 +69,8 @@ export function OBSLoginForm({
 }
 
 const containerStyle = css`
-  ${spacedFlex};
-  ${padded};
+  ${STYLES.spacedFlex};
+  ${STYLES.padded};
   flex-direction: column;
 `;
 

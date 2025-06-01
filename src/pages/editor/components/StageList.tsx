@@ -17,7 +17,7 @@ import { useEffect, useState } from "react";
 import { StageDeleteModal } from "./StageDeleteModal";
 import { StageCreateModal } from "./StageCreateModal";
 import { COLORS, SIZES } from "../../../style/theme";
-import { fullHeight, roundedCorners } from "../../../components/primitives";
+import { STYLES } from "../../../components/styles";
 
 export function StageList() {
   const [isCreating, setIsCreating] = useState(false);
@@ -82,8 +82,8 @@ export function StageList() {
 }
 
 const containerStyle = css`
-  ${fullHeight};
-  ${roundedCorners};
+  ${STYLES.fullHeight};
+  ${STYLES.roundedCorners};
   width: ${SIZES.lg};
   flex-shrink: 0;
   background-color: ${COLORS.bgLight};
@@ -91,7 +91,7 @@ const containerStyle = css`
 `;
 
 const listStyle = css`
-  ${fullHeight};
+  ${STYLES.fullHeight};
   display: flex;
   flex-direction: column;
 `;

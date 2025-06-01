@@ -21,4 +21,5 @@ export const DISPLAY_PARTICIPANT_FIELDS: {
       participant.liveData.splitStartedAt - participant.liveData.currentTime
     );
   },
+  pb: (participant) => participant.pb || null,
 };

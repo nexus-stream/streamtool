@@ -1,7 +1,7 @@
-const BASE_SPACING = 0.25; // in rem units
+const BASE_SIZE = 0.25; // in rem units
 
-export function spacing(amt: number): string {
-  return `${amt * BASE_SPACING}rem`;
+export function size(amt: number): string {
+  return `${amt * BASE_SIZE}rem`;
 }
 
 export const COLORS = {
@@ -12,12 +12,22 @@ export const COLORS = {
   text: "#FFFFFF",
   textDim: "#A3A3A3",
 
-  link: "blue",
+  link: "#0074D9",
+
+  frameBlueDark: "#23536e",
+  frameBlueLight: "#478aae",
+
+  frameGrayDark: "#a09c9f",
+  frameGrayLight: "#babab9",
+
+  placeholder: "rgba(0, 0, 0, 0.5)",
 };
 
 export const SIZES = {
-  sm: `${48 * BASE_SPACING}rem`,
-  md: `${64 * BASE_SPACING}rem`,
-  lg: `${72 * BASE_SPACING}rem`,
-  xl: `${96 * BASE_SPACING}rem`,
+  sm: size(48),
+  md: size(64),
+  lg: size(72),
+  xl: size(96),
+
+  borderRadius: size(1.5),
 };
