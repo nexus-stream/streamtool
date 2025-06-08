@@ -4,6 +4,14 @@ import { STYLES } from "../../../components/styles";
 import { size } from "../../../style/theme";
 import { FRAME_STYLES } from "../components/styles";
 import { DisplayPlaceholder } from "../components/DisplayPlaceholder";
+import { Avatar } from "../../../components/Avatar";
+import { PersonalBest } from "../components/two-player/PersonalBest";
+import { Triangle } from "../components/two-player/Triangle";
+import { Nameplate } from "../components/two-player/Nameplate";
+import { ParticipantTimer } from "../components/ParticipantTimer";
+import { useDisplayRaceParticipantTimer } from "../../../data/display/displayTimerHooks";
+import { ParticipantAvatar } from "../components/two-player/ParticipantAvatar";
+import { TwoPlayerTimer } from "../components/two-player/Timer";
 
 export const twoPlayerSquareFrame = buildFrameComponent(
   {
@@ -12,11 +20,26 @@ export const twoPlayerSquareFrame = buildFrameComponent(
     height: 1080,
   },
   ({ race }) => {
+    const time = useDisplayRaceParticipantTimer(race.participants[0], race);
+
     return (
       <div css={containerStyle}>
         <div css={displayRowStyle}>
           <DisplayPlaceholder aspectRatio="full" />
           <DisplayPlaceholder aspectRatio="full" />
+        </div>
+        <div css={nameAndTimerRowStyle}>
+          <ParticipantAvatar participant={race.participants[0]} />
+          <PersonalBest pb={race.participants[0].pb} />
+          <Triangle kind="ulbr" />
+          <Nameplate participant={race.participants[0]} side="left" />
+
+          <TwoPlayerTimer race={race} />
+
+          <Nameplate participant={race.participants[1]} side="right" />
+          <Triangle kind="urbl" />
+          <PersonalBest pb={race.participants[1].pb} />
+          <ParticipantAvatar participant={race.participants[1]} />
         </div>
       </div>
     );
@@ -24,13 +47,26 @@ export const twoPlayerSquareFrame = buildFrameComponent(
 );
 
 const containerStyle = css`
-  ${STYLES.fullSize};
+  /* ${STYLES.fullSize}; */
+  width: 1920px;
+  height: 1080px;
   display: flex;
   flex-direction: column;
+
+  p {
+    font-size: ${size(6)};
+    margin: 0;
+  }
 `;
 
 const displayRowStyle = css`
   display: flex;
   gap: ${size(2)};
   ${FRAME_STYLES.gradientBkg.twoPlayer.blue};
+  padding-top: ${size(2)};
+`;
+
+const nameAndTimerRowStyle = css`
+  display: flex;
+  height: 84px;
 `;

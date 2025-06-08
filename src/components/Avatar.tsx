@@ -31,7 +31,7 @@ const sizedAvatarStyles = {
     height: ${size(12)};
   `,
   large: css`
-    width: ${size(16)};
-    height: ${size(16)};
+    width: ${size(20)};
+    height: ${size(20)};
   `,
 };

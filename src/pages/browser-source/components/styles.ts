@@ -8,9 +8,10 @@ export const FRAME_STYLES = {
         background-image: linear-gradient(
           90deg,
           ${COLORS.frameBlueLight} 10%,
-          ${COLORS.frameBlueDark} 50%,
+          transparent 50%,
           ${COLORS.frameBlueLight} 90%
         );
+        background-color: ${COLORS.frameBlueDark};
         background-attachment: fixed;
       `,
       gray: css`
