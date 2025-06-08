@@ -67,3 +67,20 @@ export function useOBSWebSocket(
 
   return result;
 }
+
+// connect
+// disconnect
+// addListener
+// call
+
+// message { channelId: string; messageId: string; op: ^; arguments: unknown[]; }
+// response { channelId: string; messageId: string; data: unknown; }
+// event { channelId: string; event: string; data: unknown; }
+
+// If dock, send to parent
+// else, send to neighbors
+// If dock, listen to neighbors and dispatch responses
+
+// OR
+
+// Host everything with http. Only use https in helper iframes that need it (therun / twitch communication)

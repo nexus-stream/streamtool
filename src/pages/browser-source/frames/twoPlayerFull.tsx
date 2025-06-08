@@ -4,12 +4,9 @@ import { STYLES } from "../../../components/styles";
 import { size } from "../../../style/theme";
 import { FRAME_STYLES } from "../components/styles";
 import { DisplayPlaceholder } from "../components/DisplayPlaceholder";
-import { Avatar } from "../../../components/Avatar";
 import { PersonalBest } from "../components/two-player/PersonalBest";
 import { Triangle } from "../components/two-player/Triangle";
 import { Nameplate } from "../components/two-player/Nameplate";
-import { ParticipantTimer } from "../components/ParticipantTimer";
-import { useDisplayRaceParticipantTimer } from "../../../data/display/displayTimerHooks";
 import { ParticipantAvatar } from "../components/two-player/ParticipantAvatar";
 import { TwoPlayerTimer } from "../components/two-player/Timer";
 
@@ -20,8 +17,6 @@ export const twoPlayerSquareFrame = buildFrameComponent(
     height: 1080,
   },
   ({ race }) => {
-    const time = useDisplayRaceParticipantTimer(race.participants[0], race);
-
     return (
       <div css={containerStyle}>
         <div css={displayRowStyle}>

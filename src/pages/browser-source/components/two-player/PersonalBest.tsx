@@ -1,6 +1,5 @@
 import { css } from "@emotion/react";
 import { FRAME_STYLES } from "../styles";
-import { formatTimer } from "../../../../data/display/displayTimerHooks";
 
 interface Props {
   pb: string | null;
@@ -12,7 +11,7 @@ export function PersonalBest({ pb }: Props) {
       {pb && (
         <>
           <p>Personal Best</p>
-          <p>{formatTimer(pb)}</p>
+          <p>{pb}</p>
         </>
       )}
     </div>
