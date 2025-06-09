@@ -12,12 +12,7 @@ export function DockedPage() {
           <Button variant="outlined" href="/edit" target="_blank" size="small">
             Edit Stages
           </Button>
-          <Button
-            variant="outlined"
-            href={getFrameHref()}
-            target="_blank"
-            size="small"
-          >
+          <Button variant="outlined" href="/frame" target="_blank" size="small">
             Insert Frame
           </Button>
           {/* <Button variant="outlined" size="small">Connect</Button> */}
@@ -28,14 +23,4 @@ export function DockedPage() {
       </CenteredStack>
     </Page>
   );
-}
-
-function getFrameHref() {
-  const httpOverrideOrigin = import.meta.env.VITE_HTTP_PROXY_MIRROR_ORIGIN;
-
-  if (httpOverrideOrigin) {
-    return `${httpOverrideOrigin}/frame?origin=${window.location.origin}`;
-  }
-
-  return "/frame";
 }

@@ -1,34 +1,49 @@
+- Build "connect" button / screen
+- Make "add frames" open with a keyboard shortcut and remove button
+- Add stage reordering + next / last buttons
+- Add order changer
+- Add frame resizer
+- Add customizable text frame (plus one for participant text)
+- Add pretty transitions
+- Add twitch integration through advanced scene manager
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+------------------------
+
+- Replace frame inserter button with "Connect"
+  - Make frame inserter use a keyboard shortcut to open
 - Add frame browser source resizer
   - On SceneItemTransformChanged, SetInputSettings
   - First use GetInputSettings to verify the origin of the url is for our frames
-- Add twitch integration
-
-
-- Build tailwind theme for frames
-- Reorganize directories
-- Add tailwind / import ordering lint
-- Add documentation
-- Add auto / manual reordering of participants
-- Add layouts to combine and place frames
-
-
-
-
-- Build a theme for frames to use
-- Hook up http wrapping frame and postMessage-based websocket communication
 - Way to set a focused player, with stable ordering
 - Nice fading transitions
+- Move stream sources rather than updating the url
+- Add twitch integration
 - Way to order stages so they're easy to switch between
 - Way to hold the current scene on the previous stage
-------------
-- Set up Discord connection to populate voice channel info
-- Seperate mode to queue VODs
+
+- Separate mode to queue VODs
 - Hook up to Tournament backend
 - Hook up to live backend
-------------
-- Combine into a big styled layout
-  - Font: Teko Bold
-  - PB becomes final time when done
+
+-----------
 
 "Freeze current scene stage"
   send action
@@ -36,15 +51,8 @@
   If the current scene changes, unfreeze
 
 
-Results screen
-chatis.is2511.com
-reactive.fuji.tech
-
-
-Tournament mode - alternative mode
-
-Get video backgrounds
-Screenshots of layouts that you'd want
-
 DuplicateSceneItem
 SetSceneItemTransform
+
+-------------
+
