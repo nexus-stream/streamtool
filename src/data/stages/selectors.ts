@@ -66,7 +66,7 @@ export const selectCurrentPatchedDisplayRace = createSelector(
     const displayRace = buildDisplayRace(race, userEntities);
     displayRace.participants = orderParticipants(
       displayRace.participants,
-      stage.participantOrder
+      stage.participantOrder ?? []
     );
     for (let i = 0; i < displayRace.participants.length; i++) {
       if (stage.participantOverrides[displayRace.participants[i].user]) {

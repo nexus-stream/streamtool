@@ -109,6 +109,7 @@ export const {
   upsertStage,
   removeStage,
   shiftStageIndex,
+  setParticipantOrder,
   patchRaceOverrides,
   patchRaceOverrideParticipant,
 } = stageSlice.actions;

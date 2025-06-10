@@ -6,6 +6,7 @@ import { ObsWebSocketProvider } from "../../data/obs/ObsWebSocketProvider";
 import { useHotkeys } from "react-hotkeys-hook";
 import { ConnectButton } from "./components/ConnectButton";
 import { NextStageButton } from "./components/NextStageButton";
+import { ParticipantOrder } from "./components/ParticipantOrder";
 
 export function DockedPage() {
   useHotkeys(
@@ -33,6 +34,7 @@ export function DockedPage() {
             </Button>
             <NextStageButton />
           </ButtonBar>
+          <ParticipantOrder />
 
           {/* Handles listening for race updates from therun.gg. Should only ever be running in one place. */}
           <LiveUpdateManager />
