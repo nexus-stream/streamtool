@@ -49,6 +49,10 @@
     "vite": "^6.2.0"
   },
   "overrides": {
-    "redux": "^5.0.0"
+    "redux": "^5.0.0",
+    "@ataverascrespo/react18-ts-textfit": {
+      "react": "$react",
+      "react-dom": "$react-dom"
+    }
   }
 }
