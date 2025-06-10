@@ -15,6 +15,7 @@ interface DisplayProperties {
   displayName: string;
   width: number;
   height: number;
+  autoResize?: boolean;
 }
 
 export type FrameComponent<

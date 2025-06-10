@@ -11,6 +11,7 @@ export const participantNameplateFrame = buildFrameComponent(
     displayName: "Participant Nameplate",
     width: 320,
     height: 100,
+    autoResize: true,
   },
   Params,
   ({ race, participantPosition }) => {

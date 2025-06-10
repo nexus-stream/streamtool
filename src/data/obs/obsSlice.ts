@@ -40,8 +40,6 @@ export const loginToObs = createAsyncThunk(
   ) => {
     const loginTime = Date.now();
 
-    console.log("A");
-
     dispatch(
       obsSlice.actions.updateObsCredentials({ port, password, loginTime })
     );

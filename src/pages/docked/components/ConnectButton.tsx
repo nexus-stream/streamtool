@@ -1,9 +1,20 @@
 import { Button, css } from "@mui/material";
 import { useOBSWebsocketWithStatus } from "../../../data/obs/ObsWebSocketContext";
 import { STYLES } from "../../../components/styles";
+import { useAppDispatch } from "../../../data/hooks";
+import { useCallback } from "react";
+import { loginToObs } from "../../../data/obs/obsSlice";
+import { useSelector } from "react-redux";
+import { selectObsCredentials } from "../../../data/obs/selectors";
 
 export function ConnectButton() {
+  const dispatch = useAppDispatch();
   const { status } = useOBSWebsocketWithStatus();
+  const currentCredentials = useSelector(selectObsCredentials);
+
+  const onClick = useCallback(() => {
+    dispatch(loginToObs(currentCredentials));
+  }, [currentCredentials, dispatch]);
 
   switch (status) {
     case "idle":
@@ -15,6 +26,7 @@ export function ConnectButton() {
           href="/connect"
           target="_blank"
           size="small"
+          onClick={onClick}
         >
           Connect to OBS
         </Button>

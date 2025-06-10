@@ -1,5 +1,5 @@
 import { ReactNode, useEffect, useState } from "react";
-import OBSWebSocket from "obs-websocket-js";
+import OBSWebSocket, { EventSubscription } from "obs-websocket-js";
 import {
   OBSWebSocketWithStatus,
   ObsWebSocketContext,
@@ -18,14 +18,15 @@ export function ObsWebSocketProvider({ children }: Props) {
   });
 
   useEffect(() => {
-    console.log("EFFECT RUNNING");
     const socket = new OBSWebSocket();
     let isCurrentRun = true;
     setResult({ status: "connecting" });
 
     const connect = async () => {
       const result = await socket
-        .connect(`ws://127.0.0.1:${port}`, password)
+        .connect(`ws://127.0.0.1:${port}`, password, {
+          eventSubscriptions: EventSubscription.SceneItemTransformChanged,
+        })
         .then(() => true)
         .catch(() => false);
 

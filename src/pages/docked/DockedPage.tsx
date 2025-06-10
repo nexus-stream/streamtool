@@ -7,6 +7,7 @@ import { useHotkeys } from "react-hotkeys-hook";
 import { ConnectButton } from "./components/ConnectButton";
 import { NextStageButton } from "./components/NextStageButton";
 import { ParticipantOrder } from "./components/ParticipantOrder";
+import { FrameAutoResizer } from "./components/FrameAutoResizer";
 
 export function DockedPage() {
   useHotkeys(
@@ -38,6 +39,10 @@ export function DockedPage() {
 
           {/* Handles listening for race updates from therun.gg. Should only ever be running in one place. */}
           <LiveUpdateManager />
+
+          {/* Handles auto resizing the browser source of frames that have opted into that behavior. Should only
+          ever be running in one place. */}
+          <FrameAutoResizer />
         </CenteredStack>
       </Page>
     </ObsWebSocketProvider>
