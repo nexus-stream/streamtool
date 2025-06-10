@@ -5,6 +5,7 @@ import { ButtonBar, CenteredStack, Page } from "../../components/Layout";
 import { ObsWebSocketProvider } from "../../data/obs/ObsWebSocketProvider";
 import { useHotkeys } from "react-hotkeys-hook";
 import { ConnectButton } from "./components/ConnectButton";
+import { NextStageButton } from "./components/NextStageButton";
 
 export function DockedPage() {
   useHotkeys(
@@ -19,9 +20,9 @@ export function DockedPage() {
     <ObsWebSocketProvider>
       <Page>
         <CenteredStack>
+          <ConnectButton />
           <StageSelector />
           <ButtonBar>
-            <ConnectButton />
             <Button
               variant="outlined"
               href="/edit"
@@ -30,6 +31,7 @@ export function DockedPage() {
             >
               Edit
             </Button>
+            <NextStageButton />
           </ButtonBar>
 
           {/* Handles listening for race updates from therun.gg. Should only ever be running in one place. */}

@@ -32,6 +32,7 @@ export const CenteredStack = styled("div")`
 `;
 
 export const ButtonBar = styled("div")`
+  ${STYLES.fullWidth};
   ${STYLES.spacedFlex};
   justify-content: center;
   flex-wrap: wrap;
