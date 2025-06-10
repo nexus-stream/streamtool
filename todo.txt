@@ -1,5 +1,3 @@
-- Build "connect" button / screen
-- Make "add frames" open with a keyboard shortcut and remove button
 - Add stage reordering + next / last buttons
 - Add order changer
 - Add frame resizer
