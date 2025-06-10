@@ -1,24 +1,56 @@
 import { css } from "@emotion/react";
-import { ReactNode } from "react";
 import { Textfit } from "@ataverascrespo/react18-ts-textfit";
 import { STYLES } from "./styles";
+import classNames from "classnames";
+import { useHoldValue } from "./useHoldValue";
 
-interface Props {
+interface BaseProps {
   style?: "sans-serif" | "monospace";
   fontSize: number;
-  children: ReactNode;
+  text: string;
+  // Can manually control transition
+  isFading?: boolean;
 }
 
-export function FrameTypography({
+interface Props extends BaseProps {
+  skipTransition?: boolean;
+}
+
+export function FrameTypography({ skipTransition, ...baseProps }: Props) {
+  if (skipTransition) {
+    return <FrameTypographyBase {...baseProps} />;
+  } else {
+    return <FrameTypographyWithTransition {...baseProps} />;
+  }
+}
+
+export function FrameTypographyWithTransition({
+  text,
+  ...restProps
+}: BaseProps) {
+  // move outside so this doesn't get used for timers
+  const [displayText, isFading] = useHoldValue(text, 500);
+
+  return (
+    <FrameTypographyBase
+      {...restProps}
+      isFading={isFading}
+      text={displayText}
+    />
+  );
+}
+
+export function FrameTypographyBase({
   style = "sans-serif",
   fontSize,
-  children,
-}: Props) {
+  text,
+  isFading,
+}: BaseProps) {
   return (
-    <div css={containerStyle}>
+    <div className={classNames({ fading: isFading })} css={containerStyle}>
       <div css={textStyles[style]}>
         <Textfit mode="single" max={fontSize}>
-          {children}
+          {text}
         </Textfit>
       </div>
     </div>
@@ -29,6 +61,12 @@ const containerStyle = css`
   display: flex;
   align-items: center;
   ${STYLES.fullHeight};
+  transition: opacity 500ms ease-in-out;
+  opacity: 1;
+
+  &.fading {
+    opacity: 0;
+  }
 `;
 
 const baseStyle = css`

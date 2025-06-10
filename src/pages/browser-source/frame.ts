@@ -27,6 +27,7 @@ export type FrameComponent<
   zodProps: z.ZodObject<TZodType>;
   fc: (
     props: {
+      stageId: string;
       race: DisplayRace;
     } & object
   ) => ReactNode;
@@ -38,13 +39,15 @@ export function buildFrameComponent<
   displayProperties: DisplayProperties,
   zodProps: z.ZodObject<TZodType>,
   fc: (
-    props: { race: DisplayRace } & z.infer<z.ZodObject<TZodType>>
+    props: { stageId: string; race: DisplayRace } & z.infer<
+      z.ZodObject<TZodType>
+    >
   ) => ReactNode
 ): FrameComponent<TZodType>;
 
 export function buildFrameComponent(
   displayProperties: DisplayProperties,
-  fc: (props: { race: DisplayRace }) => ReactNode
+  fc: (props: { stageId: string; race: DisplayRace }) => ReactNode
 ): FrameComponent;
 
 export function buildFrameComponent(

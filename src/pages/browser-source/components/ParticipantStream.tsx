@@ -1,13 +1,12 @@
 import { css } from "@emotion/react";
 import { STYLES } from "../../../components/styles";
-import { DisplayParticipant } from "../../../data/display/types";
 
 interface Props {
-  participant: DisplayParticipant;
+  twitchUser: string;
 }
 
-export function ParticipantStream({ participant }: Props) {
-  const embed = buildTwitchEmbedLink(participant.twitchUser);
+export function ParticipantStream({ twitchUser }: Props) {
+  const embed = buildTwitchEmbedLink(twitchUser);
 
   return (
     <div css={STYLES.fullSize}>

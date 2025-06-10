@@ -1,6 +1,10 @@
 import { z } from "zod/v4";
 import { buildFrameComponent } from "../frame";
 import { ParticipantStream } from "../components/ParticipantStream";
+import { useHoldValue } from "../../../components/useHoldValue";
+import { css } from "@emotion/react";
+import { STYLES } from "../../../components/styles";
+import classNames from "classnames";
 
 const Params = z.object({
   participantPosition: z.coerce.number().default(1),
@@ -16,10 +20,32 @@ export const participantStreamFrame = buildFrameComponent(
   ({ race, participantPosition }) => {
     const participant = race.participants[participantPosition - 1];
 
+    const [twitchUser, isTransition] = useHoldValue(
+      participant?.twitchUser,
+      500
+    );
+
     if (!participant) {
       return null;
     }
 
-    return <ParticipantStream participant={participant} />;
+    return (
+      <div
+        className={classNames({ fading: isTransition })}
+        css={containerStyle}
+      >
+        <ParticipantStream twitchUser={twitchUser} />
+      </div>
+    );
   }
 );
+
+const containerStyle = css`
+  ${STYLES.fullSize};
+  transition: opacity 500ms ease-in-out;
+  opacity: 1;
+
+  &.fading {
+    opacity: 0;
+  }
+`;
