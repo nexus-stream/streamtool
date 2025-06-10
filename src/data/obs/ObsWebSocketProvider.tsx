@@ -1,39 +1,24 @@
+import { ReactNode, useEffect, useState } from "react";
 import OBSWebSocket from "obs-websocket-js";
-import { useEffect, useState } from "react";
+import {
+  OBSWebSocketWithStatus,
+  ObsWebSocketContext,
+} from "./ObsWebSocketContext";
+import { useSelector } from "react-redux";
+import { selectObsCredentials } from "./selectors";
 
-interface Idle {
-  status: "idle";
+interface Props {
+  children: ReactNode;
 }
 
-interface Connected {
-  status: "connected";
-  socket: OBSWebSocket;
-}
-
-interface LoginFailed {
-  status: "login-failed";
-}
-
-interface Connecting {
-  status: "connecting";
-}
-
-export type OBSWebSocketWithStatus =
-  | Idle
-  | Connected
-  | LoginFailed
-  | Connecting;
-
-export function useOBSWebSocket(
-  port: number,
-  password: string,
-  loginAttemptCount: number
-): OBSWebSocketWithStatus {
+export function ObsWebSocketProvider({ children }: Props) {
+  const { port, password, loginTime } = useSelector(selectObsCredentials);
   const [result, setResult] = useState<OBSWebSocketWithStatus>({
     status: "idle",
   });
 
   useEffect(() => {
+    console.log("EFFECT RUNNING");
     const socket = new OBSWebSocket();
     let isCurrentRun = true;
     setResult({ status: "connecting" });
@@ -63,7 +48,11 @@ export function useOBSWebSocket(
       socket.disconnect();
       isCurrentRun = false;
     };
-  }, [port, password, loginAttemptCount]);
+  }, [port, password, loginTime]);
 
-  return result;
+  return (
+    <ObsWebSocketContext.Provider value={result}>
+      {children}
+    </ObsWebSocketContext.Provider>
+  );
 }

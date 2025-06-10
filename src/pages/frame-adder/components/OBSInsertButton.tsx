@@ -1,7 +1,7 @@
 import { Button } from "@mui/material";
-import { useOBSWebsocket } from "./OBSWebSocketContext";
 import { useCallback } from "react";
 import { uniqueNamesGenerator, animals } from "unique-names-generator";
+import { useOBSWebsocket } from "../../../data/obs/ObsWebSocketContext";
 
 interface Props {
   url: string;

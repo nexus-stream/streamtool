@@ -2,6 +2,7 @@ import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import stageReducer from "./stages/stageSlice";
 import raceReducer from "./races/raceSlice";
 import userReducer from "./users/userSlice";
+import obsReducer from "./obs/obsSlice";
 import editorReducer from "./editor/editorSlice";
 import {
   createStateSyncMiddleware,
@@ -14,6 +15,7 @@ const rootReducer = combineReducers({
   stages: stageReducer,
   races: raceReducer,
   users: userReducer,
+  obs: obsReducer,
   editor: editorReducer,
 });
 

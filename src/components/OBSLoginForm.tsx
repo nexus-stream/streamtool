@@ -7,14 +7,14 @@ import {
   TextField,
 } from "@mui/material";
 import { useState } from "react";
-import { STYLES } from "../../../components/styles";
-import { COLORS } from "../../../style/theme";
+import { STYLES } from "./styles";
+import { COLORS } from "../style/theme";
 
 interface Props {
-  initialPort: number;
+  initialPort: string;
   initialPassword: string;
   isError: boolean;
-  onSubmit: (data: { port: number; password: string }) => void;
+  onSubmit: (data: { port: string; password: string }) => void;
 }
 
 export function OBSLoginForm({
@@ -35,7 +35,7 @@ export function OBSLoginForm({
           type="number"
           label="Port"
           value={port}
-          onChange={(event) => setPort(parseInt(event.target.value))}
+          onChange={(event) => setPort(event.target.value)}
         />
 
         <TextField

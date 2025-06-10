@@ -15,6 +15,7 @@ import { OBSConnectionWrapper } from "./components/OBSConnectionWrapper";
 import { OBSInsertButton } from "./components/OBSInsertButton";
 import { Page } from "../../components/Layout";
 import { STYLES } from "../../components/styles";
+import { ObsWebSocketProvider } from "../../data/obs/ObsWebSocketProvider";
 
 export function FrameAdderPage() {
   const [frameId, setFrameId] = useState("");
@@ -36,51 +37,53 @@ export function FrameAdderPage() {
   const overlayUrl = buildOBSOverlayURL(frameId, frameParams);
 
   return (
-    <Page>
-      <FormControl fullWidth css={containerStyle}>
-        <InputLabel id="frame-id-select-label">Frame</InputLabel>
-        <Select
-          labelId="frame-id-select-label"
-          id="frame-id-select"
-          value={frameId}
-          label="Frame"
-          onChange={onChange}
-        >
-          {Object.entries(FRAMES).map(([id, frame]) => (
-            <MenuItem key={id} value={id}>
-              {frame.displayProperties.displayName}
-            </MenuItem>
-          ))}
-        </Select>
-        {currentFrame && (
-          <>
-            <TextField
-              label="Name"
-              value={name}
-              onChange={(event) => setName(event.target.value)}
-            />
-            <FrameParamControls
-              schema={currentFrame.zodProps}
-              params={frameParams}
-              setParams={setFrameParams}
-            />
-            <Button variant="outlined" href={overlayUrl} target="_blank">
-              Preview Frame
-            </Button>
-
-            <OBSConnectionWrapper>
-              <OBSInsertButton
-                url={overlayUrl}
-                frameName={currentFrame.displayProperties.displayName}
-                name={name}
-                width={currentFrame.displayProperties.width}
-                height={currentFrame.displayProperties.height}
+    <ObsWebSocketProvider>
+      <Page>
+        <FormControl fullWidth css={containerStyle}>
+          <InputLabel id="frame-id-select-label">Frame</InputLabel>
+          <Select
+            labelId="frame-id-select-label"
+            id="frame-id-select"
+            value={frameId}
+            label="Frame"
+            onChange={onChange}
+          >
+            {Object.entries(FRAMES).map(([id, frame]) => (
+              <MenuItem key={id} value={id}>
+                {frame.displayProperties.displayName}
+              </MenuItem>
+            ))}
+          </Select>
+          {currentFrame && (
+            <>
+              <TextField
+                label="Name"
+                value={name}
+                onChange={(event) => setName(event.target.value)}
               />
-            </OBSConnectionWrapper>
-          </>
-        )}
-      </FormControl>
-    </Page>
+              <FrameParamControls
+                schema={currentFrame.zodProps}
+                params={frameParams}
+                setParams={setFrameParams}
+              />
+              <Button variant="outlined" href={overlayUrl} target="_blank">
+                Preview Frame
+              </Button>
+
+              <OBSConnectionWrapper>
+                <OBSInsertButton
+                  url={overlayUrl}
+                  frameName={currentFrame.displayProperties.displayName}
+                  name={name}
+                  width={currentFrame.displayProperties.width}
+                  height={currentFrame.displayProperties.height}
+                />
+              </OBSConnectionWrapper>
+            </>
+          )}
+        </FormControl>
+      </Page>
+    </ObsWebSocketProvider>
   );
 }
 

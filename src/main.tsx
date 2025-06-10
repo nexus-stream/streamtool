@@ -25,6 +25,7 @@ import "@fontsource/roboto-mono/300.css";
 import "@fontsource/roboto-mono/400.css";
 import "@fontsource/roboto-mono/500.css";
 import "@fontsource/roboto-mono/700.css";
+import { ObsConnectPage } from "./pages/obs-connect/ObsConnectPage";
 
 const darkTheme = createTheme({
   palette: {
@@ -43,6 +44,7 @@ createRoot(document.getElementById("root")!).render(
             <BrowserRouter>
               <Routes>
                 <Route path="/" element={<DockedPage />} />
+                <Route path="/connect" element={<ObsConnectPage />} />
                 <Route path="/edit" element={<EditorPage />} />
                 <Route path="/frame" element={<FrameAdderPage />} />
                 <Route path="/frame/:frameId" element={<BrowserSourcePage />} />

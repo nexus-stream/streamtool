@@ -1,41 +1,20 @@
-import { ReactNode, useState } from "react";
-import { useLocalStorage } from "@uidotdev/usehooks";
-import { OBSWebSocketContext } from "./OBSWebSocketContext";
-import { OBSLoginForm } from "./OBSLoginForm";
-import { useOBSWebSocket } from "./useObsWebSocket";
+import { ReactNode } from "react";
+import { useOBSWebsocketWithStatus } from "../../../data/obs/ObsWebSocketContext";
 
 interface Props {
   children: ReactNode;
 }
 
 export function OBSConnectionWrapper({ children }: Props) {
-  const [port, setPort] = useLocalStorage("obs-port", 4455);
-  const [password, setPassword] = useLocalStorage("obs-password", "");
-  const [loginAttemptCount, setLoginAttemptCount] = useState(0);
-  const socketAndStatus = useOBSWebSocket(port, password, loginAttemptCount);
+  const { status } = useOBSWebsocketWithStatus();
 
-  switch (socketAndStatus.status) {
+  switch (status) {
     case "connected":
-      return (
-        <OBSWebSocketContext.Provider value={socketAndStatus.socket}>
-          {children}
-        </OBSWebSocketContext.Provider>
-      );
+      return children;
     case "idle":
     case "login-failed":
-      return (
-        <OBSLoginForm
-          initialPort={port}
-          initialPassword={password}
-          isError={socketAndStatus.status === "login-failed"}
-          onSubmit={({ port, password }) => {
-            setPort(port);
-            setPassword(password);
-            setLoginAttemptCount((old) => old + 1);
-          }}
-        />
-      );
+      return <p>You need to connect to OBS to use this.</p>;
     case "connecting":
-      return <p>Connecting...</p>;
+      return null;
   }
 }

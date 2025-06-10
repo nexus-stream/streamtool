@@ -1,3 +1,5 @@
+import { css } from "@emotion/react";
+import { STYLES } from "../../../components/styles";
 import { DisplayParticipant } from "../../../data/display/types";
 
 interface Props {
@@ -8,8 +10,8 @@ export function ParticipantStream({ participant }: Props) {
   const embed = buildTwitchEmbedLink(participant.twitchUser);
 
   return (
-    <div className="w-full h-full bg-black">
-      <iframe className="w-full h-full" src={embed} />
+    <div css={STYLES.fullSize}>
+      <iframe css={iframeStyle} src={embed} />
     </div>
   );
 }
@@ -30,3 +32,9 @@ function buildTwitchEmbedLink(twitchUser: string) {
 
   return url.toString();
 }
+
+const iframeStyle = css`
+  ${STYLES.fullSize};
+  display: block;
+  border: none;
+`;
