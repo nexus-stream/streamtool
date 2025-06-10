@@ -29,7 +29,11 @@ export const participantTextFrame = buildFrameComponent(
       case "displayName":
       case "pronouns":
         return (
-          <FrameTypography fontSize={fontSize} text={participant[kind] ?? ""} />
+          <FrameTypography
+            fontSize={fontSize}
+            text={participant[kind] ?? ""}
+            transitionHoldKey={`${race.raceId}:${participant.user}`}
+          />
         );
       case "time":
         return (
@@ -60,7 +64,7 @@ function ParticipantTextTimer({
       style="monospace"
       fontSize={fontSize}
       text={time}
-      skipTransition
+      transitionHoldKey={`${race.raceId}:${participant.user}`}
     />
   );
 }

@@ -21,7 +21,13 @@ export const raceTextFrame = buildFrameComponent(
     switch (kind) {
       case "game":
       case "category":
-        return <FrameTypography fontSize={fontSize} text={race[kind] ?? ""} />;
+        return (
+          <FrameTypography
+            fontSize={fontSize}
+            text={race[kind] ?? ""}
+            transitionHoldKey={race.raceId}
+          />
+        );
       case "time":
         return <RaceTextTimer race={race} fontSize={fontSize} />;
     }
@@ -42,7 +48,7 @@ function RaceTextTimer({
       style="monospace"
       fontSize={fontSize}
       text={time}
-      skipTransition
+      transitionHoldKey={race.raceId}
     />
   );
 }

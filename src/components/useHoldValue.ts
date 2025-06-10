@@ -13,20 +13,27 @@ const TRANSITION_LENGTH = 500;
 
 export function useHoldValue<TValue>(
   value: TValue,
-  transitionLength: number
+  holdKey: string
 ): [TValue, boolean] {
-  const [displayValue, setDisplayValue] = useState(value);
+  const [currentHoldKey, setCurrentHoldKey] = useState(holdKey);
+  const [displayValues, setDisplayValues] = useState<{
+    [holdKey: string]: TValue;
+  }>(() => ({ [holdKey]: value }));
   const [isHoldingValue, setIsHoldingValue] = useState(false);
+
+  useEffect(() => {
+    setDisplayValues((old) => ({ ...old, [holdKey]: value }));
+  }, [holdKey, value]);
 
   useEffect(() => {
     if (isHoldingValue) {
       return;
     }
 
-    if (value !== displayValue) {
+    if (holdKey !== currentHoldKey) {
       setIsHoldingValue(true);
     }
-  }, [displayValue, isHoldingValue, value]);
+  }, [currentHoldKey, holdKey, isHoldingValue]);
 
   useEffect(() => {
     if (!isHoldingValue) {
@@ -34,14 +41,15 @@ export function useHoldValue<TValue>(
     }
 
     const timeout = setTimeout(() => {
-      setDisplayValue(value);
+      setCurrentHoldKey(holdKey);
       setIsHoldingValue(false);
-    }, transitionLength);
+      setDisplayValues((old) => ({ [holdKey]: old[holdKey] }));
+    }, TRANSITION_LENGTH);
 
     return () => {
       clearTimeout(timeout);
     };
-  }, [isHoldingValue, transitionLength, value]);
+  }, [holdKey, isHoldingValue]);
 
-  return [displayValue, isHoldingValue];
+  return [displayValues[currentHoldKey], isHoldingValue];
 }

@@ -8,6 +8,7 @@ interface BaseProps {
   style?: "sans-serif" | "monospace";
   fontSize: number;
   text: string;
+  transitionHoldKey?: string;
   // Can manually control transition
   isFading?: boolean;
 }
@@ -26,10 +27,11 @@ export function FrameTypography({ skipTransition, ...baseProps }: Props) {
 
 export function FrameTypographyWithTransition({
   text,
+  transitionHoldKey,
   ...restProps
 }: BaseProps) {
   // move outside so this doesn't get used for timers
-  const [displayText, isFading] = useHoldValue(text, 500);
+  const [displayText, isFading] = useHoldValue(text, transitionHoldKey ?? text);
 
   return (
     <FrameTypographyBase
@@ -61,11 +63,13 @@ const containerStyle = css`
   display: flex;
   align-items: center;
   ${STYLES.fullHeight};
-  transition: opacity 500ms ease-in-out;
+  transition: opacity 400ms ease-in-out;
+  transition-delay: 100ms;
   opacity: 1;
 
   &.fading {
     opacity: 0;
+    transition-delay: 100ms;
   }
 `;
 

@@ -18,7 +18,10 @@ export const avatarFrame = buildFrameComponent(
   Params,
   ({ race, participantPosition }) => {
     const participant = race.participants[participantPosition - 1];
-    const [avatarSrc, isTransition] = useHoldValue(participant?.avatar, 500);
+    const [avatarSrc, isTransition] = useHoldValue(
+      participant?.avatar,
+      `${race.raceId}:${participant.user}`
+    );
 
     if (!participant) {
       return null;
@@ -36,10 +39,12 @@ export const avatarFrame = buildFrameComponent(
 );
 
 const containerStyle = css`
-  transition: opacity 500ms ease-in-out;
+  transition: opacity 400ms ease-in-out;
+  transition-delay: 100ms;
   opacity: 1;
 
   &.fading {
     opacity: 0;
+    transition-delay: unset;
   }
 `;

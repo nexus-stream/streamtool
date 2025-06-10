@@ -22,7 +22,7 @@ export const participantStreamFrame = buildFrameComponent(
 
     const [twitchUser, isTransition] = useHoldValue(
       participant?.twitchUser,
-      500
+      `${race.raceId}:${participant.user}`
     );
 
     if (!participant) {
@@ -42,10 +42,12 @@ export const participantStreamFrame = buildFrameComponent(
 
 const containerStyle = css`
   ${STYLES.fullSize};
-  transition: opacity 500ms ease-in-out;
+  transition: opacity 400ms ease-in-out;
+  transition-delay: 100ms;
   opacity: 1;
 
   &.fading {
+    transition-delay: unset;
     opacity: 0;
   }
 `;
