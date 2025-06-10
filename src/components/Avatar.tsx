@@ -5,7 +5,7 @@ import { STYLES } from "./styles";
 
 interface Props {
   src: string | null | undefined;
-  size: "small" | "medium" | "large";
+  size: "small" | "medium" | "large" | "overlay";
 }
 
 export function Avatar({ src, size }: Props) {
@@ -33,5 +33,10 @@ const sizedAvatarStyles = {
   large: css`
     width: ${size(20)};
     height: ${size(20)};
+  `,
+  overlay: css`
+    width: 240px;
+    height: 240px;
+    border-radius: 32px;
   `,
 };

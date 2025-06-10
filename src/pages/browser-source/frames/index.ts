@@ -1,16 +1,14 @@
 import { FrameComponent } from "../frame";
-import { backgroundFrame } from "./background";
+import { avatarFrame } from "./avatar";
 import { debugFrame } from "./debug";
-import { gameAndCategoryFrame } from "./gameAndCategory";
-import { participantNameplateFrame } from "./namePlate";
+import { participantTextFrame } from "./participantText";
+import { raceTextFrame } from "./raceText";
 import { participantStreamFrame } from "./stream";
-import { twoPlayerSquareFrame } from "./twoPlayerFull";
 
 export const FRAMES: { [frameId: string]: FrameComponent } = {
-  twoPlayerSquare: twoPlayerSquareFrame,
-  gameAndCategory: gameAndCategoryFrame,
   participantStream: participantStreamFrame,
-  participantNameplate: participantNameplateFrame,
-  background: backgroundFrame,
+  participantText: participantTextFrame,
+  avatar: avatarFrame,
+  raceText: raceTextFrame,
   debug: debugFrame,
 };

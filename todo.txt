@@ -1,7 +1,5 @@
-- Add frame resizer
-- Add customizable text frame (plus one for participant text)
 - Add pretty transitions
-- Add twitch integration through advanced scene manager
+- Add twitch integration through advanced scene switcher
 
 
 
