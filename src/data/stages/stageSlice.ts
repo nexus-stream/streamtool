@@ -43,6 +43,17 @@ const stageSlice = createSlice({
       state.ids.splice(currentIndex, 1);
       state.ids.splice(newIndex, 0, stageId);
     },
+    setParticipantOrder(
+      state,
+      action: PayloadAction<{ id: string; participantOrder: string[] }>
+    ) {
+      const stage = state.entities[action.payload.id];
+      if (!stage) {
+        return;
+      }
+
+      stage.participantOrder = action.payload.participantOrder;
+    },
     patchRaceOverrides(
       state,
       action: PayloadAction<{ id: string; patch: Partial<DisplayRace> }>

@@ -14,6 +14,7 @@ export interface Stage {
   // Manual overrides of the automatically updated data.
   raceOverrides: Partial<DisplayRace>;
   participantOverrides: { [user: string]: Partial<DisplayParticipant> };
+  participantOrder: string[];
 }
 
 export interface StageWithPopulatedRace extends Stage {

@@ -2,7 +2,7 @@ import { createSelector } from "@reduxjs/toolkit";
 import { stageAdapter, stageRootSelector } from "./stageSlice";
 import { raceSelectors } from "../races/selectors";
 import { userSelectors } from "../users/selectors";
-import { DisplayRace } from "../display/types";
+import { DisplayParticipant, DisplayRace } from "../display/types";
 import { buildDisplayRace } from "../display/buildDisplayRace";
 
 export const stageSelectors = stageAdapter.getSelectors(stageRootSelector);
@@ -64,6 +64,10 @@ export const selectCurrentPatchedDisplayRace = createSelector(
     }
 
     const displayRace = buildDisplayRace(race, userEntities);
+    displayRace.participants = orderParticipants(
+      displayRace.participants,
+      stage.participantOrder
+    );
     for (let i = 0; i < displayRace.participants.length; i++) {
       if (stage.participantOverrides[displayRace.participants[i].user]) {
         displayRace.participants[i] = {
@@ -79,3 +83,31 @@ export const selectCurrentPatchedDisplayRace = createSelector(
     };
   }
 );
+
+function orderParticipants(
+  participants: DisplayParticipant[],
+  stageOrder: string[]
+) {
+  const participantMap = participants.reduce((map, participant) => {
+    map[participant.user] = participant;
+    return map;
+  }, {} as { [user: string]: DisplayParticipant });
+
+  const orderedParticipants: DisplayParticipant[] = [];
+
+  for (const user of stageOrder) {
+    const participant = participantMap[user];
+    if (participant) {
+      orderedParticipants.push(participant);
+      delete participantMap[user];
+    }
+  }
+
+  for (const participant of participants) {
+    if (participantMap[participant.user]) {
+      orderedParticipants.push(participant);
+    }
+  }
+
+  return orderedParticipants;
+}
