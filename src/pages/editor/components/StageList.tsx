@@ -18,6 +18,7 @@ import { StageDeleteModal } from "./StageDeleteModal";
 import { StageCreateModal } from "./StageCreateModal";
 import { COLORS, SIZES } from "../../../style/theme";
 import { STYLES } from "../../../components/styles";
+import { StageReorderControls } from "./StageReorderControls";
 
 export function StageList() {
   const [isCreating, setIsCreating] = useState(false);
@@ -49,6 +50,7 @@ export function StageList() {
               >
                 <ListItemText primary={stage.name} />
               </ListItemButton>
+              <StageReorderControls stageId={stage.id} />
             </ListItem>
           );
         })}

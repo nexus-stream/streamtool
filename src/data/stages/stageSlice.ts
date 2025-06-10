@@ -24,6 +24,25 @@ const stageSlice = createSlice({
     removeStage(state, action: PayloadAction<string>) {
       stageAdapter.removeOne(state, action.payload);
     },
+    shiftStageIndex(
+      state,
+      {
+        payload: { stageId, delta },
+      }: PayloadAction<{ stageId: string; delta: number }>
+    ) {
+      const currentIndex = state.ids.indexOf(stageId);
+      if (currentIndex === -1) {
+        return;
+      }
+
+      const newIndex = Math.min(
+        Math.max(currentIndex + delta, 0),
+        state.ids.length - 1
+      );
+
+      state.ids.splice(currentIndex, 1);
+      state.ids.splice(newIndex, 0, stageId);
+    },
     patchRaceOverrides(
       state,
       action: PayloadAction<{ id: string; patch: Partial<DisplayRace> }>
@@ -78,6 +97,7 @@ export const {
   setCurrentStageId,
   upsertStage,
   removeStage,
+  shiftStageIndex,
   patchRaceOverrides,
   patchRaceOverrideParticipant,
 } = stageSlice.actions;
