@@ -22,8 +22,7 @@ export function OBSInsertButton({
 
   const onClick = useCallback(async () => {
     const sceneInfo = await obsSocket.call("GetSceneList");
-    const sceneToInsertTo =
-      sceneInfo.currentPreviewSceneUuid || sceneInfo.currentProgramSceneUuid;
+    const sceneToInsertTo = sceneInfo.currentProgramSceneUuid;
     await obsSocket.call("CreateInput", {
       inputName:
         name ||
