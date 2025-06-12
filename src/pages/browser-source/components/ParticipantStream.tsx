@@ -6,7 +6,7 @@ interface Props {
 }
 
 export function ParticipantStream({ twitchUser }: Props) {
-  const embed = buildTwitchEmbedLink(twitchUser);
+  const embed = buildProxiedTwitchEmbedLink(twitchUser);
 
   return (
     <div css={STYLES.fullSize}>
@@ -15,7 +15,15 @@ export function ParticipantStream({ twitchUser }: Props) {
   );
 }
 
-function buildTwitchEmbedLink(twitchUser: string) {
+function buildProxiedTwitchEmbedLink(twitchUser: string) {
+  const origin = import.meta.env.VITE_HTTPS_ORIGIN ?? window.location.origin;
+  const parent = new URL(origin).hostname;
+  const url = new URL("/proxy", origin);
+  url.searchParams.append("src", buildTwitchEmbedLink(twitchUser, parent));
+  return url.toString();
+}
+
+function buildTwitchEmbedLink(twitchUser: string, parent: string) {
   const url = new URL("https://embed.twitch.tv");
 
   url.searchParams.append("allowfullscreen", "true");
@@ -27,7 +35,7 @@ function buildTwitchEmbedLink(twitchUser: string) {
   url.searchParams.append("theme", "dark");
 
   url.searchParams.append("channel", twitchUser);
-  url.searchParams.append("parent", window.location.hostname);
+  url.searchParams.append("parent", parent);
 
   return url.toString();
 }
