@@ -19,11 +19,12 @@ export function NextStageButton() {
 
   return (
     <Button css={buttonStyle} variant="outlined" size="small" onClick={onClick}>
-      NEXT: {nextStage.name} &gt;
+      {nextStage.name} &gt;
     </Button>
   );
 }
 
 const buttonStyle = css`
+  flex-basis: 0;
   flex-grow: 1;
 `;

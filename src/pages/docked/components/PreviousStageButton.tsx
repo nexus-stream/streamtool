@@ -25,5 +25,6 @@ export function PreviousStageButton() {
 }
 
 const buttonStyle = css`
+  flex-basis: 0;
   flex-grow: 1;
 `;
