@@ -22,7 +22,8 @@ interface DisplayProperties<TProps = unknown> {
 export type FrameComponent<
   TZodType extends Readonly<{
     [k: string]: z.core.$ZodType<unknown, unknown>;
-  }> = Readonly<{ [k: string]: z.core.$ZodType<unknown, unknown> }>
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  }> = any
 > = {
   displayProperties: DisplayProperties<z.infer<z.ZodObject<TZodType>>>;
   zodProps: z.ZodObject<TZodType>;
