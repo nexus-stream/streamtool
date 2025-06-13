@@ -99,7 +99,9 @@ function buildOBSOverlayURL(frameId: string, params: object): string {
     return "";
   }
 
-  const url = new URL(`/frame/${frameId}`, window.location.origin);
+  const origin = import.meta.env.VITE_HTTPS_ORIGIN ?? window.location.origin;
+
+  const url = new URL(`/frame/${frameId}`, origin);
   for (const [key, value] of Object.entries(params)) {
     url.searchParams.append(key, value);
   }
