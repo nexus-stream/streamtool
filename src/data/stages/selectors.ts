@@ -24,6 +24,24 @@ export const selectCurrentStage = createSelector(
   }
 );
 
+export const selectPreviousStage = createSelector(
+  stageSelectors.selectIds,
+  stageSelectors.selectAll,
+  selectCurrentStageId,
+  (stageIds, stages, stageId) => {
+    if (!stageId) {
+      return undefined;
+    }
+
+    const currentStageIndex = stageIds.indexOf(stageId);
+    if (currentStageIndex === -1) {
+      return undefined;
+    }
+
+    return stages[currentStageIndex - 1];
+  }
+);
+
 export const selectNextStage = createSelector(
   stageSelectors.selectIds,
   stageSelectors.selectAll,

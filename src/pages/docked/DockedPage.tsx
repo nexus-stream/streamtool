@@ -8,6 +8,7 @@ import { ConnectButton } from "./components/ConnectButton";
 import { NextStageButton } from "./components/NextStageButton";
 import { ParticipantOrder } from "./components/ParticipantOrder";
 import { FrameAutoResizer } from "./components/FrameAutoResizer";
+import { PreviousStageButton } from "./components/PreviousStageButton";
 
 export function DockedPage() {
   useHotkeys(
@@ -25,6 +26,7 @@ export function DockedPage() {
           <ConnectButton />
           <StageSelector />
           <ButtonBar>
+            <PreviousStageButton />
             <Button
               variant="outlined"
               href="/edit"

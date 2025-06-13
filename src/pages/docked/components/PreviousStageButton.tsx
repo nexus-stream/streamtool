@@ -1,0 +1,29 @@
+import { useSelector } from "react-redux";
+import { selectPreviousStage } from "../../../data/stages/selectors";
+import { Button, css } from "@mui/material";
+import { useCallback } from "react";
+import { useAppDispatch } from "../../../data/hooks";
+import { setCurrentStageId } from "../../../data/stages/stageSlice";
+
+export function PreviousStageButton() {
+  const dispatch = useAppDispatch();
+  const previousStage = useSelector(selectPreviousStage);
+
+  const onClick = useCallback(() => {
+    dispatch(setCurrentStageId(previousStage?.id));
+  }, [dispatch, previousStage?.id]);
+
+  if (!previousStage) {
+    return null;
+  }
+
+  return (
+    <Button css={buttonStyle} variant="outlined" size="small" onClick={onClick}>
+      &lt; {previousStage.name}
+    </Button>
+  );
+}
+
+const buttonStyle = css`
+  flex-grow: 1;
+`;
