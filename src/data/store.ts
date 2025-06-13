@@ -1,4 +1,8 @@
-import { combineReducers, configureStore } from "@reduxjs/toolkit";
+import {
+  combineReducers,
+  configureStore,
+  createListenerMiddleware,
+} from "@reduxjs/toolkit";
 import stageReducer from "./stages/stageSlice";
 import raceReducer from "./races/raceSlice";
 import userReducer from "./users/userSlice";
@@ -10,6 +14,8 @@ import {
 } from "redux-state-sync";
 import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage"; // defaults to localStorage for web
+
+const listenerMiddleware = createListenerMiddleware();
 
 const rootReducer = combineReducers({
   stages: stageReducer,
@@ -39,14 +45,16 @@ const store = configureStore({
           "persist/REHYDRATE",
         ],
       },
-    }).concat(
-      // We share data between the docked page and the pop-out editor / overlays by syncing our
-      // redux store between all of the pages. It's a bit ugly, but it keeps things very simple
-      // and gives us a lot of flexibility.
-      createStateSyncMiddleware({
-        blacklist: ["persist/PERSIST", "persist/PURGE", "persist/REHYDRATE"],
-      })
-    ),
+    })
+      .prepend(listenerMiddleware.middleware)
+      .concat(
+        // We share data between the docked page and the pop-out editor / overlays by syncing our
+        // redux store between all of the pages. It's a bit ugly, but it keeps things very simple
+        // and gives us a lot of flexibility.
+        createStateSyncMiddleware({
+          blacklist: ["persist/PERSIST", "persist/PURGE", "persist/REHYDRATE"],
+        })
+      ),
 });
 
 initMessageListener(store);

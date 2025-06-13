@@ -1,7 +1,8 @@
 import { Button } from "@mui/material";
 import { useCallback } from "react";
 import { uniqueNamesGenerator, animals } from "unique-names-generator";
-import { useOBSWebsocket } from "../../../data/obs/ObsWebSocketContext";
+import { useAppDispatch } from "../../../data/hooks";
+import { obsInsertBrowserSource } from "../../../data/obs/tunnel/actions";
 
 interface Props {
   url: string;
@@ -18,26 +19,22 @@ export function OBSInsertButton({
   width,
   height,
 }: Props) {
-  const obsSocket = useOBSWebsocket();
+  const dispatch = useAppDispatch();
 
   const onClick = useCallback(async () => {
-    const sceneInfo = await obsSocket.call("GetSceneList");
-    const sceneToInsertTo = sceneInfo.currentProgramSceneUuid;
-    await obsSocket.call("CreateInput", {
-      inputName:
-        name ||
-        `${frameName}_${uniqueNamesGenerator({
-          dictionaries: [animals],
-        })}`,
-      sceneUuid: sceneToInsertTo,
-      inputKind: "browser_source",
-      inputSettings: {
+    dispatch(
+      obsInsertBrowserSource({
+        name:
+          name ||
+          `${frameName}_${uniqueNamesGenerator({
+            dictionaries: [animals],
+          })}`,
         url,
         width,
         height,
-      },
-    });
-  }, [frameName, height, name, obsSocket, url, width]);
+      })
+    );
+  }, [dispatch, frameName, height, name, url, width]);
 
   return (
     <Button variant="outlined" onClick={onClick}>
