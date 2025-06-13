@@ -30,7 +30,7 @@ export function ObsConnectPanel() {
 
   switch (socketAndStatus.status) {
     case "connected":
-      return <p>Connected!</p>;
+      return <p>Connected to OBS</p>;
     case "idle":
     case "login-failed":
       return (

@@ -16,6 +16,8 @@ import { OBSInsertButton } from "./components/OBSInsertButton";
 import { Page } from "../../components/Layout";
 import { STYLES } from "../../components/styles";
 import { ObsWebSocketProvider } from "../../data/obs/ObsWebSocketProvider";
+import { FrameAutoResizer } from "../docked/components/FrameAutoResizer";
+import { ObsConnectPanel } from "../obs-connect/ObsConnectPage";
 
 export function FrameAdderPage() {
   const [frameId, setFrameId] = useState("");
@@ -81,8 +83,13 @@ export function FrameAdderPage() {
               </OBSConnectionWrapper>
             </>
           )}
+          <ObsConnectPanel />
         </FormControl>
       </Page>
+
+      {/* Handles auto resizing the browser source of frames that have opted into that behavior. Should only
+          ever be running in one place. */}
+      <FrameAutoResizer />
     </ObsWebSocketProvider>
   );
 }

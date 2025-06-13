@@ -109,8 +109,10 @@ function getInputFrame({
     return undefined;
   }
 
+  const frameOrigin =
+    import.meta.env.VITE_HTTPS_ORIGIN ?? window.location.origin;
   const inputUrl = new URL(inputSettings.url);
-  if (inputUrl.origin !== window.location.origin) {
+  if (inputUrl.origin !== frameOrigin) {
     return undefined;
   }
 
