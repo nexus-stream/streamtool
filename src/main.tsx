@@ -26,6 +26,7 @@ import "@fontsource/roboto-mono/400.css";
 import "@fontsource/roboto-mono/500.css";
 import "@fontsource/roboto-mono/700.css";
 import { ObsConnectPage } from "./pages/obs-connect/ObsConnectPage";
+import { ProxyPage } from "./pages/proxy/ProxyPage";
 
 const darkTheme = createTheme({
   palette: {
@@ -48,6 +49,7 @@ createRoot(document.getElementById("root")!).render(
                 <Route path="/edit" element={<EditorPage />} />
                 <Route path="/frame" element={<FrameAdderPage />} />
                 <Route path="/frame/:frameId" element={<BrowserSourcePage />} />
+                <Route path="/proxy" element={<ProxyPage />} />
                 <Route path="/dump/:raceId" element={<DumpPage />} />
               </Routes>
             </BrowserRouter>
