@@ -13,6 +13,8 @@ const Params = z.object({
 export const participantTextFrame = buildFrameComponent(
   {
     displayName: "Participant Text",
+    defaultName: ({ participantPosition, kind }) =>
+      `Participant ${participantPosition} ${kind}`,
     width: 420,
     height: 80,
     autoResize: true,

@@ -12,6 +12,7 @@ const Params = z.object({
 export const raceTextFrame = buildFrameComponent(
   {
     displayName: "Race Text",
+    defaultName: ({ kind }) => `${kind}`,
     width: 420,
     height: 80,
     autoResize: true,

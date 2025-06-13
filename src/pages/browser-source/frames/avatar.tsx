@@ -14,6 +14,8 @@ export const avatarFrame = buildFrameComponent(
     displayName: "Avatar",
     width: 240,
     height: 240,
+    defaultName: ({ participantPosition }) =>
+      `Participant ${participantPosition} Avatar`,
   },
   Params,
   ({ race, participantPosition }) => {

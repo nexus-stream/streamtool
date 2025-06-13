@@ -11,10 +11,11 @@ import { DisplayRace } from "../../data/display/types";
 // We do some type shenanigans here so we can make the zod object optional for frames that
 // don't need additional properties in an ergonomic way.
 
-interface DisplayProperties {
+interface DisplayProperties<TProps = unknown> {
   displayName: string;
   width: number;
   height: number;
+  defaultName?: (props: TProps) => string;
   autoResize?: boolean;
 }
 
@@ -23,7 +24,7 @@ export type FrameComponent<
     [k: string]: z.core.$ZodType<unknown, unknown>;
   }> = Readonly<{ [k: string]: z.core.$ZodType<unknown, unknown> }>
 > = {
-  displayProperties: DisplayProperties;
+  displayProperties: DisplayProperties<z.infer<z.ZodObject<TZodType>>>;
   zodProps: z.ZodObject<TZodType>;
   fc: (
     props: {
@@ -36,7 +37,7 @@ export type FrameComponent<
 export function buildFrameComponent<
   TZodType extends Readonly<{ [k: string]: z.core.$ZodType<unknown, unknown> }>
 >(
-  displayProperties: DisplayProperties,
+  displayProperties: DisplayProperties<z.infer<z.ZodObject<TZodType>>>,
   zodProps: z.ZodObject<TZodType>,
   fc: (
     props: { stageId: string; race: DisplayRace } & z.infer<
@@ -51,7 +52,8 @@ export function buildFrameComponent(
 ): FrameComponent;
 
 export function buildFrameComponent(
-  displayProperties: DisplayProperties,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  displayProperties: DisplayProperties<any>,
   zodPropsOrFC: unknown,
   fc?: unknown
 ) {

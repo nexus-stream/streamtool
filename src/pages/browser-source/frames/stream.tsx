@@ -15,6 +15,8 @@ export const participantStreamFrame = buildFrameComponent(
     displayName: "Participant Stream",
     width: 1920,
     height: 1080,
+    defaultName: ({ participantPosition }) =>
+      `Participant ${participantPosition} Stream`,
   },
   Params,
   ({ race, participantPosition }) => {

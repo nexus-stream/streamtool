@@ -18,16 +18,21 @@ import { STYLES } from "../../components/styles";
 import { ObsWebSocketProvider } from "../../data/obs/ObsWebSocketProvider";
 import { FrameAutoResizer } from "../docked/components/FrameAutoResizer";
 import { ObsConnectPanel } from "../obs-connect/ObsConnectPage";
+import { FrameComponent } from "../browser-source/frame";
 
 export function FrameAdderPage() {
   const [frameId, setFrameId] = useState("");
-  const [name, setName] = useState("");
+  const [nameBase, setName] = useState("");
   const [frameParams, setFrameParams] = useState<object>({});
 
-  const currentFrame = FRAMES[frameId];
+  const currentFrame: FrameComponent | undefined = FRAMES[frameId];
+  const name =
+    (nameBase || currentFrame?.displayProperties.defaultName?.(frameParams)) ??
+    "";
 
   const onChange = useCallback((event: SelectChangeEvent) => {
     setFrameId(event.target.value);
+    setName("");
     try {
       const startingParams = FRAMES[event.target.value].zodProps.parse({});
       setFrameParams(startingParams);
