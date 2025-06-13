@@ -10,16 +10,22 @@ export function NextStageButton() {
   const nextStage = useSelector(selectNextStage);
 
   const onClick = useCallback(() => {
+    if (!nextStage?.id) {
+      return;
+    }
+
     dispatch(setCurrentStageId(nextStage?.id));
   }, [dispatch, nextStage?.id]);
 
-  if (!nextStage) {
-    return null;
-  }
-
   return (
-    <Button css={buttonStyle} variant="outlined" size="small" onClick={onClick}>
-      {nextStage.name} &gt;
+    <Button
+      css={buttonStyle}
+      variant="outlined"
+      size="small"
+      onClick={onClick}
+      disabled={!nextStage}
+    >
+      {nextStage ? `${nextStage.name} >` : ""}
     </Button>
   );
 }
