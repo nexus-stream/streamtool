@@ -30,6 +30,7 @@ export function useSyncableLocalState<TValue>(
 
   const setIsSynced = useCallback(
     (newIsSynced: boolean) => {
+      console.log(newIsSynced, backingValue, localValue);
       if (newIsSynced) {
         setLocalValue(backingValue ?? localValue);
         setBackingValue(backingValue ?? localValue);
