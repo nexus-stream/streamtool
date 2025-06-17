@@ -1,7 +1,3 @@
-- Restore connect button
-- Add a "stream title" field to stage
-- Add an "enter stage event" field to stage. Dispatch it as a custom websocket event when that stage is entered.
-  - Place these outside of DisplayRace
 - Add commentators (name + pronoun) to DisplayRace
 - Add font options
   - color, stroke, horiz align, vertical align

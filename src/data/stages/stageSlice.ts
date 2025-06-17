@@ -2,6 +2,7 @@ import {
   createEntityAdapter,
   createSlice,
   PayloadAction,
+  Update,
 } from "@reduxjs/toolkit";
 import { Stage } from "./types";
 import { RootState } from "../store";
@@ -18,8 +19,11 @@ const stageSlice = createSlice({
     setCurrentStageId(state, action: PayloadAction<string | undefined>) {
       state.currentStageId = action.payload;
     },
-    upsertStage(state, action: PayloadAction<Stage>) {
-      stageAdapter.upsertOne(state, action.payload);
+    setStage(state, action: PayloadAction<Stage>) {
+      stageAdapter.setOne(state, action.payload);
+    },
+    updateStage(state, action: PayloadAction<Update<Stage, string>>) {
+      stageAdapter.updateOne(state, action.payload);
     },
     removeStage(state, action: PayloadAction<string>) {
       stageAdapter.removeOne(state, action.payload);
@@ -106,7 +110,8 @@ const stageSlice = createSlice({
 
 export const {
   setCurrentStageId,
-  upsertStage,
+  setStage,
+  updateStage,
   removeStage,
   shiftStageIndex,
   setParticipantOrder,

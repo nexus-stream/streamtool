@@ -2,7 +2,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { Stage } from "./types";
 import { v4 as uuidv4 } from "uuid";
 import { addRaceFromId } from "../races/thunks";
-import { upsertStage } from "./stageSlice";
+import { setStage } from "./stageSlice";
 import { setCurrentEditorStageId } from "../editor/editorSlice";
 
 export const createStageForRace = createAsyncThunk(
@@ -18,7 +18,7 @@ export const createStageForRace = createAsyncThunk(
       participantOverrides: {},
     };
 
-    dispatch(upsertStage(stage));
+    dispatch(setStage(stage));
     dispatch(setCurrentEditorStageId(stage.id));
   }
 );

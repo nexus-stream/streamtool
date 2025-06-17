@@ -11,6 +11,10 @@ export interface Stage {
   // Friendly name to make the stage listing readable.
   name: string;
 
+  streamTitle?: string;
+
+  stageEnterWebsocketEvent?: string;
+
   // Manual overrides of the automatically updated data.
   raceOverrides: Partial<DisplayRace>;
   participantOverrides: { [user: string]: Partial<DisplayParticipant> };
