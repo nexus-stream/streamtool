@@ -1,6 +1,51 @@
-- Add twitch integration through advanced scene switcher
+- Restore connect button
+- Add a "stream title" field to stage
+- Add an "enter stage event" field to stage. Dispatch it as a custom websocket event when that stage is entered.
+  - Place these outside of DisplayRace
+- Add commentators (name + pronoun) to DisplayRace
+- Add font options
+  - color, stroke, horiz align, vertical align
+  - Set flex basis to 0
+  - Make auto shrink a flag
+- Add multitext component
+  - participantText[]
+  - Frame editor array control
+  - gap
+  - justify-items
+
+- Add twitch integration
+  - Client ID: opwnmlab2jmjs7vzsj63sisn1769ao
+
+Rename "DisplayRace" to "StageRace", and "DisplayParticipant" to "StageRaceParticipant".
+Make stage a discriminated union, with "race" and "vod" as types
+When vod is the type, just have a "vod link" instead of raceId and overrides
+
+Add VOD frame
+VOD editor just uses normal stage editor. Make therun url field also take a VOD link
+
+- Clean up, comment, document
 
 
+https://id.twitch.tv/oauth2/authorize
+    ?response_type=token
+    &client_id=opwnmlab2jmjs7vzsj63sisn1769ao
+    &redirect_uri=${window.location.origin}/twitch
+    &scope=channel%3Amanage%3Abroadcast
+
+// Open in new window
+// Twitch endpoint that just throws access_token and expiry date into redux
+// call https://id.twitch.tv/oauth2/validate with token to get broadcaster id and expiry date
+
+PATCH https://api.twitch.tv/helix/channels?broadcasterId=[broadcasterId]
+
+game_id
+title
+
+http://localhost:3000/
+    #access_token=73d0f8mkabpbmjp921asv2jaidwxn
+    &scope=channel%3Amanage%3Apolls+channel%3Aread%3Apolls
+    &state=c3ab8aa609ea11e793ae92361f002671
+    &token_type=bearer
 
 
 
