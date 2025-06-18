@@ -4,12 +4,13 @@ import { STYLES } from "../../../components/styles";
 import classNames from "classnames";
 import { useHoldValue } from "../../../components/useHoldValue";
 import { z } from "zod/v4";
-import { CSSProperties, ReactNode, useMemo } from "react";
+import { ReactNode } from "react";
 
 export const TypographyParams = z
   .object({
     fontSize: z.coerce.number(),
-    style: z.enum(["sans-serif", "monospace"]),
+    family: z.enum(["sans-serif", "monospace"]),
+    style: z.enum(["normal", "italics"]),
     color: z.string(),
     stroke: z.coerce.number(),
     strokeColor: z.string(),
@@ -19,13 +20,14 @@ export const TypographyParams = z
   })
   .default({
     fontSize: 48,
-    style: "sans-serif",
+    family: "sans-serif",
+    style: "normal",
     color: "#FFFFFF",
     stroke: 0,
     strokeColor: "transparent",
     halign: "left",
     valign: "middle",
-    shrinkToFit: "yes",
+    shrinkToFit: "no",
   });
 
 interface BaseProps {
@@ -71,6 +73,7 @@ export function FrameTypographyBase({
   isFading,
   settings: {
     fontSize,
+    family,
     style,
     color,
     stroke,
@@ -85,7 +88,8 @@ export function FrameTypographyBase({
       <div
         css={[
           baseTextStyle,
-          textFamilyStyles[style],
+          textFamilyStyles[family],
+          textStyleStyles[style],
           textHalignStyles[halign],
           textValignStyles[valign],
         ]}
@@ -153,6 +157,13 @@ const textFamilyStyles = {
     font-family: "IBM Plex Mono", monospace;
     font-weight: 700;
     font-style: normal;
+  `,
+};
+
+const textStyleStyles = {
+  normal: css``,
+  italics: css`
+    font-style: italic;
   `,
 };
 

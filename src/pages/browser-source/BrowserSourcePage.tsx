@@ -25,19 +25,22 @@ function useFrameWithParsedParams() {
   const frame = useFrame();
   const searchParams = useSearchParamsObject();
 
-  if (!frame) {
-    return {
-      frame: errorFrame,
-      params: {
-        message: "Frame not found",
-      },
-    };
-  }
-
   try {
-    const params = frame.zodProps.parse(qs.parse(searchParams));
-    return { frame, params };
+    const params = useMemo(
+      () => frame!.zodProps.parse(qs.parse(searchParams)),
+      [frame, searchParams]
+    );
+    return { frame: frame!, params };
   } catch {
+    if (!frame) {
+      return {
+        frame: errorFrame,
+        params: {
+          message: "Frame not found",
+        },
+      };
+    }
+
     return {
       frame: errorFrame,
       params: {

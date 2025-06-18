@@ -62,6 +62,7 @@ export function FrameAdderPage() {
           </Select>
           {currentFrame && (
             <>
+              <hr />
               <TextField
                 label="Name"
                 value={name}
