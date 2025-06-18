@@ -1,4 +1,3 @@
-- Add commentators (name + pronoun) to editor
 - Add commentator text frame
 - Add font options
   - color, stroke, horiz align, vertical align
@@ -20,7 +19,7 @@ When vod is the type, just have a "vod link" instead of raceId and overrides
 Add VOD frame
 VOD editor just uses normal stage editor. Make therun url field also take a VOD link
 
-- Clean up, comment, document
+-----------
 
 
 https://id.twitch.tv/oauth2/authorize

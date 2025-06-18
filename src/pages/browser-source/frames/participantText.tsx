@@ -2,7 +2,7 @@ import { z } from "zod/v4";
 import { buildFrameComponent } from "../frame";
 import { DisplayParticipant, DisplayRace } from "../../../data/display/types";
 import { useDisplayRaceParticipantTimer } from "../../../data/display/displayTimerHooks";
-import { FrameTypography } from "../../../components/FrameTypography";
+import { FrameTypography } from "../components/FrameTypography";
 
 const Params = z.object({
   participantPosition: z.coerce.number().default(1),

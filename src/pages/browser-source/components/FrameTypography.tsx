@@ -1,8 +1,8 @@
 import { css } from "@emotion/react";
 import { Textfit } from "@ataverascrespo/react18-ts-textfit";
-import { STYLES } from "./styles";
+import { STYLES } from "../../../components/styles";
 import classNames from "classnames";
-import { useHoldValue } from "./useHoldValue";
+import { useHoldValue } from "../../../components/useHoldValue";
 
 interface BaseProps {
   style?: "sans-serif" | "monospace";
