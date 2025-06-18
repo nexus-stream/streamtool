@@ -1,8 +1,3 @@
-import { Stage } from "../../../../data/stages/types";
-import {
-  StringValuesOnly,
-  useStageStringValue,
-} from "../../../../data/display/useStageValue";
 import { css, TextField, ToggleButton } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import SaveIcon from "@mui/icons-material/Save";
@@ -10,18 +5,17 @@ import { useCallback, useState } from "react";
 import { size } from "../../../../style/theme";
 import { STYLES } from "../../../../components/styles";
 
-interface Props<TParam extends keyof Stage> {
+interface Props {
   label: string;
-  param: TParam;
-  stageId: string;
+  value: string;
+  onEdit: (newValue: string) => void;
 }
 
-export function StageValueEditor<TParam extends keyof StringValuesOnly<Stage>>({
+export function CommentatorValueEditor({
   label,
-  param,
-  stageId,
-}: Props<TParam>) {
-  const [backingValue, setBackingValue] = useStageStringValue(stageId, param);
+  value: backingValue,
+  onEdit,
+}: Props) {
   const [isEditing, setIsEditing] = useState(false);
   const [editValue, setEditValue] = useState("");
 
@@ -29,13 +23,13 @@ export function StageValueEditor<TParam extends keyof StringValuesOnly<Stage>>({
 
   const toggleIsEditing = useCallback(() => {
     if (isEditing) {
-      setBackingValue(editValue);
+      onEdit(editValue);
       setIsEditing(false);
     } else {
       setEditValue(backingValue);
       setIsEditing(true);
     }
-  }, [backingValue, editValue, isEditing, setBackingValue]);
+  }, [backingValue, editValue, isEditing, onEdit]);
 
   return (
     <div css={containerStyle}>

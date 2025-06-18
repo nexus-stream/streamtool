@@ -8,8 +8,11 @@ import { RaceValueViewer } from "./values/RaceValueViewer";
 import { RaceTimerVisualizer } from "./values/RaceTimerVisualizer";
 import { css } from "@emotion/react";
 import { STYLES } from "../../../components/styles";
-import { COLORS } from "../../../style/theme";
+import { COLORS, size } from "../../../style/theme";
 import { StageValueEditor } from "./values/StageValueEditor";
+import { useRaceOverrideState } from "../../../data/display/useRaceOverrideState";
+import { CommentatorEditor } from "./CommentatorEditor";
+import { Button } from "@mui/material";
 
 export function StageEditor() {
   const currentEditorStage = useSelector(selectCurrentEditorStage);
@@ -23,6 +26,10 @@ export function StageEditor() {
 
 export function StageEditorContent({ stage }: { stage: Stage }) {
   const participants = useDisplayRaceValue("participants", stage.id);
+  const [commentators, setCommentators] = useRaceOverrideState(
+    "commentators",
+    stage.id
+  );
 
   return (
     <div css={containerStyle}>
@@ -50,6 +57,7 @@ export function StageEditorContent({ stage }: { stage: Stage }) {
       <RaceValueViewer label="Race Status" param="status" stageId={stage.id} />
       <RaceTimerVisualizer stageId={stage.id} />
       <div>
+        <h3>Participants</h3>
         {participants.map((participant) => (
           <ParticipantEditor
             key={participant.user}
@@ -57,6 +65,35 @@ export function StageEditorContent({ stage }: { stage: Stage }) {
             participant={participant}
           />
         ))}
+      </div>
+      <div>
+        <h3>Commentators</h3>
+        {commentators?.map((commentator, index) => (
+          <CommentatorEditor
+            key={index}
+            commentator={commentator}
+            onEdit={(newValue) => {
+              const newCommentators = [...commentators];
+              newCommentators[index] = newValue;
+              setCommentators(newCommentators);
+            }}
+            onDelete={() => {
+              const newCommentators = [...commentators];
+              newCommentators.splice(index, 1);
+              setCommentators(newCommentators);
+            }}
+          />
+        ))}
+        <Button
+          css={addButtonStyle}
+          variant="outlined"
+          size="small"
+          onClick={() => {
+            setCommentators([...(commentators ?? []), { user: "" }]);
+          }}
+        >
+          Add
+        </Button>
       </div>
     </div>
   );
@@ -75,4 +112,9 @@ const containerStyle = css`
   flex-grow: 1;
   background-color: ${COLORS.bgLight};
   overflow-y: scroll;
+  padding-bottom: ${size(64)};
+`;
+
+const addButtonStyle = css`
+  margin-top: ${size(4)};
 `;

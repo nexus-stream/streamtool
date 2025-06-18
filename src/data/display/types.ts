@@ -36,8 +36,9 @@ export interface DisplayParticipant {
 }
 
 export interface Commentator {
-  name: string;
-  pronouns: string;
+  user: string;
+  pronouns?: string;
+  avatar?: string;
 }
 
 export type RaceDisplayFieldGetter<TValue> = (

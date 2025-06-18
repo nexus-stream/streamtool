@@ -26,6 +26,7 @@ export function DefaultOverrideEditor<TValue>({
 
   return (
     <TextField
+      fullWidth
       value={override ?? ""}
       size="small"
       label={label}

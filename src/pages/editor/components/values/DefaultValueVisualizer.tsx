@@ -10,7 +10,6 @@ export function DefaultValueVisualizer<TValue>({
   value,
 }: ValueVisualizerProps<TValue>) {
   if (value && typeof value !== "string" && typeof value !== "number") {
-    console.log(value);
     return <p>Default value visualizer only supports strings and numbers!</p>;
   }
 

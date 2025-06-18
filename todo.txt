@@ -1,4 +1,5 @@
-- Add commentators (name + pronoun) to DisplayRace
+- Add commentators (name + pronoun) to editor
+- Add commentator text frame
 - Add font options
   - color, stroke, horiz align, vertical align
   - Set flex basis to 0
