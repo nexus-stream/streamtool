@@ -7,6 +7,7 @@ import {
 } from "../../data/stages/selectors";
 import { useMemo } from "react";
 import { errorFrame } from "./frames/error";
+import qs from "qs";
 
 export function BrowserSourcePage() {
   const stageId = useAppSelector(selectCurrentStageId);
@@ -34,7 +35,7 @@ function useFrameWithParsedParams() {
   }
 
   try {
-    const params = frame.zodProps.parse(searchParams);
+    const params = frame.zodProps.parse(qs.parse(searchParams));
     return { frame, params };
   } catch {
     return {

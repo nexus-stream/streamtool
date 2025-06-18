@@ -1,11 +1,14 @@
 import { z } from "zod/v4";
 import { buildFrameComponent } from "../frame";
-import { FrameTypography } from "../components/FrameTypography";
+import {
+  FrameTypography,
+  TypographyParams,
+} from "../components/FrameTypography";
 
 const Params = z.object({
   commentatorPosition: z.coerce.number().default(1),
   kind: z.enum(["user", "pronouns"]).default("user"),
-  fontSize: z.coerce.number().default(48),
+  settings: TypographyParams,
 });
 
 export const commentatorTextFrame = buildFrameComponent(
@@ -18,7 +21,7 @@ export const commentatorTextFrame = buildFrameComponent(
     autoResize: true,
   },
   Params,
-  ({ race, commentatorPosition, kind, fontSize }) => {
+  ({ race, commentatorPosition, kind, settings }) => {
     const commentator = race.commentators[commentatorPosition - 1];
 
     if (!commentator) {
@@ -27,7 +30,7 @@ export const commentatorTextFrame = buildFrameComponent(
 
     return (
       <FrameTypography
-        fontSize={fontSize}
+        settings={settings}
         text={commentator[kind] ?? ""}
         transitionHoldKey={`${race.raceId}:${commentator.user}`}
       />

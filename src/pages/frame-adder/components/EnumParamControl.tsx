@@ -28,8 +28,8 @@ export function EnumParamControl({ name, options, params, setParams }: Props) {
 
   return (
     <FormControl>
-      <InputLabel>Frame</InputLabel>
-      <Select value={value} label="Frame" onChange={onChange}>
+      <InputLabel>{name}</InputLabel>
+      <Select value={value} onChange={onChange}>
         {options.map((option) => (
           <MenuItem key={option} value={option}>
             {option}

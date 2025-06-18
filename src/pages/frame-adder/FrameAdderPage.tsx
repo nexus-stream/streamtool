@@ -17,6 +17,7 @@ import { Page } from "../../components/Layout";
 import { STYLES } from "../../components/styles";
 import { ObsWebSocketProvider } from "../../data/obs/ObsWebSocketProvider";
 import { FrameComponent } from "../browser-source/frame";
+import qs from "qs";
 
 export function FrameAdderPage() {
   const [frameId, setFrameId] = useState("");
@@ -100,10 +101,7 @@ function buildOBSOverlayURL(frameId: string, params: object): string {
   const origin = import.meta.env.VITE_HTTPS_ORIGIN ?? window.location.origin;
 
   const url = new URL(`/frame/${frameId}`, origin);
-  for (const [key, value] of Object.entries(params)) {
-    url.searchParams.append(key, value);
-  }
-  return url.toString();
+  return `${url.toString()}?${qs.stringify(params)}`;
 }
 
 const containerStyle = css`

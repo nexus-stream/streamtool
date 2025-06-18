@@ -2,6 +2,10 @@ import { z } from "zod/v4";
 import { NumberParamControl } from "./NumberParamControl";
 import { StringParamControl } from "./StringParamControl";
 import { EnumParamControl } from "./EnumParamControl";
+import { FrameParamControls } from "./FrameParamControls";
+import { css } from "@mui/material";
+import { COLORS, size } from "../../../style/theme";
+import { STYLES } from "../../../components/styles";
 
 interface Props {
   name: string;
@@ -45,5 +49,39 @@ export function SingleParamControl({
     );
   }
 
+  if (baseType instanceof z.ZodObject) {
+    return (
+      <div css={nestedControlContainerStyle}>
+        <FrameParamControls
+          schema={baseType}
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          params={(params as any)[name]}
+          setParams={(newValueOrMutator) => {
+            if (typeof newValueOrMutator !== "function") {
+              setParams((old) => ({
+                ...old,
+                [name]: newValueOrMutator,
+              }));
+            } else {
+              setParams((old) => ({
+                ...old,
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                [name]: newValueOrMutator((old as any)[name]),
+              }));
+            }
+          }}
+        />
+      </div>
+    );
+  }
+
   return <p>Unknown schema type</p>;
 }
+
+const nestedControlContainerStyle = css`
+  background-color: ${COLORS.bgLight};
+  padding: ${size(4)};
+  ${STYLES.roundedCorners};
+  ${STYLES.spacedFlex};
+  flex-direction: column;
+`;

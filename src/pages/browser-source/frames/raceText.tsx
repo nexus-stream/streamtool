@@ -2,11 +2,14 @@ import { z } from "zod/v4";
 import { buildFrameComponent } from "../frame";
 import { DisplayRace } from "../../../data/display/types";
 import { useDisplayRaceTimer } from "../../../data/display/displayTimerHooks";
-import { FrameTypography } from "../components/FrameTypography";
+import {
+  FrameTypography,
+  TypographyParams,
+} from "../components/FrameTypography";
 
 const Params = z.object({
   kind: z.enum(["game", "category", "time"]).default("game"),
-  fontSize: z.coerce.number().default(48),
+  settings: TypographyParams,
 });
 
 export const raceTextFrame = buildFrameComponent(
@@ -18,19 +21,19 @@ export const raceTextFrame = buildFrameComponent(
     autoResize: true,
   },
   Params,
-  ({ race, kind, fontSize }) => {
+  ({ race, kind, settings }) => {
     switch (kind) {
       case "game":
       case "category":
         return (
           <FrameTypography
-            fontSize={fontSize}
+            settings={settings}
             text={race[kind] ?? ""}
             transitionHoldKey={race.raceId}
           />
         );
       case "time":
-        return <RaceTextTimer race={race} fontSize={fontSize} />;
+        return <RaceTextTimer race={race} settings={settings} />;
     }
   }
 );
@@ -38,16 +41,15 @@ export const raceTextFrame = buildFrameComponent(
 // eslint-disable-next-line react-refresh/only-export-components
 function RaceTextTimer({
   race,
-  fontSize,
+  settings,
 }: {
   race: DisplayRace;
-  fontSize: number;
+  settings: z.infer<typeof TypographyParams>;
 }) {
   const time = useDisplayRaceTimer(race);
   return (
     <FrameTypography
-      style="monospace"
-      fontSize={fontSize}
+      settings={settings}
       text={time}
       transitionHoldKey={race.raceId}
     />

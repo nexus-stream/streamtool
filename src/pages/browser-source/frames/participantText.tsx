@@ -2,12 +2,15 @@ import { z } from "zod/v4";
 import { buildFrameComponent } from "../frame";
 import { DisplayParticipant, DisplayRace } from "../../../data/display/types";
 import { useDisplayRaceParticipantTimer } from "../../../data/display/displayTimerHooks";
-import { FrameTypography } from "../components/FrameTypography";
+import {
+  FrameTypography,
+  TypographyParams,
+} from "../components/FrameTypography";
 
 const Params = z.object({
   participantPosition: z.coerce.number().default(1),
   kind: z.enum(["displayName", "pronouns", "time"]).default("displayName"),
-  fontSize: z.coerce.number().default(48),
+  settings: TypographyParams,
 });
 
 export const participantTextFrame = buildFrameComponent(
@@ -20,7 +23,7 @@ export const participantTextFrame = buildFrameComponent(
     autoResize: true,
   },
   Params,
-  ({ race, participantPosition, kind, fontSize }) => {
+  ({ race, participantPosition, kind, settings }) => {
     const participant = race.participants[participantPosition - 1];
 
     if (!participant) {
@@ -32,7 +35,7 @@ export const participantTextFrame = buildFrameComponent(
       case "pronouns":
         return (
           <FrameTypography
-            fontSize={fontSize}
+            settings={settings}
             text={participant[kind] ?? ""}
             transitionHoldKey={`${race.raceId}:${participant.user}`}
           />
@@ -42,7 +45,7 @@ export const participantTextFrame = buildFrameComponent(
           <ParticipantTextTimer
             participant={participant}
             race={race}
-            fontSize={fontSize}
+            settings={settings}
           />
         );
     }
@@ -53,18 +56,17 @@ export const participantTextFrame = buildFrameComponent(
 function ParticipantTextTimer({
   participant,
   race,
-  fontSize,
+  settings,
 }: {
   participant: DisplayParticipant;
   race: DisplayRace;
-  fontSize: number;
+  settings: z.infer<typeof TypographyParams>;
 }) {
   // useHoldValue for the value here of the participant's user and the race id
   const time = useDisplayRaceParticipantTimer(participant, race);
   return (
     <FrameTypography
-      style="monospace"
-      fontSize={fontSize}
+      settings={settings}
       text={time}
       transitionHoldKey={`${race.raceId}:${participant.user}`}
     />

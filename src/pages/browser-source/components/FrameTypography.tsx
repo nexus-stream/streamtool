@@ -3,14 +3,38 @@ import { Textfit } from "@ataverascrespo/react18-ts-textfit";
 import { STYLES } from "../../../components/styles";
 import classNames from "classnames";
 import { useHoldValue } from "../../../components/useHoldValue";
+import { z } from "zod/v4";
+import { CSSProperties, ReactNode, useMemo } from "react";
+
+export const TypographyParams = z
+  .object({
+    fontSize: z.coerce.number(),
+    style: z.enum(["sans-serif", "monospace"]),
+    color: z.string(),
+    stroke: z.coerce.number(),
+    strokeColor: z.string(),
+    halign: z.enum(["left", "center", "right"]),
+    valign: z.enum(["top", "middle", "bottom"]),
+    shrinkToFit: z.enum(["yes", "no"]),
+  })
+  .default({
+    fontSize: 48,
+    style: "sans-serif",
+    color: "#FFFFFF",
+    stroke: 0,
+    strokeColor: "transparent",
+    halign: "left",
+    valign: "middle",
+    shrinkToFit: "yes",
+  });
 
 interface BaseProps {
-  style?: "sans-serif" | "monospace";
-  fontSize: number;
   text: string;
   transitionHoldKey?: string;
   // Can manually control transition
   isFading?: boolean;
+
+  settings: z.infer<typeof TypographyParams>;
 }
 
 interface Props extends BaseProps {
@@ -43,25 +67,65 @@ export function FrameTypographyWithTransition({
 }
 
 export function FrameTypographyBase({
-  style = "sans-serif",
-  fontSize,
   text,
   isFading,
+  settings: {
+    fontSize,
+    style,
+    color,
+    stroke,
+    strokeColor,
+    halign,
+    valign,
+    shrinkToFit,
+  },
 }: BaseProps) {
   return (
     <div className={classNames({ fading: isFading })} css={containerStyle}>
-      <div css={textStyles[style]}>
-        <Textfit mode="single" max={fontSize}>
+      <div
+        css={[
+          baseTextStyle,
+          textFamilyStyles[style],
+          textHalignStyles[halign],
+          textValignStyles[valign],
+        ]}
+        style={{
+          color,
+          WebkitTextStroke:
+            stroke === 0 ? undefined : `${stroke}px ${strokeColor}`,
+        }}
+      >
+        <MaybeFitText fontSize={fontSize} shrinkToFit={shrinkToFit}>
           {text}
-        </Textfit>
+        </MaybeFitText>
       </div>
     </div>
   );
 }
 
+function MaybeFitText({
+  shrinkToFit,
+  fontSize,
+  children,
+}: {
+  shrinkToFit: "yes" | "no";
+  fontSize: number;
+  children: ReactNode;
+}) {
+  switch (shrinkToFit) {
+    case "yes":
+      return (
+        <Textfit mode="single" max={fontSize}>
+          {children}
+        </Textfit>
+      );
+    case "no":
+      return <span style={{ fontSize }}>{children}</span>;
+  }
+}
+
 const containerStyle = css`
   display: flex;
-  align-items: center;
   ${STYLES.fullHeight};
   transition: opacity 400ms ease-in-out;
   transition-delay: 100ms;
@@ -73,23 +137,45 @@ const containerStyle = css`
   }
 `;
 
-const baseStyle = css`
+const baseTextStyle = css`
   min-width: 0;
   flex-grow: 1;
 `;
 
-const textStyles = {
+const textFamilyStyles = {
   "sans-serif": css`
-    ${baseStyle};
     font-family: "Jockey One", sans-serif;
     font-weight: 400;
     font-style: normal;
     font-variant-numeric: tabular-nums;
   `,
   monospace: css`
-    ${baseStyle};
     font-family: "IBM Plex Mono", monospace;
     font-weight: 700;
     font-style: normal;
+  `,
+};
+
+const textHalignStyles = {
+  left: css`
+    text-align: left;
+  `,
+  center: css`
+    text-align: center;
+  `,
+  right: css`
+    text-align: right;
+  `,
+};
+
+const textValignStyles = {
+  top: css`
+    align-self: start;
+  `,
+  middle: css`
+    align-self: center;
+  `,
+  bottom: css`
+    align-self: end;
   `,
 };

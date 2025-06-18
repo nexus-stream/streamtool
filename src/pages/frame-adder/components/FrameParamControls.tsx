@@ -17,6 +17,7 @@ export function FrameParamControls({ schema, params, setParams }: Props) {
   return (
     <>
       {shapeEntries.map(([key, value]) => {
+        console.log(key, value);
         return (
           <SingleParamControl
             key={key}
