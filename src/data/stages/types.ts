@@ -9,7 +9,7 @@ interface BaseStage {
   name: string;
 
   streamTitle?: string;
-  streamGameId?: string;
+  streamGameName?: string;
 
   stageEnterWebsocketEvent?: string;
 }

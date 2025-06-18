@@ -9,6 +9,7 @@ import { PreviousStageButton } from "./components/PreviousStageButton";
 import { ConnectButton } from "./components/ConnectButton";
 import { ObsWebSocketProvider } from "../../data/obs/ObsWebSocketProvider";
 import { FrameAutoResizer } from "./components/FrameAutoResizer";
+import { TwitchButton } from "./components/TwitchButton";
 
 export function DockedPage() {
   useHotkeys(
@@ -23,7 +24,10 @@ export function DockedPage() {
     <ObsWebSocketProvider>
       <Page>
         <CenteredStack>
-          <ConnectButton />
+          <ButtonBar>
+            <ConnectButton />
+            <TwitchButton />
+          </ButtonBar>
           <StageSelector />
           <ButtonBar>
             <PreviousStageButton />

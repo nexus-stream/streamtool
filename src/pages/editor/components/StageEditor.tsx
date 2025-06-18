@@ -13,6 +13,7 @@ import { StageValueEditor } from "./values/StageValueEditor";
 import { useRaceOverrideState } from "../../../data/display/useRaceOverrideState";
 import { CommentatorEditor } from "./CommentatorEditor";
 import { Button } from "@mui/material";
+import { StageGameNameEditor } from "./values/StageGameNameEditor";
 
 export function StageEditor() {
   const currentEditorStage = useSelector(selectCurrentEditorStage);
@@ -34,16 +35,12 @@ export function StageEditorContent({ stage }: { stage: Stage }) {
         param="streamTitle"
         stageId={stage.id}
       />
-      <StageValueEditor
-        label="Stream Game ID"
-        param="streamGameId"
-        stageId={stage.id}
-      />
-      <StageValueEditor
+      <StageGameNameEditor stageId={stage.id} />
+      {/* <StageValueEditor
         label="Custom Websocket Event"
         param="stageEnterWebsocketEvent"
         stageId={stage.id}
-      />
+      /> */}
       {stage.kind === "race" && <StageRaceEditor stage={stage} />}
       {stage.kind === "vod" && <StageVodEditor stage={stage} />}
     </div>

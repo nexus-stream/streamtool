@@ -1,12 +1,6 @@
 - Add twitch integration
   - Client ID: opwnmlab2jmjs7vzsj63sisn1769ao
-
-Rename "DisplayRace" to "StageRace", and "DisplayParticipant" to "StageRaceParticipant".
-Make stage a discriminated union, with "race" and "vod" as types
-When vod is the type, just have a "vod link" instead of raceId and overrides
-
-Add VOD frame
-VOD editor just uses normal stage editor. Make therun url field also take a VOD link
+- Add websocket event dispatching
 
 -----------
 

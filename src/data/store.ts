@@ -3,6 +3,7 @@ import stageReducer from "./stages/stageSlice";
 import raceReducer from "./races/raceSlice";
 import userReducer from "./users/userSlice";
 import obsReducer from "./obs/obsSlice";
+import twitchReducer from "./twitch/twitchSlice";
 import editorReducer from "./editor/editorSlice";
 import {
   createStateSyncMiddleware,
@@ -16,6 +17,7 @@ const rootReducer = combineReducers({
   races: raceReducer,
   users: userReducer,
   obs: obsReducer,
+  twitch: twitchReducer,
   editor: editorReducer,
 });
 
