@@ -18,6 +18,7 @@ export const DISPLAY_RACE_FIELDS: {
     );
   },
   status: (race) => race.status,
+  commentators: () => [],
   startTime: (race) => race.startTime,
   endTime: (race) => race.endTime,
 };

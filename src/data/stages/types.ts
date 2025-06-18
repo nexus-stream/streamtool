@@ -12,6 +12,7 @@ export interface Stage {
   name: string;
 
   streamTitle?: string;
+  streamGameId?: string;
 
   stageEnterWebsocketEvent?: string;
 

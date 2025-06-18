@@ -90,3 +90,9 @@ SetSceneItemTransform
 
 -------------
 
+
+https://id.twitch.tv/oauth2/authorize?response_type=token&client_id=opwnmlab2jmjs7vzsj63sisn1769ao&redirect_uri=http%3A%2F%2Flocalhost%3A5173%2Ftwitch&scope=channel%3Amanage%3Abroadcast
+
+curl -X GET 'https://api.twitch.tv/helix/games?name=lego%20Star%20Wars%3A%20The%20Complete%20Saga' \
+-H 'Authorization: Bearer hit0cjfvx6v7y5doa7hsk1wrvnfhvm' \
+-H 'Client-Id: opwnmlab2jmjs7vzsj63sisn1769ao'

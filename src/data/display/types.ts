@@ -15,6 +15,7 @@ export interface DisplayRace {
   category: string;
   participants: DisplayParticipant[];
   status: RaceStatus;
+  commentators: Commentator[];
   startTime: string | null;
   endTime: string | null;
 }
@@ -32,6 +33,11 @@ export interface DisplayParticipant {
   startTime: number | null;
   finalTime: number | null;
   pb: string | null;
+}
+
+export interface Commentator {
+  name: string;
+  pronouns: string;
 }
 
 export type RaceDisplayFieldGetter<TValue> = (
