@@ -52,7 +52,7 @@ const stageSlice = createSlice({
       action: PayloadAction<{ id: string; participantOrder: string[] }>
     ) {
       const stage = state.entities[action.payload.id];
-      if (!stage) {
+      if (!stage || stage.kind !== "race") {
         return;
       }
 
@@ -63,7 +63,7 @@ const stageSlice = createSlice({
       action: PayloadAction<{ id: string; patch: Partial<DisplayRace> }>
     ) {
       const stage = state.entities[action.payload.id];
-      if (!stage) {
+      if (!stage || stage.kind !== "race") {
         return;
       }
       stage.raceOverrides = {
@@ -86,7 +86,7 @@ const stageSlice = createSlice({
       }>
     ) {
       const stage = state.entities[action.payload.id];
-      if (!stage) {
+      if (!stage || stage.kind !== "race") {
         return;
       }
 

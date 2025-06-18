@@ -1,9 +1,8 @@
 import { useCallback } from "react";
-import { useSelector } from "react-redux";
 import { useAppDispatch } from "../hooks";
-import { stageSelectors } from "../stages/selectors";
 import { patchRaceOverrides } from "../stages/stageSlice";
 import { DisplayRace } from "./types";
+import { useRaceStage } from "./useRaceStage";
 
 // Gets a useState like interface for reading and updating the override state for
 // a race value for a given stage. This lets us easily define components meant to
@@ -18,8 +17,8 @@ export function useRaceOverrideState<TParam extends keyof DisplayRace>(
 ] {
   const dispatch = useAppDispatch();
 
-  const override = useSelector(stageSelectors.selectEntities)[stageId]
-    ?.raceOverrides?.[param];
+  const stage = useRaceStage(stageId);
+  const override = stage?.raceOverrides?.[param];
 
   const setOverride = useCallback(
     (newValue: DisplayRace[TParam] | undefined) => {

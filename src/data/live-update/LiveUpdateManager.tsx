@@ -24,7 +24,9 @@ export function LiveUpdateManager() {
 const selectActiveRaceIds = createSelector(
   stageSelectors.selectAll,
   (stages) => {
-    const allRaces = stages.map((stage) => stage.raceId);
+    const allRaces = stages
+      .filter((stage) => stage.kind === "race")
+      .map((stage) => stage.raceId);
     return Array.from(new Set(allRaces));
   }
 );

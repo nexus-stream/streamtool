@@ -14,11 +14,29 @@ export const createStageForRace = createAsyncThunk(
       id: uuidv4(),
       raceId,
       name,
+      kind: "race",
       raceOverrides: {},
       participantOverrides: {},
     };
 
     dispatch(setStage(stage));
     dispatch(setCurrentEditorStageId(stage.id));
+  }
+);
+
+export const createStageForVod = createAsyncThunk(
+  "createStageForVod",
+  async ({ vodId, name }: { vodId: string; name: string }, { dispatch }) => {
+    const stage: Stage = {
+      // This has to be a thunk because uuid generation makes it an impure function and thus
+      // incompatible with redux state sync. I suppose I could just create an action and handle
+      // it in the action creator, but I'm feeling lazy right now.
+      id: uuidv4(),
+      vodId,
+      name,
+      kind: "vod",
+    };
+
+    dispatch(setStage(stage));
   }
 );

@@ -64,7 +64,7 @@ const selectCurrentRace = createSelector(
   selectCurrentStage,
   raceSelectors.selectEntities,
   (stage, raceEntities) => {
-    if (!stage) {
+    if (!stage || stage.kind !== "race") {
       return undefined;
     }
 
@@ -77,7 +77,7 @@ export const selectCurrentPatchedDisplayRace = createSelector(
   selectCurrentRace,
   userSelectors.selectEntities,
   (stage, race, userEntities): DisplayRace | undefined => {
-    if (!stage || !race) {
+    if (!stage || !race || stage.kind !== "race") {
       return;
     }
 

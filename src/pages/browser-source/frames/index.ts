@@ -3,11 +3,12 @@ import { participantAvatarFrame } from "./participantAvatar";
 import { debugFrame } from "./debug";
 import { participantTextFrame } from "./participantText";
 import { raceTextFrame } from "./raceText";
-import { participantStreamFrame } from "./stream";
+import { participantStreamFrame } from "./participantStream";
 import { commentatorAvatarFrame } from "./commentatorAvatar";
 import { commentatorTextFrame } from "./commentatorText";
 import { participantDoubleTextFrame } from "./participantDoubleText";
 import { commentatorDoubleTextFrame } from "./commentatorDoubleText";
+import { vodPlayerFrame } from "./vodPlayer";
 
 export const FRAMES: { [frameId: string]: FrameComponent } = {
   participantStream: participantStreamFrame,
@@ -18,5 +19,6 @@ export const FRAMES: { [frameId: string]: FrameComponent } = {
   commentatorDoubleText: commentatorDoubleTextFrame,
   commentatorAvatar: commentatorAvatarFrame,
   raceText: raceTextFrame,
+  vodPlayer: vodPlayerFrame,
   debug: debugFrame,
 };

@@ -1,9 +1,8 @@
 import { useCallback } from "react";
-import { useSelector } from "react-redux";
 import { useAppDispatch } from "../hooks";
-import { stageSelectors } from "../stages/selectors";
 import { patchRaceOverrideParticipant } from "../stages/stageSlice";
 import { DisplayParticipant } from "./types";
+import { useRaceStage } from "./useRaceStage";
 
 export function useParticipantOverrideState<
   TParam extends keyof DisplayParticipant
@@ -17,8 +16,9 @@ export function useParticipantOverrideState<
 ] {
   const dispatch = useAppDispatch();
 
-  const override = useSelector(stageSelectors.selectEntities)[stageId]
-    ?.participantOverrides?.[user]?.[param];
+  const stage = useRaceStage(stageId);
+
+  const override = stage?.participantOverrides?.[user]?.[param];
 
   const setOverride = useCallback(
     (newValue: DisplayParticipant[TParam] | undefined) => {

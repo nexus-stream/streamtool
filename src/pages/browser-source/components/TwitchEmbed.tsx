@@ -2,11 +2,20 @@ import { css } from "@emotion/react";
 import { STYLES } from "../../../components/styles";
 
 interface Props {
-  twitchUser: string;
+  twitchUser?: string;
+  twitchVideo?: string;
 }
 
-export function ParticipantStream({ twitchUser }: Props) {
-  const embed = buildTwitchEmbedLink(twitchUser);
+export function TwitchEmbed({ twitchUser, twitchVideo }: Props) {
+  if (!twitchUser && !twitchVideo) {
+    return <div>Embed requires a user or a video</div>;
+  }
+
+  if (twitchUser && twitchVideo) {
+    return <div>Embed cannot have both a user and a video</div>;
+  }
+
+  const embed = buildTwitchEmbedLink({ twitchUser, twitchVideo });
 
   return (
     <div css={STYLES.fullSize}>
@@ -15,7 +24,7 @@ export function ParticipantStream({ twitchUser }: Props) {
   );
 }
 
-function buildTwitchEmbedLink(twitchUser: string) {
+function buildTwitchEmbedLink({ twitchUser, twitchVideo }: Props) {
   const url = new URL("https://embed.twitch.tv");
 
   url.searchParams.append("allowfullscreen", "true");
@@ -26,7 +35,14 @@ function buildTwitchEmbedLink(twitchUser: string) {
   url.searchParams.append("layout", "video");
   url.searchParams.append("theme", "dark");
 
-  url.searchParams.append("channel", twitchUser);
+  if (twitchUser) {
+    url.searchParams.append("channel", twitchUser);
+  }
+
+  if (twitchVideo) {
+    url.searchParams.append("video", twitchVideo);
+  }
+
   url.searchParams.append("parent", window.location.hostname);
 
   return url.toString();

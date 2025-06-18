@@ -17,6 +17,7 @@ interface DisplayProperties<TProps = unknown> {
   height: number;
   defaultName?: (props: TProps) => string;
   autoResize?: boolean;
+  skipRequireRace?: boolean;
 }
 
 export type FrameComponent<

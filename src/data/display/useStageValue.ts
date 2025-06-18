@@ -15,7 +15,8 @@ export type StringValuesOnly<T> = {
 };
 
 export function useStageStringValue<
-  TParam extends keyof StringValuesOnly<Stage>
+  TParam extends keyof StringValuesOnly<TStage>,
+  TStage extends Stage
 >(stageId: string, param: TParam): [string, (val: string) => void] {
   const dispatch = useAppDispatch();
   const stage = useSelector(stageSelectors.selectEntities)[stageId];
@@ -31,5 +32,5 @@ export function useStageStringValue<
     return FALLBACK_VALUE;
   }
 
-  return [stage[param] ?? "", setter];
+  return [(stage[param] as string) ?? "", setter];
 }

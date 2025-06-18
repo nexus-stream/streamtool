@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
 import { selectCurrentEditorStage } from "../../../data/editor/selectors";
-import { Stage } from "../../../data/stages/types";
+import { Stage, VodStage } from "../../../data/stages/types";
 import { useDisplayRaceValue } from "../../../data/display/useDisplayRaceValue";
 import { RaceValueEditor } from "./values/RaceValueEditor";
 import { ParticipantEditor } from "./ParticipantEditor";
@@ -25,12 +25,6 @@ export function StageEditor() {
 }
 
 export function StageEditorContent({ stage }: { stage: Stage }) {
-  const participants = useDisplayRaceValue("participants", stage.id);
-  const [commentators, setCommentators] = useRaceOverrideState(
-    "commentators",
-    stage.id
-  );
-
   return (
     <div css={containerStyle}>
       <h2>Stage Data</h2>
@@ -50,6 +44,21 @@ export function StageEditorContent({ stage }: { stage: Stage }) {
         param="stageEnterWebsocketEvent"
         stageId={stage.id}
       />
+      {stage.kind === "race" && <StageRaceEditor stage={stage} />}
+      {stage.kind === "vod" && <StageVodEditor stage={stage} />}
+    </div>
+  );
+}
+
+function StageRaceEditor({ stage }: { stage: Stage }) {
+  const participants = useDisplayRaceValue("participants", stage.id);
+  const [commentators, setCommentators] = useRaceOverrideState(
+    "commentators",
+    stage.id
+  );
+
+  return (
+    <>
       <h2>Race Data</h2>
       <RaceValueViewer label="Race ID" param="raceId" stageId={stage.id} />
       <RaceValueEditor label="Game" param="game" stageId={stage.id} />
@@ -95,7 +104,20 @@ export function StageEditorContent({ stage }: { stage: Stage }) {
           Add
         </Button>
       </div>
-    </div>
+    </>
+  );
+}
+
+function StageVodEditor({ stage }: { stage: Stage }) {
+  return (
+    <>
+      <h2>Vod Data</h2>
+      <StageValueEditor<"vodId", VodStage>
+        label="Vod ID"
+        param="vodId"
+        stageId={stage.id}
+      />
+    </>
   );
 }
 

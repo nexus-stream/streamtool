@@ -1,6 +1,6 @@
 import { z } from "zod/v4";
 import { buildFrameComponent } from "../frame";
-import { ParticipantStream } from "../components/ParticipantStream";
+import { TwitchEmbed } from "../components/TwitchEmbed";
 import { useHoldValue } from "../../../components/useHoldValue";
 import { css } from "@emotion/react";
 import { STYLES } from "../../../components/styles";
@@ -36,7 +36,7 @@ export const participantStreamFrame = buildFrameComponent(
         className={classNames({ fading: isTransition })}
         css={containerStyle}
       >
-        <ParticipantStream twitchUser={twitchUser} />
+        <TwitchEmbed twitchUser={twitchUser} />
       </div>
     );
   }

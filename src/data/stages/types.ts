@@ -1,12 +1,9 @@
 import { DisplayRace, DisplayParticipant } from "../display/types";
 
-export interface Stage {
+interface BaseStage {
   // guid for internal purposes - lets multiple stages for the same
   // run get added, which feels like it could be useful.
   id: string;
-
-  // therun.gg race id
-  raceId: string;
 
   // Friendly name to make the stage listing readable.
   name: string;
@@ -15,6 +12,13 @@ export interface Stage {
   streamGameId?: string;
 
   stageEnterWebsocketEvent?: string;
+}
+
+export interface RaceStage extends BaseStage {
+  kind: "race";
+
+  // therun.gg race id
+  raceId: string;
 
   // Manual overrides of the automatically updated data.
   raceOverrides: Partial<DisplayRace>;
@@ -22,6 +26,10 @@ export interface Stage {
   participantOrder?: string[];
 }
 
-export interface StageWithPopulatedRace extends Stage {
-  race: DisplayRace;
+export interface VodStage extends BaseStage {
+  kind: "vod";
+
+  vodId: string;
 }
+
+export type Stage = RaceStage | VodStage;

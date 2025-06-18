@@ -2,7 +2,10 @@ import { Button, FormControl, FormHelperText, TextField } from "@mui/material";
 import { ModalButtons, StyledModal } from "../../../components/StyledModal";
 import { useAppDispatch } from "../../../data/hooks";
 import { useCallback, useState } from "react";
-import { createStageForRace } from "../../../data/stages/thunks";
+import {
+  createStageForRace,
+  createStageForVod,
+} from "../../../data/stages/thunks";
 import { VerticalContent } from "../../../components/Layout";
 
 interface Props {
@@ -20,15 +23,27 @@ export function StageCreateModal({ onClose }: Props) {
 
   const onConfirm = useCallback(async () => {
     const raceId = extractTheRunId(theRunURL);
+    if (raceId) {
+      try {
+        setStatus("loading");
+        await dispatch(createStageForRace({ raceId, name }));
+        setStatus("finished");
+        onClose();
+      } catch {
+        setStatus("error");
+      }
+      return;
+    }
 
-    try {
-      setStatus("loading");
-      await dispatch(createStageForRace({ raceId, name }));
+    const twitchVodId = extractTwitchVodID(theRunURL);
+    if (twitchVodId) {
+      dispatch(createStageForVod({ vodId: twitchVodId, name }));
       setStatus("finished");
       onClose();
-    } catch {
-      setStatus("error");
+      return;
     }
+
+    setStatus("error");
   }, [dispatch, name, onClose, theRunURL]);
 
   return (
@@ -47,7 +62,7 @@ export function StageCreateModal({ onClose }: Props) {
 
           <TextField
             type="string"
-            label="therun.gg URL"
+            label="therun.gg URL or Twitch VOD URL"
             value={theRunURL}
             disabled={status === "loading"}
             onChange={(event) => setTheRunURL(event.target.value)}
@@ -76,8 +91,14 @@ export function StageCreateModal({ onClose }: Props) {
   );
 }
 
-function extractTheRunId(url: string): string {
+function extractTheRunId(url: string): string | undefined {
   const regex = /therun\.gg\/races\/([a-zA-Z0-9]+)/;
   const match = url.match(regex);
-  return match?.[1] ?? url;
+  return match?.[1];
+}
+
+function extractTwitchVodID(url: string): string | undefined {
+  const regex = /twitch\.tv\/videos\/([0-9]+)/;
+  const match = url.match(regex);
+  return match?.[1];
 }

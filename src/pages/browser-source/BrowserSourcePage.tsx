@@ -14,11 +14,11 @@ export function BrowserSourcePage() {
   const currentRace = useAppSelector(selectCurrentPatchedDisplayRace);
   const { frame, params } = useFrameWithParsedParams();
 
-  if (!stageId || !currentRace) {
+  if (!stageId || (!currentRace && !frame.displayProperties.skipRequireRace)) {
     return null;
   }
 
-  return <frame.fc stageId={stageId} race={currentRace} {...params} />;
+  return <frame.fc stageId={stageId} race={currentRace!} {...params} />;
 }
 
 function useFrameWithParsedParams() {
