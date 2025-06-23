@@ -22,13 +22,11 @@ function ObsDataSyncInner({ socket }: { socket: OBSWebSocket }) {
       const requestData = {
         message: `streamtool flat data${stringifiedData}`,
       };
-      console.log("START", requestData);
-      const result = await socket.call("CallVendorRequest", {
+      await socket.call("CallVendorRequest", {
         vendorName: "AdvancedSceneSwitcher",
         requestType: "AdvancedSceneSwitcherMessage",
         requestData,
       });
-      console.log(result);
     };
     void toRun();
   }, [socket, stringifiedData]);
