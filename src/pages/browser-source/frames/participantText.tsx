@@ -6,7 +6,6 @@ import {
   FrameTypography,
   TypographyParams,
 } from "../components/FrameTypography";
-import { css } from "@emotion/react";
 
 const Params = z.object({
   participantPosition: z.coerce.number().default(1),
@@ -35,19 +34,11 @@ export const participantTextFrame = buildFrameComponent(
       case "displayName":
       case "pronouns":
         return (
-          <div
-            css={css`
-              display: flex;
-              gap: 4px;
-              height: 100%;
-            `}
-          >
-            <FrameTypography
-              settings={settings}
-              text={participant[kind] ?? ""}
-              transitionHoldKey={`${race.raceId}:${participant.user}`}
-            />
-          </div>
+          <FrameTypography
+            settings={settings}
+            text={participant[kind] ?? ""}
+            transitionHoldKey={`${race.raceId}:${participant.user}`}
+          />
         );
       case "time":
         return (

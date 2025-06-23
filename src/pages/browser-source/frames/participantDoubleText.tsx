@@ -9,6 +9,7 @@ import { FC } from "react";
 const Params = z.object({
   participantPosition: z.coerce.number().default(1),
   gap: z.coerce.number().default(0),
+  halign: z.enum(["left", "center", "right"]).default("left"),
   leftKind: z.enum(["displayName", "pronouns", "time"]).default("displayName"),
   leftSettings: TypographyParams,
   rightKind: z.enum(["displayName", "pronouns", "time"]).default("pronouns"),
@@ -28,9 +29,20 @@ export const participantDoubleTextFrame = buildFrameComponent(
     autoResize: true,
   },
   Params,
-  ({ leftKind, leftSettings, rightKind, rightSettings, gap, ...rest }) => {
+  ({
+    leftKind,
+    leftSettings,
+    rightKind,
+    rightSettings,
+    gap,
+    halign,
+    ...rest
+  }) => {
     return (
-      <div css={containerStyle} style={{ gap }}>
+      <div
+        css={[containerStyle, containerHalignStyles[halign]]}
+        style={{ gap }}
+      >
         <InnerFrame kind={leftKind} settings={leftSettings} {...rest} />
         <InnerFrame kind={rightKind} settings={rightSettings} {...rest} />
       </div>
@@ -41,4 +53,17 @@ export const participantDoubleTextFrame = buildFrameComponent(
 const containerStyle = css`
   display: flex;
   ${STYLES.fullHeight};
+  ${STYLES.fullWidth};
 `;
+
+const containerHalignStyles = {
+  left: css`
+    justify-content: start;
+  `,
+  center: css`
+    justify-content: center;
+  `,
+  right: css`
+    justify-content: end;
+  `,
+};

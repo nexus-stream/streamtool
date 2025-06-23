@@ -16,7 +16,7 @@ export const TypographyParams = z
     strokeColor: z.string(),
     halign: z.enum(["left", "center", "right"]),
     valign: z.enum(["top", "middle", "bottom"]),
-    shrinkToFit: z.enum(["yes", "no"]),
+    // shrinkToFit: z.enum(["yes", "no"]),
   })
   .default({
     fontSize: 48,
@@ -27,7 +27,7 @@ export const TypographyParams = z
     strokeColor: "transparent",
     halign: "left",
     valign: "middle",
-    shrinkToFit: "no",
+    // shrinkToFit: "no",
   });
 
 interface BaseProps {
@@ -80,7 +80,7 @@ export function FrameTypographyBase({
     strokeColor,
     halign,
     valign,
-    shrinkToFit,
+    // shrinkToFit,
   },
 }: BaseProps) {
   return (
@@ -99,7 +99,7 @@ export function FrameTypographyBase({
             stroke === 0 ? undefined : `${stroke}px ${strokeColor}`,
         }}
       >
-        <MaybeFitText fontSize={fontSize} shrinkToFit={shrinkToFit}>
+        <MaybeFitText fontSize={fontSize} shrinkToFit="no">
           {text}
         </MaybeFitText>
       </div>
