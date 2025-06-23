@@ -1,6 +1,7 @@
 - Add arbitrary tags
   - Keep tag registry & have dropdown to select from existing tags
 - Add user-configurable next delay + next start event
+  - Probably need a settings panel
 - Add results order
 - Make reorder listing vertical + add names
 

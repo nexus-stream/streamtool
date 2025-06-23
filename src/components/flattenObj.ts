@@ -5,7 +5,8 @@ export function flattenObj(obj?: object, baseKey?: string) {
 
   let flattenedObj: { [key: string]: unknown } = {};
 
-  for (const [key, value] of Object.entries(obj)) {
+  for (const [rawKey, value] of Object.entries(obj)) {
+    const key = makeNumberKeysOneIndexed(rawKey);
     const path = baseKey ? `${baseKey}/${key}` : key;
     if (typeof value === "object") {
       flattenedObj = {
@@ -18,4 +19,13 @@ export function flattenObj(obj?: object, baseKey?: string) {
   }
 
   return flattenedObj;
+}
+
+function makeNumberKeysOneIndexed(key: string) {
+  const numKey = parseInt(key);
+  if (isNaN(numKey)) {
+    return key;
+  }
+
+  return `${numKey + 1}`;
 }
