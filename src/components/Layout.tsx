@@ -24,11 +24,11 @@ export const TitleBar = styled("div")`
 `;
 
 export const CenteredStack = styled("div")`
-  ${STYLES.fullSize};
+  ${STYLES.fullWidth};
   ${STYLES.spacedFlex};
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  margin: auto;
 `;
 
 export const ButtonBar = styled("div")`

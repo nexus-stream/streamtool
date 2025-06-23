@@ -3,8 +3,7 @@ import {
   selectCurrentPatchedDisplayRace,
   selectCurrentStageId,
 } from "../../../data/stages/selectors";
-import { ButtonBar } from "../../../components/Layout";
-import { css, ToggleButton, Tooltip } from "@mui/material";
+import { css, ToggleButton } from "@mui/material";
 import { Avatar } from "../../../components/Avatar";
 import { useCallback, useState } from "react";
 import { size } from "../../../style/theme";
@@ -51,33 +50,45 @@ export function ParticipantOrder() {
   );
 
   return (
-    <ButtonBar>
+    <div css={containerStyle}>
       {participants.map((participant) => {
         return (
-          <Tooltip title={participant.displayName} key={participant.user}>
-            <ToggleButton
-              selected={participant.user === selectedUser}
-              onClick={() => {
-                onClick(participant.user);
-              }}
-              css={buttonStyle}
-              value=""
-            >
-              <Avatar size="medium" src={participant.avatar} />
-            </ToggleButton>
-          </Tooltip>
+          <ToggleButton
+            key={participant.user}
+            selected={participant.user === selectedUser}
+            onClick={() => {
+              onClick(participant.user);
+            }}
+            css={buttonStyle}
+            value=""
+          >
+            <Avatar size="medium" src={participant.avatar} />
+            <p>{participant.displayName}</p>
+          </ToggleButton>
         );
       })}
-    </ButtonBar>
+    </div>
   );
 }
 
+const containerStyle = css`
+  display: flex;
+  flex-direction: column;
+  gap: ${size(2)};
+  min-width: ${size(64)};
+`;
+
 const buttonStyle = css`
-  padding: ${size(1)};
+  display: flex;
+  justify-content: left;
+  gap: ${size(4)};
+  padding: ${size(0.5)};
   transition: transform 200ms ease;
+  text-transform: unset;
+  /* background-color: rgba(255, 255, 255, 0.1); */
 
   &.Mui-selected {
-    transform: translateY(${size(2)});
+    transform: translateX(${size(4)});
     img {
       opacity: 0.6;
     }
