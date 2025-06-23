@@ -102,6 +102,7 @@ export function FrameTypographyBase({
           color,
           WebkitTextStroke:
             stroke === 0 ? undefined : `${stroke}px ${strokeColor}`,
+          paintOrder: stroke === 0 ? undefined : "stroke fill",
         }}
       >
         <MaybeFitText fontSize={fontSize} shrinkToFit="no">
