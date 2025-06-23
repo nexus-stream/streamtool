@@ -6,7 +6,7 @@ import { useHoldValue } from "../../../components/useHoldValue";
 import { z } from "zod/v4";
 import { ReactNode } from "react";
 
-export const TypographyParams = z.object({
+export const TypographyParamsNoDefault = z.object({
   fontSize: z.coerce.number(),
   family: z.enum(["sans-serif", "monospace"]),
   style: z.enum(["normal", "italics"]),
@@ -31,7 +31,7 @@ export const TYPOGRAPHY_PARAMS_DEFAULT = {
   // shrinkToFit: "no",
 } as const;
 
-export const TypographyParamsWithDefault = TypographyParams.default(
+export const TypographyParamsWithDefault = TypographyParamsNoDefault.default(
   TYPOGRAPHY_PARAMS_DEFAULT
 );
 

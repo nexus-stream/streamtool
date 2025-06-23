@@ -2,7 +2,7 @@ import { z } from "zod/v4";
 import { buildFrameComponent } from "../frame";
 import {
   TYPOGRAPHY_PARAMS_DEFAULT,
-  TypographyParams,
+  TypographyParamsNoDefault,
 } from "../components/FrameTypography";
 import { css } from "@emotion/react";
 import { STYLES } from "../../../components/styles";
@@ -14,11 +14,11 @@ const Params = z.object({
   gap: z.coerce.number().default(0),
   halign: z.enum(["left", "center", "right"]).default("left"),
   leftKind: z.enum(["displayName", "pronouns", "time"]).default("displayName"),
-  leftSettings: TypographyParams.omit({ halign: true }).default(
+  leftSettings: TypographyParamsNoDefault.omit({ halign: true }).default(
     TYPOGRAPHY_PARAMS_DEFAULT
   ),
   rightKind: z.enum(["displayName", "pronouns", "time"]).default("pronouns"),
-  rightSettings: TypographyParams.omit({ halign: true }).default(
+  rightSettings: TypographyParamsNoDefault.omit({ halign: true }).default(
     TYPOGRAPHY_PARAMS_DEFAULT
   ),
 });

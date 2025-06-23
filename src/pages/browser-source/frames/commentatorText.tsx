@@ -2,13 +2,13 @@ import { z } from "zod/v4";
 import { buildFrameComponent } from "../frame";
 import {
   FrameTypography,
-  TypographyParams,
+  TypographyParamsWithDefault,
 } from "../components/FrameTypography";
 
 const Params = z.object({
   commentatorPosition: z.coerce.number().default(1),
   kind: z.enum(["user", "pronouns"]).default("user"),
-  settings: TypographyParams,
+  settings: TypographyParamsWithDefault,
 });
 
 export const commentatorTextFrame = buildFrameComponent(

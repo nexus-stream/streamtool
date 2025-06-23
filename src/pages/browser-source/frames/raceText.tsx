@@ -4,12 +4,12 @@ import { DisplayRace } from "../../../data/display/types";
 import { useDisplayRaceTimer } from "../../../data/display/displayTimerHooks";
 import {
   FrameTypography,
-  TypographyParams,
+  TypographyParamsWithDefault,
 } from "../components/FrameTypography";
 
 const Params = z.object({
   kind: z.enum(["game", "category", "time"]).default("game"),
-  settings: TypographyParams,
+  settings: TypographyParamsWithDefault,
 });
 
 export const raceTextFrame = buildFrameComponent(
@@ -44,7 +44,7 @@ function RaceTextTimer({
   settings,
 }: {
   race: DisplayRace;
-  settings: z.infer<typeof TypographyParams>;
+  settings: z.infer<typeof TypographyParamsWithDefault>;
 }) {
   const time = useDisplayRaceTimer(race);
   return (

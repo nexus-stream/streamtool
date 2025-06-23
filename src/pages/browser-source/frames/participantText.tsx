@@ -4,13 +4,13 @@ import { DisplayParticipant, DisplayRace } from "../../../data/display/types";
 import { useDisplayRaceParticipantTimer } from "../../../data/display/displayTimerHooks";
 import {
   FrameTypography,
-  TypographyParams,
+  TypographyParamsWithDefault,
 } from "../components/FrameTypography";
 
 const Params = z.object({
   participantPosition: z.coerce.number().default(1),
   kind: z.enum(["displayName", "pronouns", "time"]).default("displayName"),
-  settings: TypographyParams,
+  settings: TypographyParamsWithDefault,
 });
 
 export const participantTextFrame = buildFrameComponent(
@@ -60,7 +60,7 @@ function ParticipantTextTimer({
 }: {
   participant: DisplayParticipant;
   race: DisplayRace;
-  settings: z.infer<typeof TypographyParams>;
+  settings: z.infer<typeof TypographyParamsWithDefault>;
 }) {
   // useHoldValue for the value here of the participant's user and the race id
   const time = useDisplayRaceParticipantTimer(participant, race);
