@@ -10,7 +10,10 @@ import { useCallback, useState } from "react";
 import { size } from "../../../../style/theme";
 import { STYLES } from "../../../../components/styles";
 
-interface Props<TParam> {
+interface Props<
+  TParam extends keyof StringValuesOnly<TStage>,
+  TStage extends Stage
+> {
   label: string;
   param: TParam;
   stageId: string;
@@ -19,8 +22,12 @@ interface Props<TParam> {
 export function StageValueEditor<
   TParam extends keyof StringValuesOnly<TStage>,
   TStage extends Stage
->({ label, param, stageId }: Props<TParam>) {
-  const [backingValue, setBackingValue] = useStageStringValue(stageId, param);
+>({ label, param, stageId }: Props<TParam, TStage>) {
+  const [backingValue, setBackingValue] = useStageStringValue(
+    stageId,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    param as any
+  );
   const [isEditing, setIsEditing] = useState(false);
   const [editValue, setEditValue] = useState("");
 

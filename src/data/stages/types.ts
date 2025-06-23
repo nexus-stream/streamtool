@@ -11,7 +11,7 @@ interface BaseStage {
   streamTitle?: string;
   streamGameName?: string;
 
-  stageEnterWebsocketEvent?: string;
+  tags?: { [key: string]: string };
 }
 
 export interface RaceStage extends BaseStage {

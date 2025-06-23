@@ -14,6 +14,7 @@ import { useRaceOverrideState } from "../../../data/display/useRaceOverrideState
 import { CommentatorEditor } from "./CommentatorEditor";
 import { Button } from "@mui/material";
 import { StageGameNameEditor } from "./values/StageGameNameEditor";
+import { StageTagEditor } from "./values/StageTagEditor";
 
 export function StageEditor() {
   const currentEditorStage = useSelector(selectCurrentEditorStage);
@@ -36,6 +37,7 @@ export function StageEditorContent({ stage }: { stage: Stage }) {
         stageId={stage.id}
       />
       <StageGameNameEditor stageId={stage.id} />
+      <StageTagEditor stageId={stage.id} />
       {/* <StageValueEditor
         label="Custom Websocket Event"
         param="stageEnterWebsocketEvent"

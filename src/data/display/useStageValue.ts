@@ -14,23 +14,35 @@ export type StringValuesOnly<T> = {
   [K in keyof T as T[K] extends string | undefined ? K : never]: T[K];
 };
 
-export function useStageStringValue<
-  TParam extends keyof StringValuesOnly<TStage>,
+export function useStageValue<
+  TParam extends keyof TStage,
   TStage extends Stage
->(stageId: string, param: TParam): [string, (val: string) => void] {
+>(
+  stageId: string,
+  param: TParam
+): [TStage[TParam], (val: TStage[TParam]) => void] {
   const dispatch = useAppDispatch();
   const stage = useSelector(stageSelectors.selectEntities)[stageId];
 
   const setter = useCallback(
-    (newValue: string) => {
+    (newValue: TStage[TParam]) => {
       dispatch(updateStage({ id: stageId, changes: { [param]: newValue } }));
     },
     [dispatch, param, stageId]
   );
 
   if (!stage) {
-    return FALLBACK_VALUE;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    return FALLBACK_VALUE as any;
   }
 
-  return [(stage[param] as string) ?? "", setter];
+  return [(stage as TStage)[param], setter];
+}
+
+export function useStageStringValue<
+  TParam extends keyof StringValuesOnly<TStage>,
+  TStage extends Stage
+>(stageId: string, param: TParam): [string, (val: string) => void] {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  return useStageValue(stageId, param) as any;
 }

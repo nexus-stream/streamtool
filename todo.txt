@@ -1,4 +1,6 @@
 - Add arbitrary tags
   - Keep tag registry & have dropdown to select from existing tags
-- Add results order
+- Add results ordering
+- Add score
+- Add PB
 - Make reorder listing vertical + add names

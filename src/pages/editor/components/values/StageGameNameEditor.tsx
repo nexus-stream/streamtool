@@ -1,4 +1,4 @@
-import { useStageStringValue } from "../../../../data/display/useStageValue";
+import { useStageValue } from "../../../../data/display/useStageValue";
 import { css, TextField, ToggleButton } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import SaveIcon from "@mui/icons-material/Save";
@@ -12,7 +12,7 @@ interface Props {
 }
 
 export function StageGameNameEditor({ stageId }: Props) {
-  const [backingValue, setBackingValue] = useStageStringValue(
+  const [backingValue, setBackingValue] = useStageValue(
     stageId,
     "streamGameName"
   );
@@ -35,7 +35,7 @@ export function StageGameNameEditor({ stageId }: Props) {
         setGameId(`Id: ${gameId}`);
       }
     } else {
-      setEditValue(backingValue);
+      setEditValue(backingValue ?? "");
       setIsEditing(true);
     }
   }, [backingValue, editValue, getGameId, isEditing, setBackingValue]);
