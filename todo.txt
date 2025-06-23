@@ -1,6 +1,8 @@
-- Add twitch integration
-  - Client ID: opwnmlab2jmjs7vzsj63sisn1769ao
-- Add websocket event dispatching
+- Add arbitrary tags
+  - Keep tag registry & have dropdown to select from existing tags
+- Add user-configurable next delay + next start event
+- Add results order
+- Make reorder listing vertical + add names
 
 -----------
 

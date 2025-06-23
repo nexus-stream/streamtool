@@ -15,12 +15,12 @@ export function ObsDataSync() {
 
 function ObsDataSyncInner({ socket }: { socket: OBSWebSocket }) {
   const flatData = useFlatData();
+  const stringifiedData = JSON.stringify(flatData, null, 2);
 
   useEffect(() => {
     const toRun = async () => {
       const requestData = {
-        message: `streamtool flat data${JSON.stringify(flatData, null, 2)}`,
-        // message: "test-message",
+        message: `streamtool flat data${stringifiedData}`,
       };
       console.log("START", requestData);
       const result = await socket.call("CallVendorRequest", {
@@ -31,22 +31,7 @@ function ObsDataSyncInner({ socket }: { socket: OBSWebSocket }) {
       console.log(result);
     };
     void toRun();
-  }, [socket, flatData]);
+  }, [socket, stringifiedData]);
 
   return null;
 }
-
-// {
-//     "d": {
-//         "requestData": {
-//             "requestData": {
-//                 "message": "testing"
-//             },
-//             "requestType": "AdvancedSceneSwitcherMessage",
-//             "vendorName": "AdvancedSceneSwitcher"
-//         },
-//         "requestId": "someUniqueIdHere",
-//         "requestType": "CallVendorRequest"
-//     },
-//     "op": 6
-// }
