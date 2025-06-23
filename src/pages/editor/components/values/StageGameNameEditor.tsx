@@ -21,7 +21,7 @@ export function StageGameNameEditor({ stageId }: Props) {
   const [gameId, setGameId] = useState("");
   const { getGameId } = useTwitchApi();
 
-  const value = isEditing ? editValue : backingValue;
+  const value = isEditing ? editValue : backingValue ?? "";
 
   const toggleIsEditing = useCallback(async () => {
     if (isEditing) {

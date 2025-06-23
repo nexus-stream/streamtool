@@ -31,7 +31,7 @@ export function StageValueEditor<
   const [isEditing, setIsEditing] = useState(false);
   const [editValue, setEditValue] = useState("");
 
-  const value = isEditing ? editValue : backingValue;
+  const value = isEditing ? editValue : backingValue ?? "";
 
   const toggleIsEditing = useCallback(() => {
     if (isEditing) {

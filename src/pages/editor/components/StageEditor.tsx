@@ -37,7 +37,7 @@ export function StageEditorContent({ stage }: { stage: Stage }) {
         stageId={stage.id}
       />
       <StageGameNameEditor stageId={stage.id} />
-      <StageTagEditor stageId={stage.id} />
+      <StageTagEditor key={stage.id} stageId={stage.id} />
       {/* <StageValueEditor
         label="Custom Websocket Event"
         param="stageEnterWebsocketEvent"

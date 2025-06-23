@@ -1,8 +1,10 @@
 import { useCallback, useEffect, useState } from "react";
 import { useStageValue } from "../../../../data/display/useStageValue";
 import { css } from "@emotion/react";
-import { Button, TextField } from "@mui/material";
+import { Autocomplete, Button, TextField } from "@mui/material";
 import { size } from "../../../../style/theme";
+import { useSelector } from "react-redux";
+import { selectAllStageTagNames } from "../../../../data/stages/selectors";
 
 interface Props {
   stageId: string;
@@ -100,15 +102,23 @@ function SingleTagEditor({
   updateTag: (index: number, key: string, value: string) => void;
   deleteTag: (index: number) => void;
 }) {
+  const tagNames = useSelector(selectAllStageTagNames);
+
   return (
     <div css={rowStyle}>
-      <TextField
+      <Autocomplete
         fullWidth
+        freeSolo
+        autoSelect
+        options={tagNames}
         value={name}
-        size="small"
-        label="Name"
-        onChange={(event) => updateTag(index, event.target.value, value)}
+        onChange={(_, name) => updateTag(index, name ?? "", value)}
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        renderInput={(params: any) => (
+          <TextField {...params} size="small" label="Name" />
+        )}
       />
+
       <TextField
         fullWidth
         value={value}

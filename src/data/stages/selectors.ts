@@ -129,3 +129,16 @@ function orderParticipants(
 
   return orderedParticipants;
 }
+
+export const selectAllStageTagNames = createSelector(
+  stageSelectors.selectAll,
+  (stages) => {
+    const tagNames = new Set<string>();
+    for (const stage of stages) {
+      for (const name of Object.keys(stage.tags ?? {})) {
+        tagNames.add(name);
+      }
+    }
+    return [...tagNames].sort();
+  }
+);

@@ -21,6 +21,14 @@ export function DockedPage() {
     []
   );
 
+  useHotkeys(
+    "ctrl+t",
+    () => {
+      window.open(`/flat`);
+    },
+    []
+  );
+
   return (
     <ObsWebSocketProvider>
       <Page>
