@@ -10,6 +10,7 @@ import { ConnectButton } from "./components/ConnectButton";
 import { ObsWebSocketProvider } from "../../data/obs/ObsWebSocketProvider";
 import { FrameAutoResizer } from "./components/FrameAutoResizer";
 import { TwitchButton } from "./components/TwitchButton";
+import { ObsDataSync } from "./components/ObsDataSync";
 
 export function DockedPage() {
   useHotkeys(
@@ -49,6 +50,10 @@ export function DockedPage() {
           {/* Handles auto resizing the browser source of frames that have opted into that behavior. Should only
           ever be running in one place. */}
           <FrameAutoResizer />
+
+          {/* Handles syncing current stage data to advanced scene switcher. Should only ever be running
+          in one place. */}
+          <ObsDataSync />
         </CenteredStack>
       </Page>
     </ObsWebSocketProvider>
