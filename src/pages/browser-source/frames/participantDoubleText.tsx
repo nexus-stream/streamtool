@@ -1,6 +1,9 @@
 import { z } from "zod/v4";
 import { buildFrameComponent } from "../frame";
-import { TypographyParams } from "../components/FrameTypography";
+import {
+  TYPOGRAPHY_PARAMS_DEFAULT,
+  TypographyParams,
+} from "../components/FrameTypography";
 import { css } from "@emotion/react";
 import { STYLES } from "../../../components/styles";
 import { participantTextFrame } from "./participantText";
@@ -11,9 +14,13 @@ const Params = z.object({
   gap: z.coerce.number().default(0),
   halign: z.enum(["left", "center", "right"]).default("left"),
   leftKind: z.enum(["displayName", "pronouns", "time"]).default("displayName"),
-  leftSettings: TypographyParams,
+  leftSettings: TypographyParams.omit({ halign: true }).default(
+    TYPOGRAPHY_PARAMS_DEFAULT
+  ),
   rightKind: z.enum(["displayName", "pronouns", "time"]).default("pronouns"),
-  rightSettings: TypographyParams,
+  rightSettings: TypographyParams.omit({ halign: true }).default(
+    TYPOGRAPHY_PARAMS_DEFAULT
+  ),
 });
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any

@@ -6,29 +6,34 @@ import { useHoldValue } from "../../../components/useHoldValue";
 import { z } from "zod/v4";
 import { ReactNode } from "react";
 
-export const TypographyParams = z
-  .object({
-    fontSize: z.coerce.number(),
-    family: z.enum(["sans-serif", "monospace"]),
-    style: z.enum(["normal", "italics"]),
-    color: z.string(),
-    stroke: z.coerce.number(),
-    strokeColor: z.string(),
-    halign: z.enum(["left", "center", "right"]),
-    valign: z.enum(["top", "middle", "bottom"]),
-    // shrinkToFit: z.enum(["yes", "no"]),
-  })
-  .default({
-    fontSize: 48,
-    family: "sans-serif",
-    style: "normal",
-    color: "#FFFFFF",
-    stroke: 0,
-    strokeColor: "transparent",
-    halign: "left",
-    valign: "middle",
-    // shrinkToFit: "no",
-  });
+export const TypographyParams = z.object({
+  fontSize: z.coerce.number(),
+  family: z.enum(["sans-serif", "monospace"]),
+  style: z.enum(["normal", "italics"]),
+  color: z.string(),
+  stroke: z.coerce.number(),
+  strokeColor: z.string(),
+  halign: z.enum(["left", "center", "right"]),
+  valign: z.enum(["top", "middle", "bottom"]),
+  // shrinkToFit: z.enum(["yes", "no"]),
+});
+
+// eslint-disable-next-line react-refresh/only-export-components
+export const TYPOGRAPHY_PARAMS_DEFAULT = {
+  fontSize: 48,
+  family: "sans-serif",
+  style: "normal",
+  color: "#FFFFFF",
+  stroke: 0,
+  strokeColor: "transparent",
+  halign: "left",
+  valign: "middle",
+  // shrinkToFit: "no",
+} as const;
+
+export const TypographyParamsWithDefault = TypographyParams.default(
+  TYPOGRAPHY_PARAMS_DEFAULT
+);
 
 interface BaseProps {
   text: string;
@@ -36,7 +41,7 @@ interface BaseProps {
   // Can manually control transition
   isFading?: boolean;
 
-  settings: z.infer<typeof TypographyParams>;
+  settings: z.infer<typeof TypographyParamsWithDefault>;
 }
 
 interface Props extends BaseProps {
