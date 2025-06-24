@@ -2,6 +2,7 @@ import OBSWebSocket from "obs-websocket-js";
 import { useOBSWebsocketWithStatus } from "../../../data/obs/ObsWebSocketContext";
 import { useFlatData } from "../../../data/display/useFlatData";
 import { useEffect } from "react";
+import { useThrottle } from "ahooks";
 
 export function ObsDataSync() {
   const socketWithStatus = useOBSWebsocketWithStatus();
@@ -16,11 +17,12 @@ export function ObsDataSync() {
 function ObsDataSyncInner({ socket }: { socket: OBSWebSocket }) {
   const flatData = useFlatData();
   const stringifiedData = JSON.stringify(flatData, null, 2);
+  const throttledData = useThrottle(stringifiedData, { wait: 1000 });
 
   useEffect(() => {
     const toRun = async () => {
       const requestData = {
-        message: `streamtool flat data${stringifiedData}`,
+        message: `streamtool flat data${throttledData}`,
       };
       await socket.call("CallVendorRequest", {
         vendorName: "AdvancedSceneSwitcher",
@@ -29,7 +31,7 @@ function ObsDataSyncInner({ socket }: { socket: OBSWebSocket }) {
       });
     };
     void toRun();
-  }, [socket, stringifiedData]);
+  }, [socket, throttledData]);
 
   return null;
 }
