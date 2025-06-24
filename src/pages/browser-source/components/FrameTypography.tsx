@@ -7,31 +7,20 @@ import { z } from "zod/v4";
 import { ReactNode } from "react";
 
 export const TypographyParamsNoDefault = z.object({
-  fontSize: z.coerce.number(),
-  family: z.enum(["sans-serif", "monospace"]),
-  customFamily: z.string(),
-  style: z.enum(["normal", "italics"]),
-  color: z.string(),
-  stroke: z.coerce.number(),
-  strokeColor: z.string(),
-  halign: z.enum(["left", "center", "right"]),
-  valign: z.enum(["top", "middle", "bottom"]),
+  fontSize: z.coerce.number().default(48),
+  family: z.enum(["sans-serif", "monospace"]).default("sans-serif"),
+  customFamily: z.string().default(""),
+  style: z.enum(["normal", "italics"]).default("normal"),
+  color: z.string().default("#FFFFFF"),
+  stroke: z.coerce.number().default(0),
+  strokeColor: z.string().default("transparent"),
+  halign: z.enum(["left", "center", "right"]).default("left"),
+  valign: z.enum(["top", "middle", "bottom"]).default("middle"),
   // shrinkToFit: z.enum(["yes", "no"]),
 });
 
 // eslint-disable-next-line react-refresh/only-export-components
-export const TYPOGRAPHY_PARAMS_DEFAULT = {
-  fontSize: 48,
-  family: "sans-serif",
-  customFamily: "",
-  style: "normal",
-  color: "#FFFFFF",
-  stroke: 0,
-  strokeColor: "transparent",
-  halign: "left",
-  valign: "middle",
-  // shrinkToFit: "no",
-} as const;
+export const TYPOGRAPHY_PARAMS_DEFAULT = TypographyParamsNoDefault.parse({});
 
 export const TypographyParamsWithDefault = TypographyParamsNoDefault.default(
   TYPOGRAPHY_PARAMS_DEFAULT
