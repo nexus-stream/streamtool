@@ -40,3 +40,19 @@ export const createStageForVod = createAsyncThunk(
     dispatch(setStage(stage));
   }
 );
+
+export const createStageForTagOnly = createAsyncThunk(
+  "createStageForVod",
+  async ({ name }: { name: string }, { dispatch }) => {
+    const stage: Stage = {
+      // This has to be a thunk because uuid generation makes it an impure function and thus
+      // incompatible with redux state sync. I suppose I could just create an action and handle
+      // it in the action creator, but I'm feeling lazy right now.
+      id: uuidv4(),
+      name,
+      kind: "tag-only",
+    };
+
+    dispatch(setStage(stage));
+  }
+);

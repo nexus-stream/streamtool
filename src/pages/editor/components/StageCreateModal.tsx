@@ -4,6 +4,7 @@ import { useAppDispatch } from "../../../data/hooks";
 import { useCallback, useState } from "react";
 import {
   createStageForRace,
+  createStageForTagOnly,
   createStageForVod,
 } from "../../../data/stages/thunks";
 import { VerticalContent } from "../../../components/Layout";
@@ -43,6 +44,13 @@ export function StageCreateModal({ onClose }: Props) {
       return;
     }
 
+    if (!theRunURL.trim()) {
+      dispatch(createStageForTagOnly({ name }));
+      setStatus("finished");
+      onClose();
+      return;
+    }
+
     setStatus("error");
   }, [dispatch, name, onClose, theRunURL]);
 
@@ -62,7 +70,7 @@ export function StageCreateModal({ onClose }: Props) {
 
           <TextField
             type="string"
-            label="therun.gg URL or Twitch VOD URL"
+            label="therun.gg URL or Twitch VOD URL (optional)"
             value={theRunURL}
             disabled={status === "loading"}
             onChange={(event) => setTheRunURL(event.target.value)}

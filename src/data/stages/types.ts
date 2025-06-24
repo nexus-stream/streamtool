@@ -32,4 +32,8 @@ export interface VodStage extends BaseStage {
   vodId: string;
 }
 
-export type Stage = RaceStage | VodStage;
+export interface TagOnlyStage extends BaseStage {
+  kind: "tag-only";
+}
+
+export type Stage = RaceStage | VodStage | TagOnlyStage;
