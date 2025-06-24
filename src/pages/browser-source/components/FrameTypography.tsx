@@ -9,6 +9,7 @@ import { ReactNode } from "react";
 export const TypographyParamsNoDefault = z.object({
   fontSize: z.coerce.number(),
   family: z.enum(["sans-serif", "monospace"]),
+  customFamily: z.string(),
   style: z.enum(["normal", "italics"]),
   color: z.string(),
   stroke: z.coerce.number(),
@@ -22,6 +23,7 @@ export const TypographyParamsNoDefault = z.object({
 export const TYPOGRAPHY_PARAMS_DEFAULT = {
   fontSize: 48,
   family: "sans-serif",
+  customFamily: "",
   style: "normal",
   color: "#FFFFFF",
   stroke: 0,
@@ -79,6 +81,7 @@ export function FrameTypographyBase({
   settings: {
     fontSize,
     family,
+    customFamily,
     style,
     color,
     stroke,
@@ -88,21 +91,27 @@ export function FrameTypographyBase({
     // shrinkToFit,
   },
 }: BaseProps) {
+  const cssStyles = [
+    baseTextStyle,
+    textStyleStyles[style],
+    textHalignStyles[halign],
+    textValignStyles[valign],
+  ];
+
+  if (!customFamily) {
+    cssStyles.push(textFamilyStyles[family]);
+  }
+
   return (
     <div className={classNames({ fading: isFading })} css={containerStyle}>
       <div
-        css={[
-          baseTextStyle,
-          textFamilyStyles[family],
-          textStyleStyles[style],
-          textHalignStyles[halign],
-          textValignStyles[valign],
-        ]}
+        css={cssStyles}
         style={{
           color,
           WebkitTextStroke:
             stroke === 0 ? undefined : `${stroke}px ${strokeColor}`,
           paintOrder: stroke === 0 ? undefined : "stroke fill",
+          fontFamily: customFamily ? customFamily : undefined,
         }}
       >
         <MaybeFitText fontSize={fontSize} shrinkToFit="no">
@@ -157,7 +166,6 @@ const textFamilyStyles = {
     font-family: "Jockey One", sans-serif;
     font-weight: 400;
     font-style: normal;
-    font-variant-numeric: tabular-nums;
   `,
   monospace: css`
     font-family: "IBM Plex Mono", monospace;
