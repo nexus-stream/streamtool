@@ -1,24 +1,15 @@
-import OBSWebSocket from "obs-websocket-js";
-import { useOBSWebsocketWithStatus } from "../../../data/obs/ObsWebSocketContext";
+import { useOBSWebsocket } from "../../../data/obs/ObsWebSocketContext";
 import { useEffect } from "react";
 import { FrameComponent } from "../../browser-source/frame";
 import { FRAMES } from "../../browser-source/frames";
 
 export function FrameAutoResizer() {
-  const socketAndStatus = useOBSWebsocketWithStatus();
+  const socket = useOBSWebsocket();
 
-  if (socketAndStatus.status === "connected") {
-    return <FrameAutoResizerInner socket={socketAndStatus.socket} />;
-  }
-
-  return null;
-}
-
-function FrameAutoResizerInner({ socket }: { socket: OBSWebSocket }) {
   useEffect(() => {
     const debouncer = new MappedDebouncer(200);
 
-    socket.addListener(
+    socket?.addListener(
       "SceneItemTransformChanged",
       async ({ sceneUuid, sceneItemId, sceneItemTransform }) => {
         if (

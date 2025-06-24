@@ -1,5 +1,5 @@
 import { Button, css } from "@mui/material";
-import { useOBSWebsocketWithStatus } from "../../../data/obs/ObsWebSocketContext";
+import { useOBSWebsocketStatus } from "../../../data/obs/ObsWebSocketContext";
 import { STYLES } from "../../../components/styles";
 import { useAppDispatch } from "../../../data/hooks";
 import { useCallback } from "react";
@@ -9,7 +9,7 @@ import { selectObsCredentials } from "../../../data/obs/selectors";
 
 export function ConnectButton() {
   const dispatch = useAppDispatch();
-  const { status } = useOBSWebsocketWithStatus();
+  const status = useOBSWebsocketStatus();
   const currentCredentials = useSelector(selectObsCredentials);
 
   const onClick = useCallback(() => {

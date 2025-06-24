@@ -28,16 +28,24 @@ export const ObsWebSocketContext = createContext<OBSWebSocketWithStatus>({
   status: "idle",
 });
 
-export function useOBSWebsocketWithStatus(): OBSWebSocketWithStatus {
-  return useContext(ObsWebSocketContext);
-}
-
-export function useOBSWebsocket(): OBSWebSocket {
+export function useOBSWebsocket(): OBSWebSocket | undefined {
   const socketWithStatus = useContext(ObsWebSocketContext);
 
   if (socketWithStatus.status !== "connected") {
-    throw new Error("Not connected!");
+    return undefined;
   }
 
   return socketWithStatus.socket;
+}
+
+export function useOBSWebsocketStatus() {
+  return useContext(ObsWebSocketContext).status;
+}
+
+export function buildAdvancedSceneSwitcherMessage(message: string) {
+  return {
+    vendorName: "AdvancedSceneSwitcher",
+    requestType: "AdvancedSceneSwitcherMessage",
+    requestData: { message },
+  } as const;
 }

@@ -1,12 +1,12 @@
 import { ReactNode } from "react";
-import { useOBSWebsocketWithStatus } from "../../../data/obs/ObsWebSocketContext";
+import { useOBSWebsocketStatus } from "../../../data/obs/ObsWebSocketContext";
 
 interface Props {
   children: ReactNode;
 }
 
 export function OBSConnectionWrapper({ children }: Props) {
-  const { status } = useOBSWebsocketWithStatus();
+  const status = useOBSWebsocketStatus();
 
   switch (status) {
     case "connected":

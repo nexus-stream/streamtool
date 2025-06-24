@@ -1,3 +1,10 @@
 - Add results ordering
 - Add score
 - Add PB
+
+- Twitch logout
+- Order participants by final time
+
+-intermission
+-live
+-results

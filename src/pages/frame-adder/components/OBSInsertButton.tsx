@@ -19,15 +19,19 @@ export function OBSInsertButton({
   width,
   height,
 }: Props) {
-  const obsSocket = useOBSWebsocket();
+  const socket = useOBSWebsocket();
 
   const insertInput = useCallback(
     async (name: string, retryCount = 0) => {
+      if (!socket) {
+        return;
+      }
+
       name = name || `${frameName}_${generateNameSuffix()}`;
-      const sceneInfo = await obsSocket.call("GetSceneList");
+      const sceneInfo = await socket.call("GetSceneList");
       const sceneToInsertTo = sceneInfo.currentProgramSceneUuid;
       try {
-        await obsSocket.call("CreateInput", {
+        await socket.call("CreateInput", {
           inputName: name,
           sceneUuid: sceneToInsertTo,
           inputKind: "browser_source",
@@ -48,7 +52,7 @@ export function OBSInsertButton({
         }
       }
     },
-    [frameName, height, obsSocket, url, width]
+    [frameName, height, socket, url, width]
   );
 
   const onClick = useCallback(() => {

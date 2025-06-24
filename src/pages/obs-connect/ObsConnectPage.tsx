@@ -1,7 +1,7 @@
 import { useCallback } from "react";
 import { useAppDispatch } from "../../data/hooks";
 import { loginToObs } from "../../data/obs/obsSlice";
-import { useOBSWebsocketWithStatus } from "../../data/obs/ObsWebSocketContext";
+import { useOBSWebsocketStatus } from "../../data/obs/ObsWebSocketContext";
 import { OBSLoginForm } from "../../components/OBSLoginForm";
 import { useSelector } from "react-redux";
 import { selectObsCredentials } from "../../data/obs/selectors";
@@ -18,7 +18,7 @@ export function ObsConnectPage() {
 export function ObsConnectPanel() {
   const dispatch = useAppDispatch();
 
-  const socketAndStatus = useOBSWebsocketWithStatus();
+  const status = useOBSWebsocketStatus();
   const { port, password } = useSelector(selectObsCredentials);
 
   const onSubmit = useCallback(
@@ -28,7 +28,7 @@ export function ObsConnectPanel() {
     [dispatch]
   );
 
-  switch (socketAndStatus.status) {
+  switch (status) {
     case "connected":
       return <p>Connected to OBS</p>;
     case "idle":
@@ -37,7 +37,7 @@ export function ObsConnectPanel() {
         <OBSLoginForm
           initialPort={port}
           initialPassword={password}
-          isError={socketAndStatus.status === "login-failed"}
+          isError={status === "login-failed"}
           onSubmit={onSubmit}
         />
       );

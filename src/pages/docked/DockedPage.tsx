@@ -11,6 +11,7 @@ import { ObsWebSocketProvider } from "../../data/obs/ObsWebSocketProvider";
 import { FrameAutoResizer } from "./components/FrameAutoResizer";
 import { TwitchButton } from "./components/TwitchButton";
 import { ObsDataSync } from "./components/ObsDataSync";
+import { AdvancedSceneSwitcherMessageButton } from "./components/AdvancedSceneSwitcherMessageButton";
 
 export function DockedPage() {
   useHotkeys(
@@ -49,6 +50,17 @@ export function DockedPage() {
               Edit
             </Button>
             <NextStageButton />
+          </ButtonBar>
+          <ButtonBar>
+            <AdvancedSceneSwitcherMessageButton name="intermission">
+              Intermission
+            </AdvancedSceneSwitcherMessageButton>
+            <AdvancedSceneSwitcherMessageButton name="live">
+              Live
+            </AdvancedSceneSwitcherMessageButton>
+            <AdvancedSceneSwitcherMessageButton name="results">
+              Results
+            </AdvancedSceneSwitcherMessageButton>
           </ButtonBar>
           <ParticipantOrder />
 
