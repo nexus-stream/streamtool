@@ -5,10 +5,13 @@ import { selectNeedsTwitchAuth } from "../../../data/twitch/selectors";
 import { useState } from "react";
 import SyncIcon from "@mui/icons-material/Sync";
 import { TwitchSync } from "./TwitchSync";
+import { useAppDispatch } from "../../../data/hooks";
+import { clearTwitchToken } from "../../../data/twitch/twitchSlice";
 
 export function TwitchButton() {
   const [syncEnabled, setSyncEnabled] = useState(false);
   const needsAuth = useSelector(selectNeedsTwitchAuth);
+  const dispatch = useAppDispatch();
 
   if (!needsAuth) {
     return (
@@ -19,12 +22,24 @@ export function TwitchButton() {
           selected={syncEnabled}
           onChange={() => setSyncEnabled((old) => !old)}
         >
-          <SyncIcon />{" "}
-          {syncEnabled ? "Twitch Sync Enabled" : "Enable Twitch Sync"}
+          <SyncIcon />
+          {syncEnabled
+            ? "Twitch Game/Title Sync Enabled"
+            : "Enable Twitch Sync"}
         </ToggleButton>
 
+        <Button
+          variant="outlined"
+          size="small"
+          onClick={() => {
+            dispatch(clearTwitchToken());
+          }}
+        >
+          Logout of Twitch
+        </Button>
+
         {/* Handles syncing game and stream title with Twitch. Should only ever be running in one place. */}
-        <TwitchSync />
+        {syncEnabled && <TwitchSync />}
       </>
     );
   }
