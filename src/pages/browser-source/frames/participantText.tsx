@@ -9,7 +9,9 @@ import {
 
 const Params = z.object({
   participantPosition: z.coerce.number().default(1),
-  kind: z.enum(["displayName", "pronouns", "time"]).default("displayName"),
+  kind: z
+    .enum(["displayName", "pronouns", "time", "pb"])
+    .default("displayName"),
   settings: TypographyParamsWithDefault,
 });
 
@@ -33,6 +35,7 @@ export const participantTextFrame = buildFrameComponent(
     switch (kind) {
       case "displayName":
       case "pronouns":
+      case "pb":
         return (
           <FrameTypography
             settings={settings}

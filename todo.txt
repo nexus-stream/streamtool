@@ -2,9 +2,6 @@
 - Add score
 - Add PB
 
-- Twitch logout
-- Order participants by final time
+- Settings page
 
--intermission
--live
--results
+- Cleanup and comment

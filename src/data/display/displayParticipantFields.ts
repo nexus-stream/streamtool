@@ -1,3 +1,4 @@
+import { formatTimer } from "./displayTimerHooks";
 import { DisplayParticipant, ParticipantDisplayFieldGetter } from "./types";
 
 export const DISPLAY_PARTICIPANT_FIELDS: {
@@ -21,7 +22,18 @@ export const DISPLAY_PARTICIPANT_FIELDS: {
       participant.liveData.splitStartedAt - participant.liveData.currentTime
     );
   },
-  pb: (participant) => participant.pb || null,
+  pb: (participant) => {
+    if (!participant.pb) {
+      return null;
+    }
+
+    const time = parseFloat(participant.pb);
+    if (isNaN(time)) {
+      return null;
+    }
+
+    return formatTimer(time);
+  },
   // Handled entirely in overrides since therun doesn't have a concept of
   // a "score" between multiple races.
   score: () => null,

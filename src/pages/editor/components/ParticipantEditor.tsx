@@ -54,6 +54,12 @@ export function ParticipantEditor({ stageId, participant }: Props) {
             stageId={stageId}
             user={participant.user}
           />
+          <ParticipantValueEditor
+            label="Personal Best"
+            param="pb"
+            stageId={stageId}
+            user={participant.user}
+          />
         </VerticalContent>
       </AccordionDetails>
     </Accordion>
