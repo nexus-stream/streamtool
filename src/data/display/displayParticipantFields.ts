@@ -22,4 +22,7 @@ export const DISPLAY_PARTICIPANT_FIELDS: {
     );
   },
   pb: (participant) => participant.pb || null,
+  // Handled entirely in overrides since therun doesn't have a concept of
+  // a "score" between multiple races.
+  score: () => null,
 };

@@ -9,8 +9,10 @@ import { commentatorTextFrame } from "./commentatorText";
 import { participantDoubleTextFrame } from "./participantDoubleText";
 import { commentatorDoubleTextFrame } from "./commentatorDoubleText";
 import { vodPlayerFrame } from "./vodPlayer";
+import { tagTextFrame } from "./tagText";
 
 export const FRAMES: { [frameId: string]: FrameComponent } = {
+  tagText: tagTextFrame,
   participantStream: participantStreamFrame,
   participantText: participantTextFrame,
   participantDoubleText: participantDoubleTextFrame,

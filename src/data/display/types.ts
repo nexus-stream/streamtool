@@ -33,6 +33,7 @@ export interface DisplayParticipant {
   startTime: number | null;
   finalTime: number | null;
   pb: string | null;
+  score: number | null;
 }
 
 export interface Commentator {
