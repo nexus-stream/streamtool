@@ -5,9 +5,11 @@ import { useHoldValue } from "../../../components/useHoldValue";
 import { css } from "@emotion/react";
 import { STYLES } from "../../../components/styles";
 import classNames from "classnames";
+import { getParticipantFromPosition } from "../components/getParticipantFromPosition";
 
 const Params = z.object({
   participantPosition: z.coerce.number().default(1),
+  positionType: z.enum(["manual", "results"]).default("manual"),
 });
 
 export const participantStreamFrame = buildFrameComponent(
@@ -19,8 +21,12 @@ export const participantStreamFrame = buildFrameComponent(
       `Participant ${participantPosition} Stream`,
   },
   Params,
-  ({ race, participantPosition }) => {
-    const participant = race.participants[participantPosition - 1];
+  ({ race, participantPosition, positionType }) => {
+    const participant = getParticipantFromPosition(
+      race.participants,
+      positionType,
+      participantPosition
+    );
 
     const [twitchUser, isTransition] = useHoldValue(
       participant?.twitchUser,

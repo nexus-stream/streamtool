@@ -11,6 +11,7 @@ import { FC } from "react";
 
 const Params = z.object({
   participantPosition: z.coerce.number().default(1),
+  positionType: z.enum(["manual", "results"]).default("manual"),
   gap: z.coerce.number().default(0),
   halign: z.enum(["left", "center", "right"]).default("left"),
   leftKind: z.enum(["displayName", "pronouns", "time"]).default("displayName"),

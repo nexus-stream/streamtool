@@ -6,9 +6,11 @@ import {
   FrameTypography,
   TypographyParamsWithDefault,
 } from "../components/FrameTypography";
+import { getParticipantFromPosition } from "../components/getParticipantFromPosition";
 
 const Params = z.object({
   participantPosition: z.coerce.number().default(1),
+  positionType: z.enum(["manual", "results"]).default("manual"),
   kind: z
     .enum(["displayName", "pronouns", "time", "pb"])
     .default("displayName"),
@@ -25,8 +27,12 @@ export const participantTextFrame = buildFrameComponent(
     autoResize: true,
   },
   Params,
-  ({ race, participantPosition, kind, settings }) => {
-    const participant = race.participants[participantPosition - 1];
+  ({ race, participantPosition, positionType, kind, settings }) => {
+    const participant = getParticipantFromPosition(
+      race.participants,
+      positionType,
+      participantPosition
+    );
 
     if (!participant) {
       return null;

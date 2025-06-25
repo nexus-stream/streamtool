@@ -1,9 +1,11 @@
 import { z } from "zod/v4";
 import { buildFrameComponent } from "../frame";
 import { FrameAvatar } from "../components/FrameAvatar";
+import { getParticipantFromPosition } from "../components/getParticipantFromPosition";
 
 const Params = z.object({
   participantPosition: z.coerce.number().default(1),
+  positionType: z.enum(["manual", "results"]).default("manual"),
 });
 
 export const participantAvatarFrame = buildFrameComponent(
@@ -15,8 +17,12 @@ export const participantAvatarFrame = buildFrameComponent(
       `Participant ${participantPosition} Avatar`,
   },
   Params,
-  ({ race, participantPosition }) => {
-    const participant = race.participants[participantPosition - 1];
+  ({ race, participantPosition, positionType }) => {
+    const participant = getParticipantFromPosition(
+      race.participants,
+      positionType,
+      participantPosition
+    );
 
     if (!participant?.avatar) {
       return null;

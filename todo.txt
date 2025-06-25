@@ -1,7 +1,3 @@
-- Add results ordering
 - Add score
-- Add PB
-
 - Settings page
-
 - Cleanup and comment
