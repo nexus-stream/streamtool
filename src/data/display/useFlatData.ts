@@ -5,9 +5,14 @@ import {
   selectCurrentPatchedDisplayRace,
 } from "../stages/selectors";
 import { useMemo } from "react";
+import { getResultParticipants } from "../../pages/browser-source/components/getParticipantFromPosition";
 
 export function useFlatData() {
   const stage = useSelector(selectCurrentStage);
   const race = useSelector(selectCurrentPatchedDisplayRace);
-  return useMemo(() => flattenObj({ stage, race }), [stage, race]);
+  const results = race ? getResultParticipants(race.participants) : undefined;
+  return useMemo(
+    () => flattenObj({ stage, race, results }),
+    [stage, race, results]
+  );
 }
