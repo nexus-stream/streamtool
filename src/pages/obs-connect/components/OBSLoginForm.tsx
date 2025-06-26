@@ -7,8 +7,8 @@ import {
   TextField,
 } from "@mui/material";
 import { useState } from "react";
-import { STYLES } from "./styles";
-import { COLORS } from "../style/theme";
+import { STYLES } from "../../../style/styles";
+import { COLORS } from "../../../style/theme";
 
 interface Props {
   initialPort: string;

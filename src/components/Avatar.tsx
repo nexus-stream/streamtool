@@ -1,13 +1,14 @@
 import AvatarFallback from "../assets/avatar-fallback.png";
 import { css } from "@emotion/react";
 import { size } from "../style/theme";
-import { STYLES } from "./styles";
+import { STYLES } from "../style/styles";
 
 interface Props {
   src: string | null | undefined;
   size: "small" | "medium" | "large" | "overlay";
 }
 
+// Shared Avatar component for both the stream tool and browser sources.
 export function Avatar({ src, size }: Props) {
   return (
     <img

@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import { flattenObj } from "../../components/flattenObj";
+import { flattenObj } from "../../util/flattenObj";
 import {
   selectCurrentStage,
   selectCurrentPatchedDisplayRace,

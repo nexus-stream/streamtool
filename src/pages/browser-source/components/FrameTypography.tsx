@@ -1,8 +1,8 @@
 import { css } from "@emotion/react";
 import { Textfit } from "@ataverascrespo/react18-ts-textfit";
-import { STYLES } from "../../../components/styles";
+import { STYLES } from "../../../style/styles";
 import classNames from "classnames";
-import { useHoldValue } from "../../../components/useHoldValue";
+import { useTransitionHoldValue } from "../../../util/useTransitionHoldValue";
 import { z } from "zod/v4";
 import { ReactNode } from "react";
 
@@ -53,7 +53,10 @@ export function FrameTypographyWithTransition({
   ...restProps
 }: BaseProps) {
   // move outside so this doesn't get used for timers
-  const [displayText, isFading] = useHoldValue(text, transitionHoldKey ?? text);
+  const [displayText, isFading] = useTransitionHoldValue(
+    text,
+    transitionHoldKey ?? text
+  );
 
   return (
     <FrameTypographyBase

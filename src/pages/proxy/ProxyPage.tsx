@@ -1,6 +1,6 @@
 import { css } from "@emotion/react";
 import { useSearchParams } from "react-router";
-import { STYLES } from "../../components/styles";
+import { STYLES } from "../../style/styles";
 
 export function ProxyPage() {
   const [searchParams] = useSearchParams();

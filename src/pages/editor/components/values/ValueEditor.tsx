@@ -11,7 +11,7 @@ import { css, ToggleButton } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import { useSyncableLocalState } from "./useSyncableLocalState";
 import classNames from "classnames";
-import { STYLES } from "../../../../components/styles";
+import { STYLES } from "../../../../style/styles";
 import { size } from "../../../../style/theme";
 
 interface Props<TValue> {

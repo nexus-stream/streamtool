@@ -17,7 +17,7 @@ import { useEffect, useState } from "react";
 import { StageDeleteModal } from "./StageDeleteModal";
 import { StageCreateModal } from "./StageCreateModal";
 import { COLORS, SIZES } from "../../../style/theme";
-import { STYLES } from "../../../components/styles";
+import { STYLES } from "../../../style/styles";
 import { StageReorderControls } from "./StageReorderControls";
 
 export function StageList() {

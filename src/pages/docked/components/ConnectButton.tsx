@@ -1,6 +1,6 @@
 import { Button, css } from "@mui/material";
 import { useOBSWebsocketStatus } from "../../../data/obs/ObsWebSocketContext";
-import { STYLES } from "../../../components/styles";
+import { STYLES } from "../../../style/styles";
 import { useAppDispatch } from "../../../data/hooks";
 import { useCallback } from "react";
 import { loginToObs } from "../../../data/obs/obsSlice";

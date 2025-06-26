@@ -1,5 +1,5 @@
 import { Avatar } from "../../../components/Avatar";
-import { useHoldValue } from "../../../components/useHoldValue";
+import { useTransitionHoldValue } from "../../../util/useTransitionHoldValue";
 import { css } from "@emotion/react";
 import classNames from "classnames";
 
@@ -9,7 +9,10 @@ interface Props {
 }
 
 export function FrameAvatar({ src, transitionHoldKey }: Props) {
-  const [avatarSrc, isTransition] = useHoldValue(src, transitionHoldKey);
+  const [avatarSrc, isTransition] = useTransitionHoldValue(
+    src,
+    transitionHoldKey
+  );
 
   return (
     <div className={classNames({ fading: isTransition })} css={containerStyle}>

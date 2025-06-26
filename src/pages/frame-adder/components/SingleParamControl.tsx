@@ -5,7 +5,7 @@ import { EnumParamControl } from "./EnumParamControl";
 import { FrameParamControls } from "./FrameParamControls";
 import { css } from "@mui/material";
 import { COLORS, size } from "../../../style/theme";
-import { STYLES } from "../../../components/styles";
+import { STYLES } from "../../../style/styles";
 
 interface Props {
   name: string;

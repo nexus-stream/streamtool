@@ -2,7 +2,7 @@ import { useCallback } from "react";
 import { useAppDispatch } from "../../data/hooks";
 import { loginToObs } from "../../data/obs/obsSlice";
 import { useOBSWebsocketStatus } from "../../data/obs/ObsWebSocketContext";
-import { OBSLoginForm } from "../../components/OBSLoginForm";
+import { OBSLoginForm } from "./components/OBSLoginForm";
 import { useSelector } from "react-redux";
 import { selectObsCredentials } from "../../data/obs/selectors";
 import { ObsWebSocketProvider } from "../../data/obs/ObsWebSocketProvider";

@@ -4,7 +4,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import SaveIcon from "@mui/icons-material/Save";
 import { useCallback, useState } from "react";
 import { size } from "../../../../style/theme";
-import { STYLES } from "../../../../components/styles";
+import { STYLES } from "../../../../style/styles";
 import { useTwitchApi } from "../../../../data/twitch/useTwitchApi";
 
 interface Props {

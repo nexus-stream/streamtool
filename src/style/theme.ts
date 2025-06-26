@@ -14,13 +14,6 @@ export const COLORS = {
 
   link: "#0074D9",
 
-  frameBlueDark: "#23536e",
-  frameBlueLight: "#478aae",
-  // frameBlueNeutral: "#3f5764",
-
-  frameGrayDark: "#a09c9f",
-  frameGrayLight: "#babab9",
-
   placeholder: "rgba(0, 0, 0, 0.4)",
   placeholderBorder: "rgba(0, 0, 0, 0.8)",
 };

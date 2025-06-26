@@ -1,5 +1,5 @@
 import { css } from "@mui/material";
-import { size, SIZES } from "../style/theme";
+import { size, SIZES } from "./theme";
 
 export const STYLES = {
   spacedFlex: css`

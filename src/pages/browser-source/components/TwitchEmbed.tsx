@@ -1,5 +1,5 @@
 import { css } from "@emotion/react";
-import { STYLES } from "../../../components/styles";
+import { STYLES } from "../../../style/styles";
 
 interface Props {
   twitchUser?: string;

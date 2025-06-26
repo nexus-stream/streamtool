@@ -14,7 +14,7 @@ import { FrameParamControls } from "./components/FrameParamControls";
 import { OBSConnectionWrapper } from "./components/OBSConnectionWrapper";
 import { OBSInsertButton } from "./components/OBSInsertButton";
 import { Page } from "../../components/Layout";
-import { STYLES } from "../../components/styles";
+import { STYLES } from "../../style/styles";
 import { ObsWebSocketProvider } from "../../data/obs/ObsWebSocketProvider";
 import { FrameComponent } from "../browser-source/frame";
 import qs from "qs";

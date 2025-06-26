@@ -5,7 +5,7 @@ import {
   TypographyParamsNoDefault,
 } from "../components/FrameTypography";
 import { css } from "@emotion/react";
-import { STYLES } from "../../../components/styles";
+import { STYLES } from "../../../style/styles";
 import { participantTextFrame } from "./participantText";
 import { FC } from "react";
 

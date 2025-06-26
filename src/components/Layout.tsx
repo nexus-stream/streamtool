@@ -1,5 +1,5 @@
 import { styled } from "@mui/material";
-import { STYLES } from "./styles";
+import { STYLES } from "../style/styles";
 
 export const Page = styled("div")`
   ${STYLES.fullSize};

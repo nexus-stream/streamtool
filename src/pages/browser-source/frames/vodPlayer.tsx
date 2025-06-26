@@ -1,8 +1,8 @@
 import { buildFrameComponent } from "../frame";
 import { TwitchEmbed } from "../components/TwitchEmbed";
-import { useHoldValue } from "../../../components/useHoldValue";
+import { useTransitionHoldValue } from "../../../util/useTransitionHoldValue";
 import { css } from "@emotion/react";
-import { STYLES } from "../../../components/styles";
+import { STYLES } from "../../../style/styles";
 import classNames from "classnames";
 import { useSelector } from "react-redux";
 import { stageSelectors } from "../../../data/stages/selectors";
@@ -19,7 +19,7 @@ export const vodPlayerFrame = buildFrameComponent(
     const stage = useSelector(stageSelectors.selectEntities)[stageId];
     const currentVodId = stage.kind === "vod" ? stage.vodId : "";
 
-    const [vodId, isTransition] = useHoldValue(
+    const [vodId, isTransition] = useTransitionHoldValue(
       currentVodId,
       `${stageId}:${currentVodId}`
     );

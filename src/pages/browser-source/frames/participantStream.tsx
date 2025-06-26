@@ -1,9 +1,9 @@
 import { z } from "zod/v4";
 import { buildFrameComponent } from "../frame";
 import { TwitchEmbed } from "../components/TwitchEmbed";
-import { useHoldValue } from "../../../components/useHoldValue";
+import { useTransitionHoldValue } from "../../../util/useTransitionHoldValue";
 import { css } from "@emotion/react";
-import { STYLES } from "../../../components/styles";
+import { STYLES } from "../../../style/styles";
 import classNames from "classnames";
 import { getParticipantFromPosition } from "../components/getParticipantFromPosition";
 
@@ -28,7 +28,7 @@ export const participantStreamFrame = buildFrameComponent(
       participantPosition
     );
 
-    const [twitchUser, isTransition] = useHoldValue(
+    const [twitchUser, isTransition] = useTransitionHoldValue(
       participant?.twitchUser,
       `${race.raceId}:${participant.user}`
     );

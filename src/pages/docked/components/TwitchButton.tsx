@@ -1,5 +1,5 @@
 import { Button, css, ToggleButton } from "@mui/material";
-import { STYLES } from "../../../components/styles";
+import { STYLES } from "../../../style/styles";
 import { useSelector } from "react-redux";
 import { selectNeedsTwitchAuth } from "../../../data/twitch/selectors";
 import { useState } from "react";

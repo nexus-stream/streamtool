@@ -7,7 +7,7 @@ import { ParticipantEditor } from "./ParticipantEditor";
 import { RaceValueViewer } from "./values/RaceValueViewer";
 import { RaceTimerVisualizer } from "./values/RaceTimerVisualizer";
 import { css } from "@emotion/react";
-import { STYLES } from "../../../components/styles";
+import { STYLES } from "../../../style/styles";
 import { COLORS, size } from "../../../style/theme";
 import { StageValueEditor } from "./values/StageValueEditor";
 import { useRaceOverrideState } from "../../../data/display/useRaceOverrideState";
