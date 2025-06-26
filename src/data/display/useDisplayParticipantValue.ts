@@ -1,11 +1,11 @@
 import { useSelector } from "react-redux";
 import { stageSelectors } from "../stages/selectors";
-import { DisplayParticipant } from "./types";
 import { useAppSelector } from "../hooks";
 import { raceSelectors } from "../races/selectors";
 import { userSelectors } from "../users/selectors";
-import { DISPLAY_PARTICIPANT_FIELDS } from "./displayParticipantFields";
+import { DISPLAY_PARTICIPANT_FIELDS } from "./participant/displayParticipantFields";
 import { RaceStage } from "../stages/types";
+import { DisplayParticipant } from "./race/types";
 
 export function useDisplayParticipantValue<
   TParam extends keyof DisplayParticipant

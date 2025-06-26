@@ -33,6 +33,8 @@ const twitchState = createSlice({
 export const updateTwitchExpiration = createAction(
   "twitch/updateTwitchExpiration",
   (expiresIn: number) => {
+    // Because of Redux state sync, all reducers must be absolutely pure. This needs
+    // to be a separate action creator because of the usage of Date.now().
     return { payload: { expirationEpochTime: Date.now() + expiresIn * 1000 } };
   }
 );

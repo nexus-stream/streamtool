@@ -1,12 +1,13 @@
 import { z } from "zod/v4";
 import { buildFrameComponent } from "../frame";
-import { DisplayParticipant, DisplayRace } from "../../../data/display/types";
-import { useDisplayRaceParticipantTimer } from "../../../data/display/displayTimerHooks";
+import { useDisplayRaceParticipantTimer } from "../../../data/display/timer/displayTimerHooks";
 import {
   FrameTypography,
   TypographyParamsWithDefault,
 } from "../components/FrameTypography";
 import { getParticipantFromPosition } from "../components/getParticipantFromPosition";
+import { DisplayRace } from "../../../data/display/participant/types";
+import { DisplayParticipant } from "../../../data/display/race/types";
 
 const Params = z.object({
   participantPosition: z.coerce.number().default(1),

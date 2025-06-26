@@ -1,10 +1,10 @@
 import { FC } from "react";
-import { DisplayParticipant } from "../../../../data/display/types";
 import { OverrideEditorProps } from "./DefaultOverrideEditor";
 import { ValueVisualizerProps } from "./DefaultValueVisualizer";
 import { ValueEditor } from "./ValueEditor";
 import { useDisplayParticipantValue } from "../../../../data/display/useDisplayParticipantValue";
 import { useParticipantOverrideState } from "../../../../data/display/useParticipantOverrideState";
+import { DisplayParticipant } from "../../../../data/display/race/types";
 
 interface Props<TParam extends keyof DisplayParticipant> {
   label: string;

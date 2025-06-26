@@ -6,7 +6,8 @@ import {
 } from "@reduxjs/toolkit";
 import { Stage } from "./types";
 import { RootState } from "../store";
-import { DisplayRace, DisplayParticipant } from "../display/types";
+import { DisplayRace } from "../display/participant/types";
+import { DisplayParticipant } from "../display/race/types";
 
 export const stageAdapter = createEntityAdapter<Stage>();
 

@@ -1,33 +1,4 @@
-import { DisplayParticipant } from "../../../data/display/types";
-
-export function getResultParticipants(participants: DisplayParticipant[]) {
-  return [...participants].sort((a, b) => {
-    const aFinished = a.status === "finished" || a.status === "confirmed";
-    const bFinished = b.status === "finished" || b.status === "confirmed";
-
-    if (aFinished && !bFinished) {
-      return -1;
-    }
-
-    if (!aFinished && bFinished) {
-      return 1;
-    }
-
-    if (a.finalTime && !b.finalTime) {
-      return -1;
-    }
-
-    if (!a.finalTime && b.finalTime) {
-      return 1;
-    }
-
-    if (a.finalTime && b.finalTime) {
-      return a.finalTime - b.finalTime;
-    }
-
-    return 0;
-  });
-}
+import { DisplayParticipant } from "../../../data/display/race/types";
 
 export function getParticipantFromPosition(
   participants: DisplayParticipant[],
@@ -39,5 +10,5 @@ export function getParticipantFromPosition(
     return participants[index];
   }
 
-  return getResultParticipants(participants)[index];
+  // return getResultParticipants(participants)[index];
 }

@@ -1,11 +1,11 @@
 import { Accordion, AccordionSummary, AccordionDetails } from "@mui/material";
-import { DisplayParticipant } from "../../../data/display/types";
 import { ParticipantValueEditor } from "./values/ParticipantValueEditor";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { ParticipantValueViewer } from "./values/ParticipantValueViewer";
 import { ParticipantTimerVisualizer } from "./values/ParticipantTimerVisualizer";
 import { ParticipantEditorSummary } from "./ParticipantEditorSummary";
 import { VerticalContent } from "../../../components/Layout";
+import { DisplayParticipant } from "../../../data/display/race/types";
 
 interface Props {
   stageId: string;

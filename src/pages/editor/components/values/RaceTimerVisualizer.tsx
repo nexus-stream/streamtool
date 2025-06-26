@@ -1,5 +1,5 @@
 import { TextField } from "@mui/material";
-import { useStageRaceTimer } from "../../../../data/display/displayTimerHooks";
+import { useStageRaceTimer } from "../../../../data/display/timer/displayTimerHooks";
 
 export function RaceTimerVisualizer({ stageId }: { stageId: string }) {
   const time = useStageRaceTimer(stageId);

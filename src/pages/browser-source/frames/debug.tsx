@@ -1,6 +1,6 @@
 import { z } from "zod/v4";
 import { buildFrameComponent } from "../frame";
-import { useDisplayRaceTimer } from "../../../data/display/displayTimerHooks";
+import { useDisplayRaceTimer } from "../../../data/display/timer/displayTimerHooks";
 
 const Params = z.object({
   enumType: z.enum(["first", "second", "third"]).default("first"),

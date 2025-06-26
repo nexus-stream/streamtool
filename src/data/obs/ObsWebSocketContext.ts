@@ -41,11 +41,3 @@ export function useOBSWebsocket(): OBSWebSocket | undefined {
 export function useOBSWebsocketStatus() {
   return useContext(ObsWebSocketContext).status;
 }
-
-export function buildAdvancedSceneSwitcherMessage(message: string) {
-  return {
-    vendorName: "AdvancedSceneSwitcher",
-    requestType: "AdvancedSceneSwitcherMessage",
-    requestData: { message },
-  } as const;
-}

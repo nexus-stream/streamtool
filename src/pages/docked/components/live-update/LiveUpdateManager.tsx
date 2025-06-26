@@ -1,7 +1,7 @@
 import { createSelector } from "@reduxjs/toolkit";
-import { stageSelectors } from "../stages/selectors";
 import { RaceLiveUpdater } from "./RaceLiveUpdater";
-import { useAppSelector } from "../hooks";
+import { useAppSelector } from "../../../../data/hooks";
+import { stageSelectors } from "../../../../data/stages/selectors";
 
 // Builds a live updater for every race that we want to actively pull updates for
 // (all races that belong to a stage). This lets us leverage React's lifecycle

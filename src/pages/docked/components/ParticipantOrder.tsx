@@ -1,15 +1,13 @@
 import { useSelector } from "react-redux";
-import {
-  selectCurrentPatchedDisplayRace,
-  selectCurrentStageId,
-} from "../../../data/stages/selectors";
+import { selectCurrentStageId } from "../../../data/stages/selectors";
 import { css, ToggleButton } from "@mui/material";
 import { Avatar } from "../../../components/Avatar";
 import { useCallback, useState } from "react";
 import { size } from "../../../style/theme";
 import { useAppDispatch } from "../../../data/hooks";
 import { setParticipantOrder } from "../../../data/stages/stageSlice";
-import { DisplayParticipant } from "../../../data/display/types";
+import { selectCurrentDisplayRace } from "../../../data/display/selectors";
+import { DisplayParticipant } from "../../../data/display/race/types";
 
 const EMPTY_PARTICIPANTS: DisplayParticipant[] = [];
 
@@ -17,7 +15,7 @@ export function ParticipantOrder() {
   const dispatch = useAppDispatch();
   const [selectedUser, setSelectedUser] = useState<string | undefined>();
   const stageId = useSelector(selectCurrentStageId);
-  const race = useSelector(selectCurrentPatchedDisplayRace);
+  const race = useSelector(selectCurrentDisplayRace);
   const participants = race?.participants ?? EMPTY_PARTICIPANTS;
 
   const onClick = useCallback(

@@ -25,6 +25,7 @@ const persistedReducer = persistReducer(
   {
     key: "root",
     storage,
+    // We don't want to persist the editor state between instances.
     blacklist: ["editor"],
   },
   rootReducer
@@ -53,9 +54,7 @@ const store = configureStore({
 
 initMessageListener(store);
 
-// Infer the `RootState` and `AppDispatch` types from the store itself
 export type RootState = ReturnType<typeof store.getState>;
-// Inferred type: {posts: PostsState, comments: CommentsState, users: UsersState}
 export type AppDispatch = typeof store.dispatch;
 
 export const rootSelector = (state: RootState) => state;

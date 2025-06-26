@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
-import { DisplayParticipant, DisplayRace } from "./types";
-import { useDisplayRaceValue } from "./useDisplayRaceValue";
+import { useDisplayRaceValue } from "../useDisplayRaceValue";
+import { DisplayRace } from "../participant/types";
+import { DisplayParticipant } from "../race/types";
 
 export function useDisplayRaceTimer(race: DisplayRace) {
   return useRaceTime(race.startTime, race.endTime);

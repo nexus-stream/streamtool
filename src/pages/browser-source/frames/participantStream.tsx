@@ -30,7 +30,7 @@ export const participantStreamFrame = buildFrameComponent(
 
     const [twitchUser, isTransition] = useTransitionHoldValue(
       participant?.twitchUser,
-      `${race.raceId}:${participant.user}`
+      `${race.raceId}:${participant?.user}`
     );
 
     if (!participant) {

@@ -1,11 +1,11 @@
 import { z } from "zod/v4";
 import { buildFrameComponent } from "../frame";
-import { DisplayRace } from "../../../data/display/types";
-import { useDisplayRaceTimer } from "../../../data/display/displayTimerHooks";
+import { useDisplayRaceTimer } from "../../../data/display/timer/displayTimerHooks";
 import {
   FrameTypography,
   TypographyParamsWithDefault,
 } from "../components/FrameTypography";
+import { DisplayRace } from "../../../data/display/participant/types";
 
 const Params = z.object({
   kind: z.enum(["game", "category", "time"]).default("game"),

@@ -1,4 +1,3 @@
-import { LiveUpdateManager } from "../../data/live-update/LiveUpdateManager";
 import { Button } from "@mui/material";
 import { StageSelector } from "./components/StageSelector";
 import { ButtonBar, CenteredStack, Page } from "../../components/Layout";
@@ -12,6 +11,7 @@ import { FrameAutoResizer } from "./components/FrameAutoResizer";
 import { TwitchButton } from "./components/TwitchButton";
 import { ObsDataSync } from "./components/ObsDataSync";
 import { AdvancedSceneSwitcherMessageButton } from "./components/AdvancedSceneSwitcherMessageButton";
+import { LiveUpdateManager } from "./components/live-update/LiveUpdateManager";
 
 export function DockedPage() {
   useHotkeys(

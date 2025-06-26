@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
-import { stageSelectors } from "../stages/selectors";
-import { RaceStage } from "../stages/types";
+import { stageSelectors } from "./selectors";
+import { RaceStage } from "./types";
 
 export function useRaceStage(stageId: string): RaceStage | undefined {
   const stage = useSelector(stageSelectors.selectEntities)[stageId];

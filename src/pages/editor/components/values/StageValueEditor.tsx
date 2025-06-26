@@ -2,7 +2,7 @@ import { Stage } from "../../../../data/stages/types";
 import {
   StringValuesOnly,
   useStageStringValue,
-} from "../../../../data/display/useStageValue";
+} from "../../../../data/stages/useStageValue";
 import { css, TextField, ToggleButton } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import SaveIcon from "@mui/icons-material/Save";

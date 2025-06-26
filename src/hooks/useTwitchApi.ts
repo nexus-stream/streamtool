@@ -3,9 +3,9 @@ import {
   clearTwitchToken,
   twitchRootSelector,
   updateTwitchExpiration,
-} from "./twitchSlice";
+} from "../data/twitch/twitchSlice";
 import { useCallback } from "react";
-import { useAppDispatch } from "../hooks";
+import { useAppDispatch } from "../data/hooks";
 
 export interface TwitchApi {
   validate(): Promise<string | undefined>;

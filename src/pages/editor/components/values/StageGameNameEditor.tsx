@@ -1,11 +1,11 @@
-import { useStageValue } from "../../../../data/display/useStageValue";
+import { useStageValue } from "../../../../data/stages/useStageValue";
 import { css, TextField, ToggleButton } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import SaveIcon from "@mui/icons-material/Save";
 import { useCallback, useState } from "react";
 import { size } from "../../../../style/theme";
 import { STYLES } from "../../../../style/styles";
-import { useTwitchApi } from "../../../../data/twitch/useTwitchApi";
+import { useTwitchApi } from "../../../../hooks/useTwitchApi";
 
 interface Props {
   stageId: string;

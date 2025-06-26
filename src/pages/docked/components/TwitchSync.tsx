@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import { useTwitchApi } from "../../../data/twitch/useTwitchApi";
+import { useTwitchApi } from "../../../hooks/useTwitchApi";
 import { selectCurrentStage } from "../../../data/stages/selectors";
 import { useEffect } from "react";
 

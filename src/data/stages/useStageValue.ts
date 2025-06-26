@@ -1,9 +1,9 @@
 import { useSelector } from "react-redux";
-import { stageSelectors } from "../stages/selectors";
-import { Stage } from "../stages/types";
+import { stageSelectors } from "./selectors";
+import { Stage } from "./types";
 import { useAppDispatch } from "../hooks";
 import { useCallback } from "react";
-import { updateStage } from "../stages/stageSlice";
+import { updateStage } from "./stageSlice";
 
 const FALLBACK_VALUE: [string, (val: string) => void] = [
   "EMPTY STAGE",

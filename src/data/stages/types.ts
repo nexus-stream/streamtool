@@ -1,4 +1,5 @@
-import { DisplayRace, DisplayParticipant } from "../display/types";
+import { DisplayRace } from "../display/participant/types";
+import { DisplayParticipant } from "../display/race/types";
 
 interface BaseStage {
   // guid for internal purposes - lets multiple stages for the same

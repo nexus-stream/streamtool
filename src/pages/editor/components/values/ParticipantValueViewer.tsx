@@ -1,10 +1,10 @@
 import { FC } from "react";
-import { DisplayParticipant } from "../../../../data/display/types";
 import {
   DefaultValueVisualizer,
   ValueVisualizerProps,
 } from "./DefaultValueVisualizer";
 import { useDisplayParticipantValue } from "../../../../data/display/useDisplayParticipantValue";
+import { DisplayParticipant } from "../../../../data/display/race/types";
 
 interface Props<TParam extends keyof DisplayParticipant> {
   label: string;

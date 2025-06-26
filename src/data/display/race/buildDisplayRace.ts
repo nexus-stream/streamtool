@@ -1,7 +1,7 @@
-import { Race } from "../races/types";
-import { User } from "../users/types";
+import { Race } from "../../races/types";
+import { User } from "../../users/types";
+import { DisplayRace } from "../participant/types";
 import { DISPLAY_RACE_FIELDS } from "./displayRaceFields";
-import { DisplayRace } from "./types";
 
 export function buildDisplayRace(
   race: Race,

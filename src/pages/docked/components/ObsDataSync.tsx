@@ -1,14 +1,13 @@
-import {
-  buildAdvancedSceneSwitcherMessage,
-  useOBSWebsocket,
-} from "../../../data/obs/ObsWebSocketContext";
-import { useFlatData } from "../../../data/display/useFlatData";
+import { useOBSWebsocket } from "../../../data/obs/ObsWebSocketContext";
 import { useEffect } from "react";
 import { useThrottle } from "ahooks";
+import { buildAdvancedSceneSwitcherMessage } from "../../../util/buildAdvancedSceneSwitcherMessage";
+import { useSelector } from "react-redux";
+import { selectCurrentFlattenedDisplayData } from "../../../data/display/selectors";
 
 export function ObsDataSync() {
   const socket = useOBSWebsocket();
-  const flatData = useFlatData();
+  const flatData = useSelector(selectCurrentFlattenedDisplayData);
   const stringifiedData = JSON.stringify(flatData, null, 2);
   const throttledData = useThrottle(stringifiedData, { wait: 1000 });
 

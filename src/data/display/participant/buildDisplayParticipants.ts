@@ -1,7 +1,7 @@
-import { RaceParticipantWithLiveData } from "../races/types";
-import { User } from "../users/types";
+import { RaceParticipantWithLiveData } from "../../races/types";
+import { User } from "../../users/types";
+import { DisplayParticipant } from "../race/types";
 import { DISPLAY_PARTICIPANT_FIELDS } from "./displayParticipantFields";
-import { DisplayParticipant } from "./types";
 
 export function buildDisplayParticipant(
   participant: RaceParticipantWithLiveData,

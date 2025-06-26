@@ -1,8 +1,8 @@
 import { useCallback } from "react";
 import { useAppDispatch } from "../hooks";
 import { patchRaceOverrideParticipant } from "../stages/stageSlice";
-import { DisplayParticipant } from "./types";
-import { useRaceStage } from "./useRaceStage";
+import { useRaceStage } from "../stages/useRaceStage";
+import { DisplayParticipant } from "./race/types";
 
 export function useParticipantOverrideState<
   TParam extends keyof DisplayParticipant

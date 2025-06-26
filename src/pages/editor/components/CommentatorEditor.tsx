@@ -5,12 +5,12 @@ import {
   Typography,
   Button,
 } from "@mui/material";
-import { Commentator } from "../../../data/display/types";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { TitleBar, VerticalContent } from "../../../components/Layout";
 import { Avatar } from "../../../components/Avatar";
 import { useCallback } from "react";
 import { CommentatorValueEditor } from "./values/CommentatorValueEditor";
+import { Commentator } from "../../../data/display/participant/types";
 
 interface Props {
   commentator: Commentator;

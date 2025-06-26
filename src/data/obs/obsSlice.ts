@@ -31,7 +31,7 @@ const obsSlice = createSlice({
 });
 
 // Normally we'd handle this in the reducer function, but because we're using redux-state-sync
-// we need to keep reducer functions absolutely pure.
+// we need to keep reducer functions absolutely pure and Date.now() isn't pure.
 export const loginToObs = createAsyncThunk(
   "loginToObs",
   async (

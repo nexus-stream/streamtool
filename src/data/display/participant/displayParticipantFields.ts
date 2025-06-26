@@ -1,5 +1,13 @@
-import { formatTimer } from "./displayTimerHooks";
-import { DisplayParticipant, ParticipantDisplayFieldGetter } from "./types";
+import { Race } from "../../races/types";
+import { User } from "../../users/types";
+import { formatTimer } from "../timer/displayTimerHooks";
+import { ParticipantDisplayFieldGetter } from "../race/displayRaceFields";
+import { DisplayParticipant } from "../race/types";
+
+export type RaceDisplayFieldGetter<TValue> = (
+  race: Race,
+  userEntities: Record<string, User>
+) => TValue;
 
 export const DISPLAY_PARTICIPANT_FIELDS: {
   [K in keyof DisplayParticipant]: ParticipantDisplayFieldGetter<

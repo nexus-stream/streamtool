@@ -1,10 +1,10 @@
 import { css, Typography } from "@mui/material";
-import { DisplayParticipant } from "../../../data/display/types";
 import { Avatar } from "../../../components/Avatar";
 import { useParticipantOverrideState } from "../../../data/display/useParticipantOverrideState";
-import { useStageParticipantTimer } from "../../../data/display/displayTimerHooks";
+import { useStageParticipantTimer } from "../../../data/display/timer/displayTimerHooks";
 import { TitleBar } from "../../../components/Layout";
 import { COLORS, size } from "../../../style/theme";
+import { DisplayParticipant } from "../../../data/display/race/types";
 
 interface Props {
   stageId: string;
