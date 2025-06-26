@@ -5,9 +5,12 @@ import {
   FrameTypography,
   TypographyParamsWithDefault,
 } from "../components/FrameTypography";
-import { getParticipantFromPosition } from "../components/getParticipantFromPosition";
 import { DisplayRace } from "../../../data/display/participant/types";
 import { DisplayParticipant } from "../../../data/display/race/types";
+import { useParticipantAtPosition } from "../hooks/useParticipantAtPosition";
+import { useSelector } from "react-redux";
+import { selectCurrentStageId } from "../../../data/stages/selectors";
+import { selectCurrentDisplayRace } from "../../../data/display/selectors";
 
 const Params = z.object({
   participantPosition: z.coerce.number().default(1),
@@ -28,9 +31,10 @@ export const participantTextFrame = buildFrameComponent(
     autoResize: true,
   },
   Params,
-  ({ race, participantPosition, positionType, kind, settings }) => {
-    const participant = getParticipantFromPosition(
-      race.participants,
+  ({ participantPosition, positionType, kind, settings }) => {
+    const stageId = useSelector(selectCurrentStageId);
+    const race = useSelector(selectCurrentDisplayRace);
+    const participant = useParticipantAtPosition(
       positionType,
       participantPosition
     );
@@ -47,14 +51,14 @@ export const participantTextFrame = buildFrameComponent(
           <FrameTypography
             settings={settings}
             text={participant[kind] ?? ""}
-            transitionHoldKey={`${race.raceId}:${participant.user}`}
+            transitionHoldKey={`${stageId}:${participant.user}`}
           />
         );
       case "time":
         return (
           <ParticipantTextTimer
             participant={participant}
-            race={race}
+            race={race!}
             settings={settings}
           />
         );

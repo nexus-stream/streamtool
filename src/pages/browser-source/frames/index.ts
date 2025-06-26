@@ -1,6 +1,5 @@
 import { FrameComponent } from "../frame";
 import { participantAvatarFrame } from "./participantAvatar";
-import { debugFrame } from "./debug";
 import { participantTextFrame } from "./participantText";
 import { raceTextFrame } from "./raceText";
 import { participantStreamFrame } from "./participantStream";
@@ -22,5 +21,4 @@ export const FRAMES: { [frameId: string]: FrameComponent } = {
   commentatorAvatar: commentatorAvatarFrame,
   raceText: raceTextFrame,
   vodPlayer: vodPlayerFrame,
-  debug: debugFrame,
 };

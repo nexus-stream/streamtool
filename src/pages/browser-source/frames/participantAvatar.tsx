@@ -1,7 +1,9 @@
 import { z } from "zod/v4";
-import { buildFrameComponent } from "../frame";
+import { useSelector } from "react-redux";
+import { useParticipantAtPosition } from "../hooks/useParticipantAtPosition";
 import { FrameAvatar } from "../components/FrameAvatar";
-import { getParticipantFromPosition } from "../components/getParticipantFromPosition";
+import { buildFrameComponent } from "../frame";
+import { selectCurrentStageId } from "../../../data/stages/selectors";
 
 const Params = z.object({
   participantPosition: z.coerce.number().default(1),
@@ -17,9 +19,9 @@ export const participantAvatarFrame = buildFrameComponent(
       `Participant ${participantPosition} Avatar`,
   },
   Params,
-  ({ race, participantPosition, positionType }) => {
-    const participant = getParticipantFromPosition(
-      race.participants,
+  ({ participantPosition, positionType }) => {
+    const stageId = useSelector(selectCurrentStageId);
+    const participant = useParticipantAtPosition(
       positionType,
       participantPosition
     );
@@ -31,7 +33,7 @@ export const participantAvatarFrame = buildFrameComponent(
     return (
       <FrameAvatar
         src={participant?.avatar ?? undefined}
-        transitionHoldKey={`${race.raceId}:${participant.user}`}
+        transitionHoldKey={`${stageId}:${participant.user}`}
       />
     );
   }

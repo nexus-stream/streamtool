@@ -21,7 +21,7 @@ export const tagTextFrame = buildFrameComponent(
     autoResize: true,
   },
   Params,
-  ({ stageId, tagName, settings }) => {
+  ({ tagName, settings }) => {
     const stage = useSelector(selectCurrentStage);
     const text = stage?.tags?.[tagName] ?? "";
 
@@ -29,7 +29,7 @@ export const tagTextFrame = buildFrameComponent(
       <FrameTypography
         settings={settings}
         text={text}
-        transitionHoldKey={`${stageId}|${text}`}
+        transitionHoldKey={`${stage?.id}|${text}`}
       />
     );
   }

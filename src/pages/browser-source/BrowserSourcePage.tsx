@@ -1,22 +1,14 @@
 import { useParams, useSearchParams } from "react-router";
 import { FRAMES } from "./frames";
-import { useAppSelector } from "../../data/hooks";
-import { selectCurrentStageId } from "../../data/stages/selectors";
 import { useMemo } from "react";
 import { errorFrame } from "./frames/error";
 import qs from "qs";
-import { selectCurrentDisplayRace } from "../../data/display/selectors";
 
 export function BrowserSourcePage() {
-  const stageId = useAppSelector(selectCurrentStageId);
-  const currentRace = useAppSelector(selectCurrentDisplayRace);
   const { frame, params } = useFrameWithParsedParams();
 
-  if (!stageId || (!currentRace && !frame.displayProperties.skipRequireRace)) {
-    return null;
-  }
-
-  return <frame.fc stageId={stageId} race={currentRace!} {...params} />;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  return <frame.fc {...(params as any)} />;
 }
 
 function useFrameWithParsedParams() {

@@ -4,6 +4,8 @@ import {
   FrameTypography,
   TypographyParamsWithDefault,
 } from "../components/FrameTypography";
+import { useSelector } from "react-redux";
+import { selectCurrentDisplayRace } from "../../../data/display/selectors";
 
 const Params = z.object({
   commentatorPosition: z.coerce.number().default(1),
@@ -21,8 +23,10 @@ export const commentatorTextFrame = buildFrameComponent(
     autoResize: true,
   },
   Params,
-  ({ race, commentatorPosition, kind, settings }) => {
-    const commentator = race.commentators[commentatorPosition - 1];
+  ({ commentatorPosition, kind, settings }) => {
+    const race = useSelector(selectCurrentDisplayRace);
+
+    const commentator = race?.commentators[commentatorPosition - 1];
 
     if (!commentator) {
       return null;

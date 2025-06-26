@@ -6,6 +6,8 @@ import {
   TypographyParamsWithDefault,
 } from "../components/FrameTypography";
 import { DisplayRace } from "../../../data/display/participant/types";
+import { useSelector } from "react-redux";
+import { selectCurrentDisplayRace } from "../../../data/display/selectors";
 
 const Params = z.object({
   kind: z.enum(["game", "category", "time"]).default("game"),
@@ -21,7 +23,13 @@ export const raceTextFrame = buildFrameComponent(
     autoResize: true,
   },
   Params,
-  ({ race, kind, settings }) => {
+  ({ kind, settings }) => {
+    const race = useSelector(selectCurrentDisplayRace);
+
+    if (!race) {
+      return null;
+    }
+
     switch (kind) {
       case "game":
       case "category":

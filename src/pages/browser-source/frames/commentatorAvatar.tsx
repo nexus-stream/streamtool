@@ -1,6 +1,8 @@
 import { z } from "zod/v4";
 import { buildFrameComponent } from "../frame";
 import { FrameAvatar } from "../components/FrameAvatar";
+import { useSelector } from "react-redux";
+import { selectCurrentDisplayRace } from "../../../data/display/selectors";
 
 const Params = z.object({
   commentatorPosition: z.coerce.number().default(1),
@@ -15,8 +17,10 @@ export const commentatorAvatarFrame = buildFrameComponent(
       `Commentator ${commentatorPosition} Avatar`,
   },
   Params,
-  ({ race, commentatorPosition }) => {
-    const commentator = race.commentators[commentatorPosition - 1];
+  ({ commentatorPosition }) => {
+    const race = useSelector(selectCurrentDisplayRace);
+
+    const commentator = race?.commentators[commentatorPosition - 1];
 
     if (!commentator?.avatar) {
       return null;
@@ -25,7 +29,7 @@ export const commentatorAvatarFrame = buildFrameComponent(
     return (
       <FrameAvatar
         src={commentator?.avatar ?? undefined}
-        transitionHoldKey={`${race.raceId}:${commentator.user}`}
+        transitionHoldKey={`${race?.raceId}:${commentator.user}`}
       />
     );
   }

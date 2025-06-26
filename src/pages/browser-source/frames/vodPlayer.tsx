@@ -5,7 +5,7 @@ import { css } from "@emotion/react";
 import { STYLES } from "../../../style/styles";
 import classNames from "classnames";
 import { useSelector } from "react-redux";
-import { stageSelectors } from "../../../data/stages/selectors";
+import { selectCurrentStage } from "../../../data/stages/selectors";
 
 export const vodPlayerFrame = buildFrameComponent(
   {
@@ -15,16 +15,16 @@ export const vodPlayerFrame = buildFrameComponent(
     defaultName: () => "Vod Player",
     skipRequireRace: true,
   },
-  ({ stageId }) => {
-    const stage = useSelector(stageSelectors.selectEntities)[stageId];
-    const currentVodId = stage.kind === "vod" ? stage.vodId : "";
+  () => {
+    const stage = useSelector(selectCurrentStage);
+    const currentVodId = stage?.kind === "vod" ? stage.vodId : "";
 
     const [vodId, isTransition] = useTransitionHoldValue(
       currentVodId,
-      `${stageId}:${currentVodId}`
+      `${stage?.id}:${currentVodId}`
     );
 
-    if (stage.kind !== "vod") {
+    if (stage?.kind !== "vod") {
       return null;
     }
 

@@ -1,6 +1,5 @@
 import { ReactNode } from "react";
 import { z } from "zod/v4";
-import { DisplayRace } from "../../data/display/participant/types";
 
 // Frames package a functional component along with a Zod object representing the type of
 // additional props that should be sent to the frame along with the race information. We
@@ -28,12 +27,7 @@ export type FrameComponent<
 > = {
   displayProperties: DisplayProperties<z.infer<z.ZodObject<TZodType>>>;
   zodProps: z.ZodObject<TZodType>;
-  fc: (
-    props: {
-      stageId: string;
-      race: DisplayRace;
-    } & object
-  ) => ReactNode;
+  fc: (props: z.infer<z.ZodObject<TZodType>>) => ReactNode;
 };
 
 export function buildFrameComponent<
@@ -41,16 +35,12 @@ export function buildFrameComponent<
 >(
   displayProperties: DisplayProperties<z.infer<z.ZodObject<TZodType>>>,
   zodProps: z.ZodObject<TZodType>,
-  fc: (
-    props: { stageId: string; race: DisplayRace } & z.infer<
-      z.ZodObject<TZodType>
-    >
-  ) => ReactNode
+  fc: (props: z.infer<z.ZodObject<TZodType>>) => ReactNode
 ): FrameComponent<TZodType>;
 
 export function buildFrameComponent(
   displayProperties: DisplayProperties,
-  fc: (props: { stageId: string; race: DisplayRace }) => ReactNode
+  fc: () => ReactNode
 ): FrameComponent;
 
 export function buildFrameComponent(

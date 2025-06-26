@@ -5,7 +5,9 @@ import { useTransitionHoldValue } from "../../../util/useTransitionHoldValue";
 import { css } from "@emotion/react";
 import { STYLES } from "../../../style/styles";
 import classNames from "classnames";
-import { getParticipantFromPosition } from "../components/getParticipantFromPosition";
+import { useParticipantAtPosition } from "../hooks/useParticipantAtPosition";
+import { useSelector } from "react-redux";
+import { selectCurrentStageId } from "../../../data/stages/selectors";
 
 const Params = z.object({
   participantPosition: z.coerce.number().default(1),
@@ -21,16 +23,16 @@ export const participantStreamFrame = buildFrameComponent(
       `Participant ${participantPosition} Stream`,
   },
   Params,
-  ({ race, participantPosition, positionType }) => {
-    const participant = getParticipantFromPosition(
-      race.participants,
+  ({ participantPosition, positionType }) => {
+    const stageId = useSelector(selectCurrentStageId);
+    const participant = useParticipantAtPosition(
       positionType,
       participantPosition
     );
 
     const [twitchUser, isTransition] = useTransitionHoldValue(
       participant?.twitchUser,
-      `${race.raceId}:${participant?.user}`
+      `${stageId}:${participant?.user}`
     );
 
     if (!participant) {
