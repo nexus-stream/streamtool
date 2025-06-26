@@ -23,9 +23,9 @@ export function DockedPage() {
   );
 
   useHotkeys(
-    "ctrl+t",
+    "ctrl+d",
     () => {
-      window.open(`/flat`);
+      window.open(`/debug`);
     },
     []
   );

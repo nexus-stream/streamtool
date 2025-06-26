@@ -27,7 +27,7 @@ import "@fontsource/roboto-mono/500.css";
 import "@fontsource/roboto-mono/700.css";
 import { ObsConnectPage } from "./pages/obs-connect/ObsConnectPage";
 import { TwitchWebhookPage } from "./pages/twitch-webhook/TwitchWebhookPage";
-import { FlatStagePage } from "./pages/flat-stage/FlatStagePage";
+import { DebugPage } from "./pages/debug/DebugPage";
 
 const darkTheme = createTheme({
   palette: {
@@ -51,7 +51,7 @@ createRoot(document.getElementById("root")!).render(
                 <Route path="/frame" element={<FrameAdderPage />} />
                 <Route path="/frame/:frameId" element={<BrowserSourcePage />} />
                 <Route path="/twitch" element={<TwitchWebhookPage />} />
-                <Route path="/flat" element={<FlatStagePage />} />
+                <Route path="/debug" element={<DebugPage />} />
                 <Route path="/dump/:raceId" element={<DumpPage />} />
               </Routes>
             </BrowserRouter>

@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
-import { selectCurrentFlattenedDisplayData } from "../../data/display/selectors";
+import { selectCurrentFlattenedDisplayData } from "../../../data/display/selectors";
 
-export function FlatStagePage() {
+export function FlattenedDisplayDataViewer() {
   const data = useSelector(selectCurrentFlattenedDisplayData);
 
   return (
