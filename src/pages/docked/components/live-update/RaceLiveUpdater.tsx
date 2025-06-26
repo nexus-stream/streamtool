@@ -1,11 +1,11 @@
 import { useEffect } from "react";
 import { LiveUpdateMessage } from "./types";
 import { useAppDispatch } from "../../../../data/hooks";
+import { upsertRace } from "../../../../data/races/raceSlice";
 import {
-  upsertRace,
-  updateParticipant,
-} from "../../../../data/races/raceSlice";
-import { addRaceFromId } from "../../../../data/races/thunks";
+  addRaceFromId,
+  updateParticipantAndRefetchRaceIfNew,
+} from "../../../../data/races/thunks";
 
 interface Props {
   raceId: string;
@@ -32,7 +32,7 @@ export function RaceLiveUpdater({ raceId }: Props) {
           dispatch(upsertRace(message.data));
           break;
         case "participantUpdate":
-          dispatch(updateParticipant(message.data));
+          dispatch(updateParticipantAndRefetchRaceIfNew(message.data));
           break;
       }
     });

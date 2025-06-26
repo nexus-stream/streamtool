@@ -1,7 +1,9 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { getRace } from "./api";
-import { upsertRace } from "./raceSlice";
+import { updateParticipant, upsertRace } from "./raceSlice";
 import { addUserFromId } from "../users/thunks";
+import { RaceParticipant } from "./types";
+import { RootState } from "../store";
 
 export const addRaceFromId = createAsyncThunk(
   "addRaceFromId",
@@ -16,5 +18,18 @@ export const addRaceFromId = createAsyncThunk(
     );
 
     return true;
+  }
+);
+
+export const updateParticipantAndRefetchRaceIfNew = createAsyncThunk(
+  "updateParticipantAndRefetchRaceIfNew",
+  async (participant: RaceParticipant, { dispatch, getState }) => {
+    const state = getState() as RootState;
+    const race = state.races.entities[participant.raceId];
+    if (!race?.participants?.find((other) => other.user === participant.user)) {
+      dispatch(addRaceFromId(participant.raceId));
+    }
+
+    dispatch(updateParticipant(participant));
   }
 );
