@@ -9,8 +9,20 @@ import {
 import { TitleBar } from "../../components/Layout";
 import { size } from "../../style/theme";
 import { AllData } from "./components/AllData";
+import { useSelector } from "react-redux";
+import { selectCurrentStageId } from "../../data/stages/selectors";
 
 export function DebugPage() {
+  const currentStageId = useSelector(selectCurrentStageId);
+
+  if (!currentStageId) {
+    return (
+      <div css={containerStyle}>
+        Select a stage in the dock to view debug data
+      </div>
+    );
+  }
+
   return (
     <div css={containerStyle}>
       <Accordion>

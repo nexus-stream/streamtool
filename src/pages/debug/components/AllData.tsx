@@ -8,7 +8,7 @@ export function AllData() {
   const raceId = stage?.kind === "race" ? stage.raceId : "";
   const race = useSelector(raceSelectors.selectEntities)[raceId];
   const users = useSelector(userSelectors.selectEntities);
-  const raceUsers = race.participants?.map(
+  const raceUsers = race?.participants?.map(
     (participant) => users[participant.user]
   );
 
