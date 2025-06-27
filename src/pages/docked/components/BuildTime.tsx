@@ -15,5 +15,5 @@ const formattedDateString = dateTimeFormatter.format(
 );
 
 export function BuildTime() {
-  return <div>{formattedDateString}</div>;
+  return <div>Build Time: {formattedDateString}</div>;
 }

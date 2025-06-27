@@ -29,6 +29,14 @@ export function DockedPage() {
   );
 
   useHotkeys(
+    "ctrl+d",
+    () => {
+      window.open(`/debug`);
+    },
+    []
+  );
+
+  useHotkeys(
     "ctrl+a",
     () => {
       dispatch(toggleIsAdmin());
