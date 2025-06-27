@@ -51,4 +51,4 @@ This should be a four step process:
 3. (optional) Add or edit a frame to display your new field. If it's a simple text field, you can add it to the "kind" enum in the params of `raceText.tsx` or `participantText.tsx`, otherwise you can add a new frame and then add that to the mapping in `frames/index.ts`
 4. (optional) Add an editor to `StageEditor.tsx` or `ParticipantEditor.tsx` for your new field. Follow the patterns in those files
 
-And if you get stuck, please reach out either through this repo or to me (kylebyte) on Discord.
+And if you get stuck, please reach out either through this repo or to me (kylebyte) on Discord. I wouldn't call this code bad, but I definitely cut some corners here and there, so there's plenty of room for it to be improved and plenty of design decisions that you shouldn't be afraid to change. Just don't break anything plz.
