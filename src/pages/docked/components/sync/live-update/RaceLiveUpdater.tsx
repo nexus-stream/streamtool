@@ -1,11 +1,11 @@
 import { useEffect } from "react";
-import { LiveUpdateMessage } from "./types";
-import { useAppDispatch } from "../../../../data/hooks";
+import { useAppDispatch } from "../../../../../data/hooks";
 import {
-  updateParticipant,
   upsertRace,
-} from "../../../../data/races/raceSlice";
-import { addRaceFromId } from "../../../../data/races/thunks";
+  updateParticipant,
+} from "../../../../../data/races/raceSlice";
+import { addRaceFromId } from "../../../../../data/races/thunks";
+import { LiveUpdateMessage } from "./types";
 
 interface Props {
   raceId: string;

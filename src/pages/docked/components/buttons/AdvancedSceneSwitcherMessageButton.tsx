@@ -1,7 +1,7 @@
 import { ReactNode, useCallback } from "react";
-import { useOBSWebsocket } from "../../../data/obs/ObsWebSocketContext";
 import { Button } from "@mui/material";
-import { buildAdvancedSceneSwitcherMessage } from "../../../util/buildAdvancedSceneSwitcherMessage";
+import { useOBSWebsocket } from "../../../../data/obs/ObsWebSocketContext";
+import { buildAdvancedSceneSwitcherMessage } from "../../../../util/buildAdvancedSceneSwitcherMessage";
 
 interface Props {
   name: string;

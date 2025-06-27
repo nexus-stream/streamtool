@@ -1,7 +1,7 @@
-import { useOBSWebsocket } from "../../../data/obs/ObsWebSocketContext";
 import { useEffect } from "react";
-import { FrameComponent } from "../../browser-source/frame";
-import { FRAMES } from "../../browser-source/frames";
+import { useOBSWebsocket } from "../../../../data/obs/ObsWebSocketContext";
+import { FrameComponent } from "../../../browser-source/frame";
+import { FRAMES } from "../../../browser-source/frames";
 
 export function FrameAutoResizer() {
   const socket = useOBSWebsocket();

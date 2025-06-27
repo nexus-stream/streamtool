@@ -1,15 +1,15 @@
 import { Button, css, ToggleButton } from "@mui/material";
-import { STYLES } from "../../../style/styles";
+import { STYLES } from "../../../../style/styles";
 import { useSelector } from "react-redux";
-import { selectNeedsTwitchAuth } from "../../../data/twitch/selectors";
-import { useState } from "react";
+import { selectNeedsTwitchAuth } from "../../../../data/twitch/selectors";
 import SyncIcon from "@mui/icons-material/Sync";
-import { TwitchSync } from "./TwitchSync";
-import { useAppDispatch } from "../../../data/hooks";
-import { clearTwitchToken } from "../../../data/twitch/twitchSlice";
+import { useAppDispatch } from "../../../../data/hooks";
+import { clearTwitchToken } from "../../../../data/twitch/twitchSlice";
+import { selectIsTwitchSyncEnabled } from "../../../../data/config/selectors";
+import { setIsTwitchSyncEnabled } from "../../../../data/config/configSlice";
 
 export function TwitchButton() {
-  const [syncEnabled, setSyncEnabled] = useState(false);
+  const isSyncEnabled = useSelector(selectIsTwitchSyncEnabled);
   const needsAuth = useSelector(selectNeedsTwitchAuth);
   const dispatch = useAppDispatch();
 
@@ -19,11 +19,11 @@ export function TwitchButton() {
         <ToggleButton
           size="small"
           value="check"
-          selected={syncEnabled}
-          onChange={() => setSyncEnabled((old) => !old)}
+          selected={isSyncEnabled}
+          onChange={() => dispatch(setIsTwitchSyncEnabled(!isSyncEnabled))}
         >
           <SyncIcon />
-          {syncEnabled
+          {isSyncEnabled
             ? "Twitch Game/Title Sync Enabled"
             : "Enable Twitch Sync"}
         </ToggleButton>
@@ -37,9 +37,6 @@ export function TwitchButton() {
         >
           Logout of Twitch
         </Button>
-
-        {/* Handles syncing game and stream title with Twitch. Should only ever be running in one place. */}
-        {syncEnabled && <TwitchSync />}
       </>
     );
   }

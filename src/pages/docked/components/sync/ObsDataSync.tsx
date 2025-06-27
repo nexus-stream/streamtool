@@ -1,9 +1,9 @@
-import { useOBSWebsocket } from "../../../data/obs/ObsWebSocketContext";
 import { useEffect } from "react";
 import { useThrottle } from "ahooks";
-import { buildAdvancedSceneSwitcherMessage } from "../../../util/buildAdvancedSceneSwitcherMessage";
 import { useSelector } from "react-redux";
-import { selectCurrentFlattenedDisplayData } from "../../../data/display/selectors";
+import { selectCurrentFlattenedDisplayData } from "../../../../data/display/selectors";
+import { useOBSWebsocket } from "../../../../data/obs/ObsWebSocketContext";
+import { buildAdvancedSceneSwitcherMessage } from "../../../../util/buildAdvancedSceneSwitcherMessage";
 
 export function ObsDataSync() {
   const socket = useOBSWebsocket();

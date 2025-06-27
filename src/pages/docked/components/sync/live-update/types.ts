@@ -1,4 +1,4 @@
-import { RaceParticipant, Race } from "../../../../data/races/types";
+import { RaceParticipant, Race } from "../../../../../data/races/types";
 
 export interface ParticipantUpdate {
   type: "participantUpdate";

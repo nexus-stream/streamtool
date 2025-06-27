@@ -1,9 +1,9 @@
 import { useSelector } from "react-redux";
-import { selectNextStage } from "../../../data/stages/selectors";
+import { selectNextStage } from "../../../../data/stages/selectors";
 import { Button, css } from "@mui/material";
 import { useCallback } from "react";
-import { useAppDispatch } from "../../../data/hooks";
-import { setCurrentStageId } from "../../../data/stages/stageSlice";
+import { useAppDispatch } from "../../../../data/hooks";
+import { setCurrentStageId } from "../../../../data/stages/stageSlice";
 
 export function NextStageButton() {
   const dispatch = useAppDispatch();

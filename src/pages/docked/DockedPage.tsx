@@ -2,18 +2,26 @@ import { Button } from "@mui/material";
 import { StageSelector } from "./components/StageSelector";
 import { ButtonBar, CenteredStack, Page } from "../../components/Layout";
 import { useHotkeys } from "react-hotkeys-hook";
-import { NextStageButton } from "./components/NextStageButton";
+import { NextStageButton } from "./components/buttons/NextStageButton";
 import { ParticipantOrder } from "./components/ParticipantOrder";
-import { PreviousStageButton } from "./components/PreviousStageButton";
-import { ConnectButton } from "./components/ConnectButton";
+import { toggleIsAdmin } from "../../data/config/configSlice";
+import { useAppDispatch } from "../../data/hooks";
 import { ObsWebSocketProvider } from "../../data/obs/ObsWebSocketProvider";
-import { FrameAutoResizer } from "./components/FrameAutoResizer";
-import { TwitchButton } from "./components/TwitchButton";
-import { ObsDataSync } from "./components/ObsDataSync";
-import { AdvancedSceneSwitcherMessageButton } from "./components/AdvancedSceneSwitcherMessageButton";
-import { LiveUpdateManager } from "./components/live-update/LiveUpdateManager";
+import { AdminContainer } from "./components/AdminContainer";
+import { AdvancedSceneSwitcherMessageButton } from "./components/buttons/AdvancedSceneSwitcherMessageButton";
+import { ConnectButton } from "./components/buttons/ConnectButton";
+import { PreviousStageButton } from "./components/buttons/PreviousStageButton";
+import { TwitchButton } from "./components/buttons/TwitchButton";
+import { DockedPageSyncManager } from "./components/sync/DockedPageSyncManager";
+import { BuildTime } from "./components/BuildTime";
+import { ViewDebugDataButton } from "./components/buttons/ViewDebugDataButton";
+import { AddFramesButton } from "./components/buttons/AddFramesButton";
+
+const BUILD_DATE = new Date(import.meta.env.VITE_BUILD_DATE).toString();
 
 export function DockedPage() {
+  const dispatch = useAppDispatch();
+
   useHotkeys(
     "ctrl+f",
     () => {
@@ -25,19 +33,24 @@ export function DockedPage() {
   useHotkeys(
     "ctrl+d",
     () => {
-      window.open(`/debug`);
+      dispatch(toggleIsAdmin());
     },
-    []
+    [dispatch]
   );
 
   return (
     <ObsWebSocketProvider>
       <Page>
         <CenteredStack>
-          <ButtonBar>
-            <ConnectButton />
-            <TwitchButton />
-          </ButtonBar>
+          <AdminContainer>
+            <BuildTime />
+            <ButtonBar>
+              <ConnectButton />
+              <TwitchButton />
+              <AddFramesButton />
+              <ViewDebugDataButton />
+            </ButtonBar>
+          </AdminContainer>
           <StageSelector />
           <ButtonBar>
             <PreviousStageButton />
@@ -64,16 +77,7 @@ export function DockedPage() {
           </ButtonBar>
           <ParticipantOrder />
 
-          {/* Handles listening for race updates from therun.gg. Should only ever be running in one place. */}
-          <LiveUpdateManager />
-
-          {/* Handles auto resizing the browser source of frames that have opted into that behavior. Should only
-          ever be running in one place. */}
-          <FrameAutoResizer />
-
-          {/* Handles syncing current stage data to advanced scene switcher. Should only ever be running
-          in one place. */}
-          <ObsDataSync />
+          <DockedPageSyncManager />
         </CenteredStack>
       </Page>
     </ObsWebSocketProvider>

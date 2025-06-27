@@ -4,6 +4,7 @@ import raceReducer from "./races/raceSlice";
 import userReducer from "./users/userSlice";
 import obsReducer from "./obs/obsSlice";
 import twitchReducer from "./twitch/twitchSlice";
+import configReducer from "./config/configSlice";
 import editorReducer from "./editor/editorSlice";
 import {
   createStateSyncMiddleware,
@@ -18,6 +19,7 @@ const rootReducer = combineReducers({
   users: userReducer,
   obs: obsReducer,
   twitch: twitchReducer,
+  config: configReducer,
   editor: editorReducer,
 });
 

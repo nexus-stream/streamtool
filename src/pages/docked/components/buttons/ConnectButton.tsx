@@ -1,11 +1,11 @@
 import { Button, css } from "@mui/material";
-import { useOBSWebsocketStatus } from "../../../data/obs/ObsWebSocketContext";
-import { STYLES } from "../../../style/styles";
-import { useAppDispatch } from "../../../data/hooks";
 import { useCallback } from "react";
-import { loginToObs } from "../../../data/obs/obsSlice";
 import { useSelector } from "react-redux";
-import { selectObsCredentials } from "../../../data/obs/selectors";
+import { useAppDispatch } from "../../../../data/hooks";
+import { loginToObs } from "../../../../data/obs/obsSlice";
+import { useOBSWebsocketStatus } from "../../../../data/obs/ObsWebSocketContext";
+import { selectObsCredentials } from "../../../../data/obs/selectors";
+import { STYLES } from "../../../../style/styles";
 
 export function ConnectButton() {
   const dispatch = useAppDispatch();
