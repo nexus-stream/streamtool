@@ -12,6 +12,7 @@ import { AllData } from "./components/AllData";
 import { useSelector } from "react-redux";
 import { selectCurrentStageId } from "../../data/stages/selectors";
 
+// Page that renders debug data that's useful for people building layouts.
 export function DebugPage() {
   const currentStageId = useSelector(selectCurrentStageId);
 

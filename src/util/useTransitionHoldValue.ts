@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 
 // This needs to stay consistent across the UI or it's gonna look ugly.
 const TRANSITION_LENGTH = 500;
+const TRANSITION_DELAY_LENGTH = 100;
 
 // When data changes, we want to nicely transition the old value to the new one. This
 // holds the previous value in the component during that transition period (currently
@@ -60,5 +61,7 @@ export function useTransitionHoldValue<TValue>(
 }
 
 export const transitionHoldStyle = css`
-  transition: opacity ${TRANSITION_LENGTH - 100}ms ease-in-out;
+  transition: opacity ${TRANSITION_LENGTH - TRANSITION_DELAY_LENGTH}ms
+    ease-in-out;
+  transition-delay: ${TRANSITION_DELAY_LENGTH}ms;
 `;

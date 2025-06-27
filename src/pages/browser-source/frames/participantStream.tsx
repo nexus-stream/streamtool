@@ -1,7 +1,10 @@
 import { z } from "zod/v4";
 import { buildFrameComponent } from "../frame";
 import { TwitchEmbed } from "../components/TwitchEmbed";
-import { useTransitionHoldValue } from "../../../util/useTransitionHoldValue";
+import {
+  transitionHoldStyle,
+  useTransitionHoldValue,
+} from "../../../util/useTransitionHoldValue";
 import { css } from "@emotion/react";
 import { STYLES } from "../../../style/styles";
 import classNames from "classnames";
@@ -52,8 +55,7 @@ export const participantStreamFrame = buildFrameComponent(
 
 const containerStyle = css`
   ${STYLES.fullSize};
-  transition: opacity 400ms ease-in-out;
-  transition-delay: 100ms;
+  ${transitionHoldStyle};
   opacity: 1;
 
   &.fading {

@@ -5,6 +5,8 @@ import { selectCurrentFlattenedDisplayData } from "../../../../data/display/sele
 import { useOBSWebsocket } from "../../../../data/obs/ObsWebSocketContext";
 import { buildAdvancedSceneSwitcherMessage } from "../../../../util/buildAdvancedSceneSwitcherMessage";
 
+// Whenever our current stage's data changes, send it through our websocket to
+// be ingested by a macro in Advanced Scene Switcher.
 export function ObsDataSync() {
   const socket = useOBSWebsocket();
   const flatData = useSelector(selectCurrentFlattenedDisplayData);

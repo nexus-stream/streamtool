@@ -4,6 +4,7 @@ import { selectCurrentStage } from "../../../../data/stages/selectors";
 import { useEffect } from "react";
 import { selectIsTwitchSyncEnabled } from "../../../../data/config/selectors";
 
+// Whenever our current stage's stream title or game changes, send them to Twitch.
 export function TwitchSync() {
   const { updateStreamInfo } = useTwitchApi();
   const isTwitchSyncEnabled = useSelector(selectIsTwitchSyncEnabled);

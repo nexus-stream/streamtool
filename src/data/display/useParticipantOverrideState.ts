@@ -2,7 +2,7 @@ import { useCallback } from "react";
 import { useAppDispatch } from "../hooks";
 import { patchRaceOverrideParticipant } from "../stages/stageSlice";
 import { useRaceStage } from "../stages/useRaceStage";
-import { DisplayParticipant } from "./race/types";
+import { DisplayParticipant } from "./participant/types";
 
 // Gets a useState like interface for reading and updating the override state for
 // a participant value for a given stage / user. This lets us easily define components

@@ -5,7 +5,7 @@ import { raceSelectors } from "../races/selectors";
 import { userSelectors } from "../users/selectors";
 import { DISPLAY_PARTICIPANT_FIELDS } from "./participant/displayParticipantFields";
 import { RaceStage } from "../stages/types";
-import { DisplayParticipant } from "./race/types";
+import { DisplayParticipant } from "./participant/types";
 
 export function useDisplayParticipantValue<
   TParam extends keyof DisplayParticipant

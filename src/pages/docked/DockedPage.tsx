@@ -1,48 +1,26 @@
 import { Button } from "@mui/material";
 import { StageSelector } from "./components/StageSelector";
 import { ButtonBar, CenteredStack, Page } from "../../components/Layout";
-import { useHotkeys } from "react-hotkeys-hook";
 import { NextStageButton } from "./components/buttons/NextStageButton";
 import { ParticipantOrder } from "./components/ParticipantOrder";
-import { toggleIsAdmin } from "../../data/config/configSlice";
-import { useAppDispatch } from "../../data/hooks";
 import { ObsWebSocketProvider } from "../../data/obs/ObsWebSocketProvider";
 import { AdminContainer } from "./components/AdminContainer";
 import { AdvancedSceneSwitcherMessageButton } from "./components/buttons/AdvancedSceneSwitcherMessageButton";
-import { ConnectButton } from "./components/buttons/ConnectButton";
+import { OBSConnectButton } from "./components/buttons/OBSConnectButton";
 import { PreviousStageButton } from "./components/buttons/PreviousStageButton";
 import { TwitchButton } from "./components/buttons/TwitchButton";
 import { DockedPageSyncManager } from "./components/sync/DockedPageSyncManager";
 import { BuildTime } from "./components/BuildTime";
 import { ViewDebugDataButton } from "./components/buttons/ViewDebugDataButton";
 import { AddFramesButton } from "./components/buttons/AddFramesButton";
+import { useDockedPageHotkeys } from "./hooks/useDockedPageHotkeys";
 
+// The page that lives in the custom dock on OBS. Because this page always exists when
+// the tool is in use and there's only ever one of them, it handles a lot of behind the
+// scenes integration stuff with OBS and Twitch as well as rendering the main set of
+// controls a host will use.
 export function DockedPage() {
-  const dispatch = useAppDispatch();
-
-  useHotkeys(
-    "ctrl+f",
-    () => {
-      window.open(`/frame`);
-    },
-    []
-  );
-
-  useHotkeys(
-    "ctrl+d",
-    () => {
-      window.open(`/debug`);
-    },
-    []
-  );
-
-  useHotkeys(
-    "ctrl+a",
-    () => {
-      dispatch(toggleIsAdmin());
-    },
-    [dispatch]
-  );
+  useDockedPageHotkeys();
 
   return (
     <ObsWebSocketProvider>
@@ -51,7 +29,7 @@ export function DockedPage() {
           <AdminContainer>
             <BuildTime />
             <ButtonBar>
-              <ConnectButton />
+              <OBSConnectButton />
               <TwitchButton />
               <AddFramesButton />
               <ViewDebugDataButton />

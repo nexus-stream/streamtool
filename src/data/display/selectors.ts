@@ -2,9 +2,9 @@ import { createSelector } from "@reduxjs/toolkit";
 import { raceSelectors } from "../races/selectors";
 import { selectCurrentStage } from "../stages/selectors";
 import { userSelectors } from "../users/selectors";
-import { DisplayRace } from "./participant/types";
+import { DisplayRace } from "./race/types";
 import { buildDisplayRace } from "./race/buildDisplayRace";
-import { DisplayParticipant } from "./race/types";
+import { DisplayParticipant } from "./participant/types";
 import { flattenObj } from "../../util/flattenObj";
 
 const selectCurrentRace = createSelector(

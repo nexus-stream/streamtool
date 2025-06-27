@@ -2,7 +2,10 @@ import { css } from "@emotion/react";
 import { Textfit } from "@ataverascrespo/react18-ts-textfit";
 import { STYLES } from "../../../style/styles";
 import classNames from "classnames";
-import { useTransitionHoldValue } from "../../../util/useTransitionHoldValue";
+import {
+  transitionHoldStyle,
+  useTransitionHoldValue,
+} from "../../../util/useTransitionHoldValue";
 import { z } from "zod/v4";
 import { ReactNode } from "react";
 
@@ -16,7 +19,6 @@ export const TypographyParamsNoDefault = z.object({
   strokeColor: z.string().default("transparent"),
   halign: z.enum(["left", "center", "right"]).default("left"),
   valign: z.enum(["top", "middle", "bottom"]).default("middle"),
-  // shrinkToFit: z.enum(["yes", "no"]),
 });
 
 // eslint-disable-next-line react-refresh/only-export-components
@@ -26,33 +28,18 @@ export const TypographyParamsWithDefault = TypographyParamsNoDefault.default(
   TYPOGRAPHY_PARAMS_DEFAULT
 );
 
-interface BaseProps {
+interface Props {
   text: string;
   transitionHoldKey?: string;
-  // Can manually control transition
-  isFading?: boolean;
 
   settings: z.infer<typeof TypographyParamsWithDefault>;
 }
 
-interface Props extends BaseProps {
-  skipTransition?: boolean;
-}
-
-export function FrameTypography({ skipTransition, ...baseProps }: Props) {
-  if (skipTransition) {
-    return <FrameTypographyBase {...baseProps} />;
-  } else {
-    return <FrameTypographyWithTransition {...baseProps} />;
-  }
-}
-
-export function FrameTypographyWithTransition({
+export function FrameTypography({
   text,
   transitionHoldKey,
   ...restProps
-}: BaseProps) {
-  // move outside so this doesn't get used for timers
+}: Props) {
   const [displayText, isFading] = useTransitionHoldValue(
     text,
     transitionHoldKey ?? text
@@ -67,7 +54,7 @@ export function FrameTypographyWithTransition({
   );
 }
 
-export function FrameTypographyBase({
+function FrameTypographyBase({
   text,
   isFading,
   settings: {
@@ -80,9 +67,8 @@ export function FrameTypographyBase({
     strokeColor,
     halign,
     valign,
-    // shrinkToFit,
   },
-}: BaseProps) {
+}: Props & { isFading: boolean }) {
   const cssStyles = [
     baseTextStyle,
     textStyleStyles[style],
@@ -138,8 +124,7 @@ function MaybeFitText({
 const containerStyle = css`
   display: flex;
   ${STYLES.fullHeight};
-  transition: opacity 400ms ease-in-out;
-  transition-delay: 100ms;
+  ${transitionHoldStyle};
   opacity: 1;
 
   &.fading {

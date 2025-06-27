@@ -4,12 +4,12 @@ import { stageSelectors } from "../../../../../data/stages/selectors";
 import { RaceLiveUpdater } from "./RaceLiveUpdater";
 
 // Builds a live updater for every race that we want to actively pull updates for
-// (all races that belong to a stage). This lets us leverage React's lifecycle
+// all races that belong to a stage. This lets us leverage React's lifecycle
 // events to setup and teardown our websocket connections.
 //
 // This could also be a good place to clean up unattached races / users from as
 // well.
-export function LiveUpdateManager() {
+export function TheRunLiveUpdateManager() {
   const raceIds = useAppSelector(selectActiveRaceIds);
 
   return (

@@ -4,13 +4,15 @@ import { useParticipantOverrideState } from "../../../data/display/useParticipan
 import { useStageParticipantTimer } from "../../../data/display/timer/displayTimerHooks";
 import { TitleBar } from "../../../components/Layout";
 import { COLORS, size } from "../../../style/theme";
-import { DisplayParticipant } from "../../../data/display/race/types";
+import { DisplayParticipant } from "../../../data/display/participant/types";
 
 interface Props {
   stageId: string;
   participant: DisplayParticipant;
 }
 
+// The component that shows in the accordion for a single participant on the edit page
+// when it's collapsed.
 export function ParticipantEditorSummary({ stageId, participant }: Props) {
   const [avatarOverride] = useParticipantOverrideState(
     "avatar",

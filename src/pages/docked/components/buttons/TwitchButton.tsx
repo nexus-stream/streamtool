@@ -58,6 +58,9 @@ export function TwitchButton() {
   );
 }
 
+// oauth works by navigating to the client's page with a redirect uri to your own site
+// that they'll direct to with your new authorization token in the hash parameters. We
+// give them /twitch, which loads TwitchWebhookPage.
 function buildTwitchAuthUrl() {
   const redirectUrl = new URL("/twitch", window.location.origin);
 

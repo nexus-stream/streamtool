@@ -5,8 +5,8 @@ import {
   FrameTypography,
   TypographyParamsWithDefault,
 } from "../components/FrameTypography";
-import { DisplayRace } from "../../../data/display/participant/types";
-import { DisplayParticipant } from "../../../data/display/race/types";
+import { DisplayRace } from "../../../data/display/race/types";
+import { DisplayParticipant } from "../../../data/display/participant/types";
 import { useParticipantAtPosition } from "../hooks/useParticipantAtPosition";
 import { useSelector } from "react-redux";
 import { selectCurrentStageId } from "../../../data/stages/selectors";
@@ -76,7 +76,6 @@ function ParticipantTextTimer({
   race: DisplayRace;
   settings: z.infer<typeof TypographyParamsWithDefault>;
 }) {
-  // useHoldValue for the value here of the participant's user and the race id
   const time = useDisplayRaceParticipantTimer(participant, race);
   return (
     <FrameTypography

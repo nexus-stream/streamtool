@@ -4,7 +4,7 @@ import {
   DefaultValueVisualizer,
   ValueVisualizerProps,
 } from "./DefaultValueVisualizer";
-import { DisplayRace } from "../../../../data/display/participant/types";
+import { DisplayRace } from "../../../../data/display/race/types";
 
 interface Props<TParam extends keyof DisplayRace> {
   label: string;

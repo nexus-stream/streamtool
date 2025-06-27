@@ -27,8 +27,6 @@ export function StageSelector() {
     [dispatch]
   );
 
-  // Add link to open editor in new window
-  // Add link to open frame builder in new window
   return (
     <FormControl fullWidth>
       <InputLabel id="current-stage-select-label">Current Stage</InputLabel>

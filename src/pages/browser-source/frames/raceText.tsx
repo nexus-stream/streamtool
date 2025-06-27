@@ -1,13 +1,13 @@
 import { z } from "zod/v4";
 import { buildFrameComponent } from "../frame";
-import { useDisplayRaceTimer } from "../../../data/display/timer/displayTimerHooks";
 import {
   FrameTypography,
   TypographyParamsWithDefault,
 } from "../components/FrameTypography";
-import { DisplayRace } from "../../../data/display/participant/types";
+import { DisplayRace } from "../../../data/display/race/types";
 import { useSelector } from "react-redux";
 import { selectCurrentDisplayRace } from "../../../data/display/selectors";
+import { useDisplayRaceTimer } from "../../../data/display/timer/displayTimerHooks";
 
 const Params = z.object({
   kind: z.enum(["game", "category", "time"]).default("game"),

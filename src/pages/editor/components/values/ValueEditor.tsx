@@ -24,6 +24,11 @@ interface Props<TValue> {
   OverrideEditor?: FC<OverrideEditorProps<TValue>>;
 }
 
+// A base helper component to edit an overridable value. Because we often don't
+// want an override to take effect until it's been fully edited (want to avoid
+// viewers watching you type in the overridden value letter by letter), this keeps
+// the override value in local state, and only passes it out of the component when
+// the override is enabled.
 export function ValueEditor<TValue>({
   label,
   value,

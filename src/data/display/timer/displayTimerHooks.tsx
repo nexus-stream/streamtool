@@ -1,8 +1,12 @@
 import { useEffect, useState } from "react";
 import { useDisplayRaceValue } from "../useDisplayRaceValue";
-import { DisplayRace } from "../participant/types";
-import { DisplayParticipant } from "../race/types";
+import { DisplayRace } from "../race/types";
+import { DisplayParticipant } from "../participant/types";
 import { formatTimer } from "../../../util/formatTimer";
+
+// Helpers to get timers when either given a stage id or a generated DisplayRace.
+// There's certainly a way to consolidate these - just make sure that you respect
+// any race overrides on the stage if overriding timers is ever implemented.
 
 export function useDisplayRaceTimer(race: DisplayRace) {
   return useRaceTime(race.startTime, race.endTime);

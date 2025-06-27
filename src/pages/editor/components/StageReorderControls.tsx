@@ -9,6 +9,7 @@ interface Props {
   stageId: string;
 }
 
+// Extremely ugly, but they work.
 export function StageReorderControls({ stageId }: Props) {
   const dispatch = useAppDispatch();
 

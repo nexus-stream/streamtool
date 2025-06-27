@@ -10,7 +10,7 @@ import { TitleBar, VerticalContent } from "../../../components/Layout";
 import { Avatar } from "../../../components/Avatar";
 import { useCallback } from "react";
 import { CommentatorValueEditor } from "./values/CommentatorValueEditor";
-import { Commentator } from "../../../data/display/participant/types";
+import { Commentator } from "../../../data/display/race/types";
 
 interface Props {
   commentator: Commentator;
@@ -18,6 +18,8 @@ interface Props {
   onDelete: () => void;
 }
 
+// I slapped this together really quick. Might make more sense to move this out into
+// a base stage rather than handling it as an override of a race.
 export function CommentatorEditor({ commentator, onEdit, onDelete }: Props) {
   const patch = useCallback(
     <TParam extends keyof Commentator>(

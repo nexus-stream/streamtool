@@ -1,5 +1,8 @@
 import { Avatar } from "../../../components/Avatar";
-import { useTransitionHoldValue } from "../../../util/useTransitionHoldValue";
+import {
+  transitionHoldStyle,
+  useTransitionHoldValue,
+} from "../../../util/useTransitionHoldValue";
 import { css } from "@emotion/react";
 import classNames from "classnames";
 
@@ -22,8 +25,7 @@ export function FrameAvatar({ src, transitionHoldKey }: Props) {
 }
 
 const containerStyle = css`
-  transition: opacity 400ms ease-in-out;
-  transition-delay: 100ms;
+  ${transitionHoldStyle};
   opacity: 1;
 
   &.fading {

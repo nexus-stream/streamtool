@@ -1,7 +1,7 @@
 import { useCallback } from "react";
 import { useAppDispatch } from "../hooks";
 import { patchRaceOverrides } from "../stages/stageSlice";
-import { DisplayRace } from "./participant/types";
+import { DisplayRace } from "./race/types";
 import { useRaceStage } from "../stages/useRaceStage";
 
 // Gets a useState like interface for reading and updating the override state for

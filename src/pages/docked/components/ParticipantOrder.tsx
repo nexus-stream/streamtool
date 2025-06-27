@@ -7,10 +7,12 @@ import { size } from "../../../style/theme";
 import { useAppDispatch } from "../../../data/hooks";
 import { setParticipantOrder } from "../../../data/stages/stageSlice";
 import { selectCurrentDisplayRace } from "../../../data/display/selectors";
-import { DisplayParticipant } from "../../../data/display/race/types";
+import { DisplayParticipant } from "../../../data/display/participant/types";
 
 const EMPTY_PARTICIPANTS: DisplayParticipant[] = [];
 
+// Displays all participants for the current stage's race and allows them to be
+// manually reordered.
 export function ParticipantOrder() {
   const dispatch = useAppDispatch();
   const [selectedUser, setSelectedUser] = useState<string | undefined>();

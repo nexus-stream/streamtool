@@ -16,6 +16,9 @@ import { Button } from "@mui/material";
 import { StageGameNameEditor } from "./values/StageGameNameEditor";
 import { StageTagEditor } from "./values/StageTagEditor";
 
+// The editor for a stage. For simple string values, you should only need to add a
+// StageValueEditor or RaceValueEditor component for the new field and those helpers
+// will take care of the rest.
 export function StageEditor() {
   const currentEditorStage = useSelector(selectCurrentEditorStage);
 
@@ -38,11 +41,6 @@ export function StageEditorContent({ stage }: { stage: Stage }) {
       />
       <StageGameNameEditor stageId={stage.id} />
       <StageTagEditor key={stage.id} stageId={stage.id} />
-      {/* <StageValueEditor
-        label="Custom Websocket Event"
-        param="stageEnterWebsocketEvent"
-        stageId={stage.id}
-      /> */}
       {stage.kind === "race" && <StageRaceEditor stage={stage} />}
       {stage.kind === "vod" && <StageVodEditor stage={stage} />}
     </div>

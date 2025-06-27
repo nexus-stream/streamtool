@@ -5,13 +5,16 @@ import { ParticipantValueViewer } from "./values/ParticipantValueViewer";
 import { ParticipantTimerVisualizer } from "./values/ParticipantTimerVisualizer";
 import { ParticipantEditorSummary } from "./ParticipantEditorSummary";
 import { VerticalContent } from "../../../components/Layout";
-import { DisplayParticipant } from "../../../data/display/race/types";
+import { DisplayParticipant } from "../../../data/display/participant/types";
 
 interface Props {
   stageId: string;
   participant: DisplayParticipant;
 }
 
+// The editor for a single participant. If you're adding a new field here that's just
+// a simple string, you should only need to add a "ParticipantValueEditor" component
+// for the new field and it'll handle the rest.
 export function ParticipantEditor({ stageId, participant }: Props) {
   return (
     <Accordion key={participant.user}>

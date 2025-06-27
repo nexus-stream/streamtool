@@ -14,6 +14,7 @@ const formattedDateString = dateTimeFormatter.format(
   parseInt(import.meta.env.VITE_BUILD_TIME)
 );
 
+// Useful debug information to make sure you're on the latest version of the tool.
 export function BuildTime() {
   return <div>Build Time: {formattedDateString}</div>;
 }

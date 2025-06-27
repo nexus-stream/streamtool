@@ -1,6 +1,6 @@
 import { TextField } from "@mui/material";
 import { useStageParticipantTimer } from "../../../../data/display/timer/displayTimerHooks";
-import { DisplayParticipant } from "../../../../data/display/race/types";
+import { DisplayParticipant } from "../../../../data/display/participant/types";
 
 export function ParticipantTimerVisualizer({
   stageId,

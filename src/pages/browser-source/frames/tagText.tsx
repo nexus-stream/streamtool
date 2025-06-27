@@ -29,7 +29,7 @@ export const tagTextFrame = buildFrameComponent(
       <FrameTypography
         settings={settings}
         text={text}
-        transitionHoldKey={`${stage?.id}|${text}`}
+        transitionHoldKey={`${stage?.id}:${text}`}
       />
     );
   }

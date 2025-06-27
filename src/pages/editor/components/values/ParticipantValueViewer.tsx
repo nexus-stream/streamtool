@@ -4,7 +4,7 @@ import {
   ValueVisualizerProps,
 } from "./DefaultValueVisualizer";
 import { useDisplayParticipantValue } from "../../../../data/display/useDisplayParticipantValue";
-import { DisplayParticipant } from "../../../../data/display/race/types";
+import { DisplayParticipant } from "../../../../data/display/participant/types";
 
 interface Props<TParam extends keyof DisplayParticipant> {
   label: string;

@@ -3,6 +3,22 @@ import { useOBSWebsocket } from "../../../../data/obs/ObsWebSocketContext";
 import { FrameComponent } from "../../../browser-source/frame";
 import { FRAMES } from "../../../browser-source/frames";
 
+// OBS has two sizes for browser sources - the size the item takes up in your OBS scene,
+// and the size that the browser renders the page at. These sizes do not sync up, so if
+// you resize a browser source, it will continue rendering at the original size.
+//
+// I assume they mainly do this because duplicating a browser source is a common pattern
+// and they want to only have to render the page once in that case even if you resize one
+// of the duplicated sources.
+//
+// We don't want that with (all) frames generated with this tool though, because it's mostly
+// rendering text and text sizes should remain consistent thoughout the layout.
+//
+// This component listens for resize events for all frames that have "autoResize" set to
+// true in their display properties and sets that source to render the page at the item's
+// new size in OBS. Lots of ugly hacks in here, but because it'll only really be used when
+// layouts are being created and shouldn't be doing much during an event, I think a bit of
+// jank's alright.
 export function FrameAutoResizer() {
   const socket = useOBSWebsocket();
 

@@ -7,7 +7,7 @@ import { useOBSWebsocketStatus } from "../../../../data/obs/ObsWebSocketContext"
 import { selectObsCredentials } from "../../../../data/obs/selectors";
 import { STYLES } from "../../../../style/styles";
 
-export function ConnectButton() {
+export function OBSConnectButton() {
   const dispatch = useAppDispatch();
   const status = useOBSWebsocketStatus();
   const currentCredentials = useSelector(selectObsCredentials);

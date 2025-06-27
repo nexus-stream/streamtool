@@ -27,6 +27,11 @@ const Params = z.object({
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const InnerFrame = participantTextFrame.fc as FC<any>;
 
+// "Double text" is a very inelegant way to let layout builders put two pieces of text
+// back to back so the gap between them will always be the same (ex. so name + pronouns
+// sticks together regardless of the length of the name).
+//
+// Will replace this with something more elegant someday if there's a need.
 export const participantDoubleTextFrame = buildFrameComponent(
   {
     displayName: "Participant Double Text",
