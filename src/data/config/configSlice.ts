@@ -8,7 +8,7 @@ interface ConfigState {
 
 const configSlice = createSlice({
   name: "config",
-  initialState: { isAdmin: false, isTwitchSyncEnabled: false } as ConfigState,
+  initialState: { isAdmin: true, isTwitchSyncEnabled: false } as ConfigState,
   reducers: {
     toggleIsAdmin(state) {
       state.isAdmin = !state.isAdmin;
