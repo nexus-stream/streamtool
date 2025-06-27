@@ -10,6 +10,9 @@ export const raceAdapter = createEntityAdapter({
   selectId: (race: Race) => race.raceId,
 });
 
+// Contains raw data from TheRun. This should never be directly used anywhere in the
+// app - any data you need should be incorporated into DisplayRace / DisplayParticipant
+// instead.
 const raceSlice = createSlice({
   name: "races",
   initialState: raceAdapter.getInitialState(),

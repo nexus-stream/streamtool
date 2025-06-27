@@ -44,22 +44,20 @@ export const participantTextFrame = buildFrameComponent(
     }
 
     switch (kind) {
-      case "displayName":
-      case "pronouns":
-      case "pb":
-        return (
-          <FrameTypography
-            settings={settings}
-            text={participant[kind] ?? ""}
-            transitionHoldKey={`${stageId}:${participant.user}`}
-          />
-        );
       case "time":
         return (
           <ParticipantTextTimer
             participant={participant}
             race={race!}
             settings={settings}
+          />
+        );
+      default:
+        return (
+          <FrameTypography
+            settings={settings}
+            text={participant[kind] ?? ""}
+            transitionHoldKey={`${stageId}:${participant.user}`}
           />
         );
     }

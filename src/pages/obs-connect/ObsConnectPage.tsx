@@ -7,6 +7,7 @@ import { useSelector } from "react-redux";
 import { selectObsCredentials } from "../../data/obs/selectors";
 import { ObsWebSocketProvider } from "../../data/obs/ObsWebSocketProvider";
 
+// Page that lets us connect to obs-websocket.
 export function ObsConnectPage() {
   return (
     <ObsWebSocketProvider>

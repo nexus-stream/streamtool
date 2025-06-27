@@ -48,6 +48,8 @@ export function OBSInsertButton({
           e.code === 601 &&
           retryCount < 3
         ) {
+          // We could do anything here to dedupe the name, but I think it's funny
+          // to just put a random animal name in.
           insertInput(`${name}_${generateNameSuffix()}`, retryCount + 1);
         }
       }

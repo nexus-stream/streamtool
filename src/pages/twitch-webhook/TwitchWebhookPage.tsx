@@ -4,8 +4,8 @@ import { updateTwitchToken } from "../../data/twitch/twitchSlice";
 import { useTwitchApi } from "../../hooks/useTwitchApi";
 
 // This is the page we give to Twitch's oauth flow for it to redirect to
-// with our access token. All it does is stuff the token into Redux and
-// then close the window.
+// with our access token. All it does is validate the token, then stuff
+// it into Redux and close the window.
 export function TwitchWebhookPage() {
   const accessToken = getUrlHashParam("access_token");
   const [error, setError] = useState("");

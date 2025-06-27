@@ -8,6 +8,7 @@ interface Props {
   setParams: React.Dispatch<React.SetStateAction<object>>;
 }
 
+// Builds a form control for each entry in the given frame's params.
 export function FrameParamControls({ schema, params, setParams }: Props) {
   const shapeEntries = useMemo(
     () => Object.entries(schema.shape),

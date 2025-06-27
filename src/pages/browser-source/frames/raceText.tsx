@@ -31,8 +31,9 @@ export const raceTextFrame = buildFrameComponent(
     }
 
     switch (kind) {
-      case "game":
-      case "category":
+      case "time":
+        return <RaceTextTimer race={race} settings={settings} />;
+      default:
         return (
           <FrameTypography
             settings={settings}
@@ -40,8 +41,6 @@ export const raceTextFrame = buildFrameComponent(
             transitionHoldKey={race.raceId}
           />
         );
-      case "time":
-        return <RaceTextTimer race={race} settings={settings} />;
     }
   }
 );

@@ -10,6 +10,9 @@ export const userAdapter = createEntityAdapter({
   selectId: (user: User) => user.user,
 });
 
+// Contains raw data from TheRun. This should never be directly used anywhere in the
+// app - any data you need should be incorporated into DisplayRace / DisplayParticipant
+// instead.
 const userSlice = createSlice({
   name: "users",
   initialState: userAdapter.getInitialState(),

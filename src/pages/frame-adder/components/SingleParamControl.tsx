@@ -14,6 +14,7 @@ interface Props {
   setParams: React.Dispatch<React.SetStateAction<object>>;
 }
 
+// Given a single param, instance one of our typed form controls to select a value for that type.
 export function SingleParamControl({
   name,
   schemaValue,

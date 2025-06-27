@@ -19,6 +19,10 @@ import { ObsWebSocketProvider } from "../../data/obs/ObsWebSocketProvider";
 import { FrameComponent } from "../browser-source/frame";
 import qs from "qs";
 
+// The page that generates URLs for the browser sources you can add to OBS with realtime
+// data from the stream tool. Most of the crunchy parts of this process live in
+// pages/browser-source, this just generates forms from the zod object attached to the
+// frames and builds URLs that point to BrowserSourcePage with the frame's config.
 export function FrameAdderPage() {
   const [frameId, setFrameId] = useState("");
   const [nameBase, setName] = useState("");
