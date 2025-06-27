@@ -4,13 +4,17 @@ import { useSelector } from "react-redux";
 import { selectNeedsTwitchAuth } from "../../../../data/twitch/selectors";
 import SyncIcon from "@mui/icons-material/Sync";
 import { useAppDispatch } from "../../../../data/hooks";
-import { clearTwitchToken } from "../../../../data/twitch/twitchSlice";
+import {
+  clearTwitchToken,
+  twitchRootSelector,
+} from "../../../../data/twitch/twitchSlice";
 import { selectIsTwitchSyncEnabled } from "../../../../data/config/selectors";
 import { setIsTwitchSyncEnabled } from "../../../../data/config/configSlice";
 
 export function TwitchButton() {
   const isSyncEnabled = useSelector(selectIsTwitchSyncEnabled);
   const needsAuth = useSelector(selectNeedsTwitchAuth);
+  const twitchLoginName = useSelector(twitchRootSelector).login;
   const dispatch = useAppDispatch();
 
   if (!needsAuth) {
@@ -35,7 +39,7 @@ export function TwitchButton() {
             dispatch(clearTwitchToken());
           }}
         >
-          Logout of Twitch
+          Logout of Twitch {twitchLoginName ? `(${twitchLoginName})` : ""}
         </Button>
       </>
     );

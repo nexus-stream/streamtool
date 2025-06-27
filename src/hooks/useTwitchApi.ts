@@ -3,6 +3,7 @@ import {
   clearTwitchToken,
   twitchRootSelector,
   updateTwitchExpiration,
+  updateTwitchLogin,
 } from "../data/twitch/twitchSlice";
 import { useCallback } from "react";
 import { useAppDispatch } from "../data/hooks";
@@ -15,9 +16,10 @@ export interface TwitchApi {
 
 // Builds functions to call the Twitch API using the accessToken that
 // we've stored in Redux.
-export function useTwitchApi(): TwitchApi {
+export function useTwitchApi(overrideAccessToken?: string): TwitchApi {
   const dispatch = useAppDispatch();
-  const { accessToken } = useSelector(twitchRootSelector);
+  const { accessToken: storedAccessToken } = useSelector(twitchRootSelector);
+  const accessToken = overrideAccessToken ?? storedAccessToken;
 
   const req = useCallback(
     async (
@@ -55,7 +57,7 @@ export function useTwitchApi(): TwitchApi {
     [accessToken]
   );
 
-  const validate = useCallback(async () => {
+  const validate = useCallback(async (): Promise<string | undefined> => {
     const data = await req("https://id.twitch.tv/oauth2/validate", {
       omitClientId: true,
     });
@@ -65,6 +67,7 @@ export function useTwitchApi(): TwitchApi {
       return undefined;
     }
 
+    dispatch(updateTwitchLogin(data.login));
     dispatch(updateTwitchExpiration(data.expires_in));
 
     return data.user_id;

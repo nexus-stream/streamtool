@@ -3,6 +3,7 @@ import { RootState } from "../store";
 
 interface TwitchState {
   accessToken?: string;
+  login?: string;
   expirationEpochTime?: number;
 }
 
@@ -18,8 +19,12 @@ const twitchState = createSlice({
     ) {
       state.accessToken = action.payload.accessToken;
     },
+    updateTwitchLogin(state, action: PayloadAction<string>) {
+      state.login = action.payload;
+    },
     clearTwitchToken(state) {
       delete state.accessToken;
+      delete state.login;
       delete state.expirationEpochTime;
     },
   },
@@ -39,7 +44,8 @@ export const updateTwitchExpiration = createAction(
   }
 );
 
-export const { updateTwitchToken, clearTwitchToken } = twitchState.actions;
+export const { updateTwitchToken, clearTwitchToken, updateTwitchLogin } =
+  twitchState.actions;
 
 export default twitchState.reducer;
 
