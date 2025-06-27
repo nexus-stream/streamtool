@@ -29,7 +29,7 @@ export function DockedPage() {
   );
 
   useHotkeys(
-    "ctrl+d",
+    "ctrl+a",
     () => {
       dispatch(toggleIsAdmin());
     },
