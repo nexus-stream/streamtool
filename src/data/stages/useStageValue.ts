@@ -14,6 +14,7 @@ export type StringValuesOnly<T> = {
   [K in keyof T as T[K] extends string | undefined ? K : never]: T[K];
 };
 
+// Helper to get a useState like interface for a stage param in Redux.
 export function useStageValue<
   TParam extends keyof TStage,
   TStage extends Stage

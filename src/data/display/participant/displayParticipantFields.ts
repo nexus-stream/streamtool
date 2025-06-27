@@ -1,6 +1,6 @@
+import { formatTimer } from "../../../util/formatTimer";
 import { Race } from "../../races/types";
 import { User } from "../../users/types";
-import { formatTimer } from "../timer/displayTimerHooks";
 import { ParticipantDisplayFieldGetter } from "../race/displayRaceFields";
 import { DisplayParticipant } from "../race/types";
 

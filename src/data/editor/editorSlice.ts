@@ -5,6 +5,7 @@ interface EditorState {
   currentStageId?: string;
 }
 
+// This state does not persist when you close and reopen the window.
 const editorSlice = createSlice({
   name: "editor",
   initialState: {} as EditorState,

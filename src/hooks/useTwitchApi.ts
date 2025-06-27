@@ -16,6 +16,11 @@ export interface TwitchApi {
 
 // Builds functions to call the Twitch API using the accessToken that
 // we've stored in Redux.
+//
+// This should be refactored into a class that gets returned and a
+// component that periodically calls validate and updates the token
+// state rather than doing it in-line in validate, but I don't wanna
+// do that right now.
 export function useTwitchApi(overrideAccessToken?: string): TwitchApi {
   const dispatch = useAppDispatch();
   const { accessToken: storedAccessToken } = useSelector(twitchRootSelector);

@@ -31,12 +31,8 @@ const raceSlice = createSlice({
       );
 
       if (participantIndex === -1) {
-        // I assume added participants come in as a new race because of the other
-        // fields it'd affect, but if they don't then this needs to be made more
-        // complicated.
-
-        // Best solution would be to make this a thunk and dispatch a fresh fetch
-        // + upsertRace when a participant is added.
+        // When a new participant gets added, we also receive a race update so we
+        // can safely skip updates for nonexistent participants.
         return;
       }
 

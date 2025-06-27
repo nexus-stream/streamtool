@@ -4,6 +4,10 @@ import { patchRaceOverrideParticipant } from "../stages/stageSlice";
 import { useRaceStage } from "../stages/useRaceStage";
 import { DisplayParticipant } from "./race/types";
 
+// Gets a useState like interface for reading and updating the override state for
+// a participant value for a given stage / user. This lets us easily define components
+// meant to edit these values by just passing in a stage id and the parameter that we
+// want to edit.
 export function useParticipantOverrideState<
   TParam extends keyof DisplayParticipant
 >(

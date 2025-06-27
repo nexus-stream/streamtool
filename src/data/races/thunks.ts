@@ -3,6 +3,9 @@ import { getRace } from "./api";
 import { upsertRace } from "./raceSlice";
 import { addUserFromId } from "../users/thunks";
 
+// Retrieve a race for the given ID from therun and dispatch it to Redux. Also,
+// retrieve info for each participant in the race and dispatch that to Redux as
+// well.
 export const addRaceFromId = createAsyncThunk(
   "addRaceFromId",
   async (raceId: string, { dispatch }) => {

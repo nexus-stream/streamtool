@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useDisplayRaceValue } from "../useDisplayRaceValue";
 import { DisplayRace } from "../participant/types";
 import { DisplayParticipant } from "../race/types";
+import { formatTimer } from "../../../util/formatTimer";
 
 export function useDisplayRaceTimer(race: DisplayRace) {
   return useRaceTime(race.startTime, race.endTime);
@@ -84,20 +85,4 @@ function useCurrentTime() {
   }, []);
 
   return currentTime;
-}
-
-export function formatTimer(ms: number) {
-  ms = Math.max(ms, 0);
-  const totalSeconds = Math.floor(ms / 1000);
-  const hours = Math.floor(totalSeconds / 3600);
-  const minutes = Math.floor((totalSeconds % 3600) / 60);
-  const seconds = totalSeconds % 60;
-
-  return `${padTimerSegment(hours)}:${padTimerSegment(
-    minutes
-  )}:${padTimerSegment(seconds)}`;
-}
-
-function padTimerSegment(num: number): string {
-  return `${num}`.padStart(2, "0");
 }
