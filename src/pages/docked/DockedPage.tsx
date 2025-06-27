@@ -17,8 +17,6 @@ import { BuildTime } from "./components/BuildTime";
 import { ViewDebugDataButton } from "./components/buttons/ViewDebugDataButton";
 import { AddFramesButton } from "./components/buttons/AddFramesButton";
 
-const BUILD_DATE = new Date(import.meta.env.VITE_BUILD_DATE).toString();
-
 export function DockedPage() {
   const dispatch = useAppDispatch();
 
