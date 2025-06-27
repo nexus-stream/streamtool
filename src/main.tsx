@@ -8,7 +8,6 @@ import { BrowserSourcePage } from "./pages/browser-source/BrowserSourcePage";
 import { Provider } from "react-redux";
 import store, { persistor } from "./data/store";
 import { PersistGate } from "redux-persist/integration/react";
-import { DumpPage } from "./pages/dump/DumpPage";
 import {
   ThemeProvider,
   createTheme,
@@ -52,7 +51,6 @@ createRoot(document.getElementById("root")!).render(
                 <Route path="/frame/:frameId" element={<BrowserSourcePage />} />
                 <Route path="/twitch" element={<TwitchWebhookPage />} />
                 <Route path="/debug" element={<DebugPage />} />
-                <Route path="/dump/:raceId" element={<DumpPage />} />
               </Routes>
             </BrowserRouter>
           </PersistGate>

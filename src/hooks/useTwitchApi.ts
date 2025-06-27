@@ -13,6 +13,8 @@ export interface TwitchApi {
   updateStreamInfo(title: string, gameId: string): Promise<void>;
 }
 
+// Builds functions to call the Twitch API using the accessToken that
+// we've stored in Redux.
 export function useTwitchApi(): TwitchApi {
   const dispatch = useAppDispatch();
   const { accessToken } = useSelector(twitchRootSelector);

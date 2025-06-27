@@ -1,11 +1,11 @@
 import { useEffect } from "react";
 import { LiveUpdateMessage } from "./types";
 import { useAppDispatch } from "../../../../data/hooks";
-import { upsertRace } from "../../../../data/races/raceSlice";
 import {
-  addRaceFromId,
-  updateParticipantAndRefetchRaceIfNew,
-} from "../../../../data/races/thunks";
+  updateParticipant,
+  upsertRace,
+} from "../../../../data/races/raceSlice";
+import { addRaceFromId } from "../../../../data/races/thunks";
 
 interface Props {
   raceId: string;
@@ -26,13 +26,13 @@ export function RaceLiveUpdater({ raceId }: Props) {
   useEffect(() => {
     const ws = new WebSocket(buildWebsocketEndpoint(raceId));
     ws.addEventListener("message", (event) => {
-      const message: LiveUpdateMessage = event.data;
+      const message: LiveUpdateMessage = JSON.parse(event.data);
       switch (message.type) {
         case "raceUpdate":
           dispatch(upsertRace(message.data));
           break;
         case "participantUpdate":
-          dispatch(updateParticipantAndRefetchRaceIfNew(message.data));
+          dispatch(updateParticipant(message.data));
           break;
       }
     });
