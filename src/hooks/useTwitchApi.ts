@@ -8,10 +8,30 @@ import {
 import { useCallback } from "react";
 import { useAppDispatch } from "../data/hooks";
 
+export interface TwitchGame {
+  id: string;
+  name: string;
+}
+
 export interface TwitchApi {
   validate(): Promise<string | undefined>;
   getGameId(name: string): Promise<string | undefined>;
+  searchGames(query: string): Promise<TwitchGame[]>;
   updateStreamInfo(title: string, gameId: string): Promise<void>;
+}
+
+// Twitch's search can return several results with the same name. Collapse
+// those down to the entry with the lowest id and cap the result at 10 distinct
+// names, so a name conflict doesn't eat into what we surface.
+function dedupeGames(games: TwitchGame[]): TwitchGame[] {
+  const byName = new Map<string, TwitchGame>();
+  for (const game of games) {
+    const existing = byName.get(game.name);
+    if (!existing || Number(game.id) < Number(existing.id)) {
+      byName.set(game.name, game);
+    }
+  }
+  return [...byName.values()].slice(0, 10);
 }
 
 // Builds functions to call the Twitch API using the accessToken that
@@ -98,6 +118,23 @@ export function useTwitchApi(overrideAccessToken?: string): TwitchApi {
     [req, validate]
   );
 
+  const searchGames = useCallback(
+    async (query: string): Promise<TwitchGame[]> => {
+      const result = await validate();
+      if (!result) {
+        return [];
+      }
+
+      const url = new URL("/helix/search/categories", "https://api.twitch.tv");
+      url.searchParams.append("query", query);
+      url.searchParams.append("first", "20");
+
+      const { data } = await req(url.toString());
+      return dedupeGames((data ?? []) as TwitchGame[]);
+    },
+    [req, validate]
+  );
+
   const updateStreamInfo = useCallback(
     async (title: string, game: string) => {
       const broadcasterId = await validate();
@@ -121,5 +158,5 @@ export function useTwitchApi(overrideAccessToken?: string): TwitchApi {
     [getGameId, req, validate]
   );
 
-  return { validate, getGameId, updateStreamInfo };
+  return { validate, getGameId, searchGames, updateStreamInfo };
 }
