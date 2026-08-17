@@ -64,6 +64,7 @@ export const commentatorDoubleTextFrame = buildFrameComponent(
 
 const containerStyle = css`
   display: flex;
+  align-items: baseline;
   ${STYLES.fullHeight};
 `;
 

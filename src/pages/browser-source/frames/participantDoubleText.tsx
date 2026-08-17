@@ -65,6 +65,7 @@ export const participantDoubleTextFrame = buildFrameComponent(
 
 const containerStyle = css`
   display: flex;
+  align-items: baseline;
   ${STYLES.fullHeight};
   ${STYLES.fullWidth};
 `;
