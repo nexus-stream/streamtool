@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useOBSWebsocket } from "../../../../data/obs/ObsWebSocketContext";
 import { FrameComponent } from "../../../browser-source/frame";
-import { FRAMES } from "../../../browser-source/frames";
+import { parseOBSOverlayURL } from "../../../browser-source/overlayUrl";
 
 // OBS has two sizes for browser sources - the size the item takes up in your OBS scene,
 // and the size that the browser renders the page at. These sizes do not sync up, so if
@@ -103,8 +103,6 @@ function getSceneItemKey(sceneUuid: string, sceneItemId: number): string {
   return `${sceneUuid}__${sceneItemId}`;
 }
 
-const framePathnameRegex = /^\/frame\/([^/]+)$/;
-
 function getInputFrame({
   inputSettings,
   inputKind,
@@ -112,20 +110,5 @@ function getInputFrame({
   inputSettings: { [key: string]: unknown };
   inputKind: string;
 }): FrameComponent | undefined {
-  if (inputKind !== "browser_source" || typeof inputSettings.url !== "string") {
-    return undefined;
-  }
-
-  const frameOrigin = window.location.origin;
-  const inputUrl = new URL(inputSettings.url);
-  if (inputUrl.origin !== frameOrigin) {
-    return undefined;
-  }
-
-  const frameId = inputUrl.pathname.match(framePathnameRegex)?.[1];
-  if (!frameId) {
-    return undefined;
-  }
-
-  return FRAMES[frameId];
+  return parseOBSOverlayURL(inputSettings, inputKind)?.frame;
 }
