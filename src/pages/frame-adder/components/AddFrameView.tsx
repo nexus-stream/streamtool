@@ -1,4 +1,4 @@
-import { Button, css } from "@mui/material";
+import { Button } from "@mui/material";
 import { useState } from "react";
 import { FRAMES } from "../../browser-source/frames";
 import { buildOBSOverlayURL } from "../../browser-source/overlayUrl";
@@ -20,7 +20,7 @@ export function AddFrameView() {
   const overlayUrl = buildOBSOverlayURL(frameId, frameParams);
 
   return (
-    <div css={containerStyle}>
+    <div css={STYLES.spacedColumn}>
       <FrameConfigForm
         frameId={frameId}
         setFrameId={setFrameId}
@@ -49,7 +49,3 @@ export function AddFrameView() {
   );
 }
 
-const containerStyle = css`
-  ${STYLES.spacedFlex};
-  flex-direction: column;
-`;

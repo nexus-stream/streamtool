@@ -24,6 +24,18 @@ export interface ParsedOverlayURL {
   rawParams: Record<string, unknown>;
 }
 
+// Parses the query params of a frame URL. This is the single place that expands
+// qs's bracket notation (e.g. `settings[fontSize]`) back into nested objects;
+// BrowserSourcePage and parseOBSOverlayURL both go through here so they can't drift.
+export function parseFrameParams(
+  searchParams: URLSearchParams
+): Record<string, unknown> {
+  return qs.parse(Object.fromEntries(searchParams.entries())) as Record<
+    string,
+    unknown
+  >;
+}
+
 // Given the settings of an input in OBS, determine whether it's a browser source
 // pointing at one of our frames and, if so, return the frame and its raw (still
 // string-encoded) query params.
@@ -49,8 +61,6 @@ export function parseOBSOverlayURL(
   return {
     frameId,
     frame,
-    rawParams: qs.parse(inputUrl.search, {
-      ignoreQueryPrefix: true,
-    }) as Record<string, unknown>,
+    rawParams: parseFrameParams(inputUrl.searchParams),
   };
 }

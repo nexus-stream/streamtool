@@ -1,7 +1,14 @@
 import { Button } from "@mui/material";
 import { useCallback, useState } from "react";
 import { useOBSWebsocket } from "../../../data/obs/ObsWebSocketContext";
-import { LoadedFrame } from "./FrameSelectListener";
+
+// The scene-item identity of the input being edited. Narrower than the listener's
+// LoadedFrame because the button doesn't need the parsed params.
+export interface SelectedFrame {
+  inputUuid: string;
+  inputName: string;
+  frameId: string;
+}
 
 interface Props {
   url: string;
@@ -9,7 +16,7 @@ interface Props {
   width: number;
   height: number;
   frameId: string;
-  selectedFrame: LoadedFrame;
+  selectedFrame: SelectedFrame;
 }
 
 // Overwrites the currently selected frame in OBS with the form's current config.

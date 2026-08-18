@@ -1,4 +1,4 @@
-import { Button, css } from "@mui/material";
+import { Button } from "@mui/material";
 import { useCallback, useState } from "react";
 import { FRAMES } from "../../browser-source/frames";
 import { buildOBSOverlayURL } from "../../browser-source/overlayUrl";
@@ -6,7 +6,7 @@ import { STYLES } from "../../../style/styles";
 import { FrameConfigForm } from "./FrameConfigForm";
 import { FrameSelectListener, LoadedFrame } from "./FrameSelectListener";
 import { OBSConnectionWrapper } from "./OBSConnectionWrapper";
-import { OBSUpdateButton } from "./OBSUpdateButton";
+import { OBSUpdateButton, SelectedFrame } from "./OBSUpdateButton";
 
 // Edits an existing frame: selecting a frame in OBS populates the form, and Save
 // overwrites that source with the form's current config.
@@ -14,7 +14,7 @@ export function EditFrameView() {
   const [frameId, setFrameId] = useState("");
   const [nameBase, setName] = useState("");
   const [frameParams, setFrameParams] = useState<object>({});
-  const [selectedFrame, setSelectedFrame] = useState<LoadedFrame | undefined>(
+  const [selectedFrame, setSelectedFrame] = useState<SelectedFrame | undefined>(
     undefined
   );
 
@@ -33,11 +33,15 @@ export function EditFrameView() {
     setFrameId(frame.frameId);
     setFrameParams(frame.params);
     setName(frame.inputName);
-    setSelectedFrame(frame);
+    setSelectedFrame({
+      inputUuid: frame.inputUuid,
+      inputName: frame.inputName,
+      frameId: frame.frameId,
+    });
   }, []);
 
   return (
-    <div css={containerStyle}>
+    <div css={STYLES.spacedColumn}>
       <FrameSelectListener onSelect={handleSelect} />
       <FrameConfigForm
         frameId={frameId}
@@ -70,7 +74,3 @@ export function EditFrameView() {
   );
 }
 
-const containerStyle = css`
-  ${STYLES.spacedFlex};
-  flex-direction: column;
-`;
