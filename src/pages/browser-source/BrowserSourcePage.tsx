@@ -2,7 +2,7 @@ import { useParams, useSearchParams } from "react-router";
 import { FRAMES } from "./frames";
 import { useMemo } from "react";
 import { errorFrame } from "./frames/error";
-import qs from "qs";
+import { parseFrameParams } from "./overlayUrl";
 
 // The page that renders "frames" - pretty pages that can be added to OBS as browser
 // sources and automatically update as stages / the underlying data from therun changes.
@@ -21,11 +21,11 @@ export function BrowserSourcePage() {
 
 function useFrameWithParsedParams() {
   const frame = useFrame();
-  const searchParams = useSearchParamsObject();
+  const [searchParams] = useSearchParams();
 
   try {
     const params = useMemo(
-      () => frame!.zodProps.parse(qs.parse(searchParams)),
+      () => frame!.zodProps.parse(parseFrameParams(searchParams)),
       [frame, searchParams]
     );
     return { frame: frame!, params };
@@ -58,10 +58,3 @@ function useFrame() {
   return FRAMES[frameId];
 }
 
-function useSearchParamsObject() {
-  const [searchParams] = useSearchParams();
-
-  return useMemo(() => {
-    return Object.fromEntries(searchParams.entries());
-  }, [searchParams]);
-}

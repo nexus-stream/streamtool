@@ -7,6 +7,12 @@ export const STYLES = {
     gap: ${size(4)};
   `,
 
+  spacedColumn: css`
+    display: flex;
+    flex-direction: column;
+    gap: ${size(4)};
+  `,
+
   fullWidth: css`
     width: 100%;
   `,
