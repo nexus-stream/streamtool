@@ -54,6 +54,7 @@ export function ValueEditor<TValue>({
           value="check"
           selected={isOverrideSynced || isEditOpen}
           onChange={() => setIsEditOpen((old) => isOverrideSynced || !old)}
+          aria-label={`Edit ${label}`}
         >
           <EditIcon />
         </ToggleButton>
@@ -73,6 +74,7 @@ export function ValueEditor<TValue>({
             value="check"
             selected={isOverrideSynced}
             onChange={() => setIsOverrideSynced(!isOverrideSynced)}
+            aria-label={isOverrideSynced ? `Clear ${label} Override` : `Enable ${label} Override`}
           >
             {isOverrideSynced ? "Clear" : "Enable"}
           </ToggleButton>

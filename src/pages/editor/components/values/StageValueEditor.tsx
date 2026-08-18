@@ -63,6 +63,7 @@ export function StageValueEditor<
         value="check"
         selected={isEditing}
         onChange={toggleIsEditing}
+        aria-label={isEditing ? `Save ${label}` : `Edit ${label}`}
       >
         {isEditing ? <SaveIcon /> : <EditIcon />}
       </ToggleButton>
