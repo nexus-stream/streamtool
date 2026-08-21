@@ -49,6 +49,6 @@ export const DISPLAY_PARTICIPANT_FIELDS: {
       return null;
     }
 
-    return "PB - " + formatTimer(time);
+    return formatTimer(time);
   },
 };
