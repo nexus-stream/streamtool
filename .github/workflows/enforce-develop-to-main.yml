@@ -1,0 +1,17 @@
+name: Enforce develop-to-main
+on:
+  pull_request:
+    branches: [main]
+permissions:
+  contents: read
+jobs:
+  require-develop-source:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Fail unless source branch is develop
+        run: |
+          if [ "${{ github.head_ref }}" != "develop" ]; then
+            echo "::error::PRs to main must originate from the develop branch."
+            exit 1
+          fi
+          echo "Source branch is develop."
