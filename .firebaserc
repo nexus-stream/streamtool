@@ -1,5 +1,17 @@
 {
   "projects": {
     "default": "project-nexus-stream"
+  },
+  "targets": {
+    "project-nexus-stream": {
+      "hosting": {
+        "production": [
+          "project-nexus-stream"
+        ],
+        "develop": [
+          "project-nexus-stream-develop"
+        ]
+      }
+    }
   }
 }
