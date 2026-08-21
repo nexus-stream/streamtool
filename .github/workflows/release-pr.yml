@@ -38,10 +38,10 @@ jobs:
             echo
           } > release-body.md
 
-          NUMBER=$(gh pr create --base main --head develop \
+          URL=$(gh pr create --base main --head develop \
             --title "Release: develop → main" \
-            --body-file release-body.md \
-            --json number --jq '.number')
+            --body-file release-body.md)
+          NUMBER="${URL##*/}"
           echo "number=$NUMBER" >> "$GITHUB_OUTPUT"
           echo "Created PR #$NUMBER"
 
