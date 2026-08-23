@@ -38,7 +38,7 @@ export const participantTextFrame = buildFrameComponent(
     const race = useSelector(selectCurrentDisplayRace);
     const participant = useParticipantAtPosition(
       positionType,
-      participantPosition
+      participantPosition,
     );
 
     if (!participant) {
@@ -58,13 +58,19 @@ export const participantTextFrame = buildFrameComponent(
         return (
           <FrameTypography
             settings={settings}
-            text={`${prefix}${participant[kind]}${suffix}`}
+            text={[prefix, participant[kind], suffix]
+              .map(sanitizeText)
+              .join("")}
             transitionHoldKey={`${stageId}:${participant.user}`}
           />
         );
     }
-  }
+  },
 );
+
+function sanitizeText(text?: string | null): string {
+  return text ?? "";
+}
 
 // eslint-disable-next-line react-refresh/only-export-components
 function ParticipantTextTimer({

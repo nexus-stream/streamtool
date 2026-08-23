@@ -40,8 +40,8 @@ interface SceneItemTransform {
   alignment?: number;
 }
 
-// Replaces the given scene items with a single composite browser source covering
-// their bounding box. The originals' scene items and inputs are removed; their config
+// Creates a single composite browser source covering the given scene items' bounding box.
+// Originals are left in place without deletion or hiding.
 export async function groupSceneFrames(
   socket: OBSWebSocket,
   frames: SceneFrame[],
@@ -122,14 +122,6 @@ export async function groupSceneFrames(
       alignment: TOP_LEFT_ALIGNMENT,
     },
   });
-
-  for (const frame of frames) {
-    await socket.call("RemoveSceneItem", {
-      sceneUuid: frame.sceneUuid,
-      sceneItemId: frame.sceneItemId,
-    });
-    await socket.call("RemoveInput", { inputUuid: frame.inputUuid });
-  }
 }
 
 // Recreates a composite's children as individual browser sources at their original
