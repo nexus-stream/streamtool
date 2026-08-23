@@ -202,8 +202,8 @@ describe("group frames selected in OBS", () => {
       expect.objectContaining({
         sceneItemId: 99,
         sceneItemTransform: expect.objectContaining({
-          positionX: 4, // 100 - COMPOSITE_PADDING(16) - 80
-          positionY: 164, // 100 - COMPOSITE_PADDING(16) + 80
+          positionX: 84, // 100 - COMPOSITE_PADDING(16)
+          positionY: 84, // 100 - COMPOSITE_PADDING(16)
           width: 452,
           height: 212,
           alignment: 5,

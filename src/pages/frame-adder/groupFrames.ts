@@ -40,8 +40,7 @@ interface SceneItemTransform {
   alignment?: number;
 }
 
-// Creates a single composite browser source covering the given scene items' bounding box,
-// offset 80 pixels down and left from the originals so the new group is visually distinct.
+// Creates a single composite browser source covering the given scene items' bounding box.
 // Originals are left in place without deletion or hiding.
 export async function groupSceneFrames(
   socket: OBSWebSocket,
@@ -116,8 +115,8 @@ export async function groupSceneFrames(
     sceneUuid,
     sceneItemId,
     sceneItemTransform: {
-      positionX: minX - COMPOSITE_PADDING - 80,
-      positionY: minY - COMPOSITE_PADDING + 80,
+      positionX: minX - COMPOSITE_PADDING,
+      positionY: minY - COMPOSITE_PADDING,
       width,
       height,
       alignment: TOP_LEFT_ALIGNMENT,
