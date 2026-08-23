@@ -19,8 +19,26 @@ export function AddFrameView() {
     "";
   const overlayUrl = buildOBSOverlayURL(frameId, frameParams);
 
+  const controls = currentFrame && (
+    <>
+      <Button variant="outlined" href={overlayUrl} target="_blank">
+        Preview Frame
+      </Button>
+      <OBSConnectionWrapper>
+        <OBSInsertButton
+          url={overlayUrl}
+          frameName={currentFrame.displayProperties.displayName}
+          name={name}
+          width={currentFrame.displayProperties.width}
+          height={currentFrame.displayProperties.height}
+        />
+      </OBSConnectionWrapper>
+    </>
+  );
+
   return (
     <div css={STYLES.spacedColumn}>
+      {controls}
       <FrameConfigForm
         frameId={frameId}
         setFrameId={setFrameId}
@@ -29,23 +47,7 @@ export function AddFrameView() {
         frameParams={frameParams}
         setFrameParams={setFrameParams}
       />
-      {currentFrame && (
-        <>
-          <Button variant="outlined" href={overlayUrl} target="_blank">
-            Preview Frame
-          </Button>
-          <OBSConnectionWrapper>
-            <OBSInsertButton
-              url={overlayUrl}
-              frameName={currentFrame.displayProperties.displayName}
-              name={name}
-              width={currentFrame.displayProperties.width}
-              height={currentFrame.displayProperties.height}
-            />
-          </OBSConnectionWrapper>
-        </>
-      )}
+      {controls}
     </div>
   );
 }
-
