@@ -1,6 +1,8 @@
 import { describe, expect, it } from "vitest";
 import { within } from "@testing-library/react";
+import { Base64 } from "js-base64";
 import {
+  CompositeConfig,
   encodeCompositeConfig,
   parseCompositeConfig,
 } from "../pages/browser-source/frames";
@@ -20,8 +22,9 @@ function renderFrame(store: ReturnType<typeof createTestStore>, route: string) {
 }
 
 describe("composite config encoding", () => {
-  it("round-trips a layout, including non-ASCII params", () => {
-    const config = {
+  it("round-trips a v1 layout, including non-ASCII params", () => {
+    const config: CompositeConfig = {
+      version: 1,
       width: 1280,
       height: 720,
       frames: [
@@ -39,11 +42,43 @@ describe("composite config encoding", () => {
     expect(parseCompositeConfig(encodeCompositeConfig(config))).toEqual(config);
   });
 
+  it("parses unversioned legacy composite configs and upgrades them to v1", () => {
+    const legacyJson = JSON.stringify({
+      width: 800,
+      height: 600,
+      frames: [
+        {
+          frameId: "tagText",
+          params: { tagName: "title" },
+          width: 200,
+          height: 50,
+          x: 0,
+          y: 0,
+        },
+      ],
+    });
+    const legacyBase64 = Base64.encode(legacyJson);
+    expect(parseCompositeConfig(legacyBase64)).toEqual({
+      version: 1,
+      width: 800,
+      height: 600,
+      frames: [
+        {
+          frameId: "tagText",
+          params: { tagName: "title" },
+          width: 200,
+          height: 50,
+          x: 0,
+          y: 0,
+        },
+      ],
+    });
+  });
+
   it("throws on a malformed config string", () => {
     expect(() => parseCompositeConfig("!!!")).toThrow();
   });
 });
-
 describe("composite frame", () => {
   it("renders nested frames positioned on the composite canvas", async () => {
     const store = createTestStore();

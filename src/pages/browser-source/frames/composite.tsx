@@ -1,3 +1,4 @@
+import { Base64 } from "js-base64";
 import { css } from "@emotion/react";
 import { ReactNode, useMemo } from "react";
 import { z } from "zod/v4";
@@ -13,7 +14,32 @@ import { errorFrame } from "./error";
 // not through the manual frame-adder form, so the whole layout lives behind one
 // opaque config param instead of a pile of nested form controls.
 
-const CompositeFrameConfigSchema = z.object({
+export interface CompositeFrameConfig {
+  frameId: string;
+  params: Record<string, unknown>;
+  width: number;
+  height: number;
+  x: number;
+  y: number;
+  name?: string;
+}
+
+export interface CompositeConfigV1 {
+  version: 1;
+  width: number;
+  height: number;
+  frames: CompositeFrameConfig[];
+}
+
+export type CompositeConfigInput = {
+  version?: 1;
+  width: number;
+  height: number;
+  frames: CompositeFrameConfig[];
+};
+
+export type CompositeConfig = CompositeConfigV1;
+const CompositeFrameConfigSchema: z.ZodType<CompositeFrameConfig> = z.object({
   frameId: z.string(),
   // The child frame's own configuration, parsed by that frame's zodProps at render
   // time. Left permissive here so the composite doesn't need to know child schemas.
@@ -27,40 +53,36 @@ const CompositeFrameConfigSchema = z.object({
   name: z.string().optional(),
 });
 
-const CompositeConfigSchema = z.object({
-  width: z.number().positive(),
-  height: z.number().positive(),
-  frames: z.array(CompositeFrameConfigSchema),
-});
+// Schema supporting both unversioned legacy configs and version 1.
+const CompositeConfigSchema = z
+  .object({
+    version: z.literal(1).optional(),
+    width: z.number().positive(),
+    height: z.number().positive(),
+    frames: z.array(CompositeFrameConfigSchema),
+  })
+  .transform(
+    (data): CompositeConfigV1 => ({
+      version: 1,
+      width: data.width,
+      height: data.height,
+      frames: data.frames,
+    }),
+  );
 
-export type CompositeFrameConfig = z.infer<typeof CompositeFrameConfigSchema>;
-export type CompositeConfig = z.infer<typeof CompositeConfigSchema>;
+export const COMPOSITE_PADDING = 16;
 
-// btoa/atob only handle Latin-1, so route through a byte string so non-ASCII
-// content (names, custom text) survives the round trip.
-function encodeBase64(text: string): string {
-  const bytes = new TextEncoder().encode(text);
-  let binary = "";
-  for (const byte of bytes) {
-    binary += String.fromCharCode(byte);
-  }
-  return btoa(binary);
-}
-
-function decodeBase64(encoded: string): string {
-  const binary = atob(encoded);
-  const bytes = Uint8Array.from(binary, (char) => char.charCodeAt(0));
-  return new TextDecoder().decode(bytes);
-}
-
-export function encodeCompositeConfig(config: CompositeConfig): string {
-  return encodeBase64(JSON.stringify(config));
+export function encodeCompositeConfig(config: CompositeConfigInput): string {
+  const payload: CompositeConfigV1 = {
+    ...config,
+    version: 1,
+  };
+  return Base64.encode(JSON.stringify(payload));
 }
 
 export function parseCompositeConfig(encoded: string): CompositeConfig {
-  return CompositeConfigSchema.parse(JSON.parse(decodeBase64(encoded)));
+  return CompositeConfigSchema.parse(JSON.parse(Base64.decode(encoded)));
 }
-
 export const compositeFrame = buildFrameComponent(
   {
     displayName: "Composite",
@@ -94,7 +116,7 @@ export const compositeFrame = buildFrameComponent(
         {decoded.frames.map((frame, index) => renderChild(frame, index))}
       </div>
     );
-  }
+  },
 );
 
 // FRAMES is read at render time only, so it must be fully populated before any
@@ -104,8 +126,8 @@ function renderChild(frame: CompositeFrameConfig, key: number): ReactNode {
   const childFrame = FRAMES[frame.frameId];
   const style = css`
     position: absolute;
-    left: ${frame.x}px;
-    top: ${frame.y}px;
+    left: ${frame.x + COMPOSITE_PADDING}px;
+    top: ${frame.y + COMPOSITE_PADDING}px;
     width: ${frame.width}px;
     height: ${frame.height}px;
     overflow: hidden;
@@ -119,8 +141,11 @@ function renderChild(frame: CompositeFrameConfig, key: number): ReactNode {
     );
   }
 
-  const { width: nativeWidth, height: nativeHeight, autoResize } =
-    childFrame.displayProperties;
+  const {
+    width: nativeWidth,
+    height: nativeHeight,
+    autoResize,
+  } = childFrame.displayProperties;
   const shouldScale =
     !autoResize &&
     nativeWidth > 0 &&

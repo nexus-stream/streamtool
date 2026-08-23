@@ -25,5 +25,13 @@ export const FRAMES: { [frameId: string]: FrameComponent } = {
   composite: compositeFrame,
 };
 
-export { encodeCompositeConfig, parseCompositeConfig } from "./composite";
-export type { CompositeConfig, CompositeFrameConfig } from "./composite";
+export {
+  COMPOSITE_PADDING,
+  encodeCompositeConfig,
+  parseCompositeConfig,
+} from "./composite";
+export type {
+  CompositeConfig,
+  CompositeConfigV1,
+  CompositeFrameConfig,
+} from "./composite";

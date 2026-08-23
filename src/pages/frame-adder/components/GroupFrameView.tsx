@@ -1,4 +1,4 @@
-import { Button } from "@mui/material";
+import { Button, TextField } from "@mui/material";
 import { useCallback, useEffect, useState } from "react";
 import { FRAMES } from "../../browser-source/frames";
 import { useOBSWebsocket } from "../../../data/obs/ObsWebSocketContext";
@@ -8,23 +8,24 @@ import {
   SceneFrame,
   groupSceneFrames,
   resolveSceneFrame,
-  ungroupSceneFrame,
 } from "../groupFrames";
 
 // The "Group" tab. There is no reliable multi-select read in obs-websocket, so we
 // accumulate the scene items the user clicks in OBS: each SceneItemSelected resolves
 // to one of our frames and is added here, with a Remove button to prune mistakes.
-// "Group" collapses the accumulated set; "Ungroup" expands a single selected composite.
+// "Group" collapses the accumulated set into a composite frame.
 export function GroupFrameView() {
   const socket = useOBSWebsocket();
   const [frames, setFrames] = useState<SceneFrame[]>([]);
+  const [name, setName] = useState("Group");
   const [error, setError] = useState<string | undefined>(undefined);
   const [busy, setBusy] = useState(false);
-
   useEffect(() => {
     if (!socket) {
       return;
     }
+
+    let isMounted = true;
 
     const handleSelected = async ({
       sceneUuid,
@@ -35,33 +36,41 @@ export function GroupFrameView() {
     }) => {
       try {
         const frame = await resolveSceneFrame(socket, sceneUuid, sceneItemId);
-        if (!frame) {
+        if (!frame || !isMounted || frame.compositeConfig !== undefined) {
           return;
         }
-        setFrames((prev) =>
-          prev.some((f) => f.sceneItemId === frame.sceneItemId)
+        setFrames((prev) => {
+          if (prev.length > 0 && prev[0].sceneUuid !== frame.sceneUuid) {
+            return [frame];
+          }
+          return prev.some((f) => f.sceneItemId === frame.sceneItemId)
             ? prev
-            : [...prev, frame]
-        );
+            : [...prev, frame];
+        });
       } catch {
         // The item isn't one of our frames (or vanished mid-resolve); ignore it.
       }
     };
 
+    const handleSceneChange = () => {
+      if (isMounted) {
+        setFrames([]);
+      }
+    };
+
     socket.addListener("SceneItemSelected", handleSelected);
+    socket.addListener("CurrentProgramSceneChanged", handleSceneChange);
     return () => {
+      isMounted = false;
       socket.removeListener("SceneItemSelected", handleSelected);
+      socket.removeListener("CurrentProgramSceneChanged", handleSceneChange);
     };
   }, [socket]);
-
   const removeFrame = (sceneItemId: number) => {
     setFrames((prev) => prev.filter((f) => f.sceneItemId !== sceneItemId));
   };
 
   const canGroup = frames.length >= 2;
-  const canUngroup =
-    frames.length === 1 && frames[0].compositeConfig !== undefined;
-
   const onGroup = useCallback(async () => {
     if (!socket || !canGroup) {
       return;
@@ -69,30 +78,21 @@ export function GroupFrameView() {
     setBusy(true);
     setError(undefined);
     try {
-      await groupSceneFrames(socket, frames);
+      await groupSceneFrames(socket, frames, name);
       setFrames([]);
+      setName("Group");
     } catch (e) {
       setError(e instanceof Error ? e.message : "Failed to group frames");
     } finally {
       setBusy(false);
     }
-  }, [socket, canGroup, frames]);
+  }, [socket, canGroup, frames, name]);
 
-  const onUngroup = useCallback(async () => {
-    if (!socket || !canUngroup) {
-      return;
-    }
-    setBusy(true);
+  const onClear = useCallback(() => {
+    setFrames([]);
+    setName("Group");
     setError(undefined);
-    try {
-      await ungroupSceneFrame(socket, frames[0]);
-      setFrames([]);
-    } catch (e) {
-      setError(e instanceof Error ? e.message : "Failed to ungroup frame");
-    } finally {
-      setBusy(false);
-    }
-  }, [socket, canUngroup, frames]);
+  }, []);
 
   return (
     <div css={STYLES.spacedColumn}>
@@ -117,6 +117,13 @@ export function GroupFrameView() {
             </div>
           ))
         )}
+        {canGroup && (
+          <TextField
+            label="Name"
+            value={name}
+            onChange={(event) => setName(event.target.value)}
+          />
+        )}
         <div css={STYLES.spacedFlex}>
           <Button
             variant="contained"
@@ -126,11 +133,11 @@ export function GroupFrameView() {
             Group
           </Button>
           <Button
-            variant="contained"
-            onClick={onUngroup}
-            disabled={!canUngroup || busy}
+            variant="outlined"
+            onClick={onClear}
+            disabled={frames.length === 0 || busy}
           >
-            Ungroup
+            Clear
           </Button>
         </div>
         {error && <p>{error}</p>}

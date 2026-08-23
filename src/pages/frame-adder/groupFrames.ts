@@ -1,6 +1,7 @@
 import OBSWebSocket, { OBSWebSocketError } from "obs-websocket-js";
 import { uniqueNamesGenerator, animals } from "unique-names-generator";
 import {
+  COMPOSITE_PADDING,
   CompositeConfig,
   encodeCompositeConfig,
   parseCompositeConfig,
@@ -20,26 +21,17 @@ const COMPOSITE_FRAME_ID = "composite";
 // OBS_ALIGN_TOP_LEFT: place positionX/positionY at the top-left corner, so a child's
 // x/y offset from the composite's own position is just position + offset.
 const TOP_LEFT_ALIGNMENT = 5;
-
-// A scene item that is one of our frames, resolved to everything grouping needs.
+// A selected scene item resolved from OBS events. Stores only identity metadata;
+// live positions, sizes, and configs are queried on-demand at group/ungroup time.
 export interface SceneFrame {
   sceneItemId: number;
   sceneUuid: string;
   inputUuid: string;
   inputName: string;
   frameId: string;
-  // Absolute top-left corner and size of the item in the OBS canvas (pixels).
-  x: number;
-  y: number;
-  width: number;
-  height: number;
-  // The frame's raw (still string-typed) params straight from its URL, ready to be
-  // re-serialized into a composite child config.
-  rawParams: Record<string, unknown>;
-  // The decoded layout when this frame is itself a composite (for ungrouping).
+  // The decoded layout when this frame is a composite (for UI canUngroup check).
   compositeConfig?: CompositeConfig;
 }
-
 interface SceneItemTransform {
   positionX: number;
   positionY: number;
@@ -50,30 +42,54 @@ interface SceneItemTransform {
 
 // Replaces the given scene items with a single composite browser source covering
 // their bounding box. The originals' scene items and inputs are removed; their config
-// and names live on inside the composite so they can be ungrouped later.
 export async function groupSceneFrames(
   socket: OBSWebSocket,
-  frames: SceneFrame[]
+  frames: SceneFrame[],
+  name: string = "Group"
 ): Promise<void> {
   if (frames.length < 2) {
     return;
   }
 
-  // The scene the selected items live in, taken from the selection event rather than
-  // GetSceneList's program scene, which can be null in multi-canvas OBS.
   const sceneUuid = frames[0].sceneUuid;
 
-  const minX = Math.min(...frames.map((f) => f.x));
-  const minY = Math.min(...frames.map((f) => f.y));
-  const maxX = Math.max(...frames.map((f) => f.x + f.width));
-  const maxY = Math.max(...frames.map((f) => f.y + f.height));
-  const width = maxX - minX;
-  const height = maxY - minY;
+  // Query fresh transforms and parameters for each frame at the exact moment of grouping.
+  const frameDetails = await Promise.all(
+    frames.map(async (frame) => {
+      const [input, transformResponse] = await Promise.all([
+        socket.call("GetInputSettings", { inputUuid: frame.inputUuid }),
+        socket.call("GetSceneItemTransform", {
+          sceneUuid: frame.sceneUuid,
+          sceneItemId: frame.sceneItemId,
+        }),
+      ]);
+      const parsed = parseOBSOverlayURL(input.inputSettings, input.inputKind);
+      const bounds = transformToBounds(
+        transformResponse.sceneItemTransform as unknown as SceneItemTransform
+      );
+      return {
+        ...frame,
+        x: bounds.x,
+        y: bounds.y,
+        width: bounds.width,
+        height: bounds.height,
+        rawParams: parsed?.rawParams ?? {},
+      };
+    })
+  );
+
+  const minX = Math.min(...frameDetails.map((f) => f.x));
+  const minY = Math.min(...frameDetails.map((f) => f.y));
+  const maxX = Math.max(...frameDetails.map((f) => f.x + f.width));
+  const maxY = Math.max(...frameDetails.map((f) => f.y + f.height));
+  const width = maxX - minX + COMPOSITE_PADDING * 2;
+  const height = maxY - minY + COMPOSITE_PADDING * 2;
 
   const config: CompositeConfig = {
+    version: 1,
     width,
     height,
-    frames: frames.map((f) => ({
+    frames: frameDetails.map((f) => ({
       frameId: f.frameId,
       params: f.rawParams,
       width: f.width,
@@ -87,11 +103,10 @@ export async function groupSceneFrames(
   const url = buildOBSOverlayURL(COMPOSITE_FRAME_ID, {
     config: encodeCompositeConfig(config),
   });
-
-  const { sceneItemId, inputUuid } = await createInputWithRetry(
+  const { sceneItemId } = await createInputWithRetry(
     socket,
     sceneUuid,
-    "Group",
+    name || "Group",
     url,
     width,
     height
@@ -100,8 +115,8 @@ export async function groupSceneFrames(
     sceneUuid,
     sceneItemId,
     sceneItemTransform: {
-      positionX: minX,
-      positionY: minY,
+      positionX: minX - COMPOSITE_PADDING,
+      positionY: minY - COMPOSITE_PADDING,
       width,
       height,
       alignment: TOP_LEFT_ALIGNMENT,
@@ -110,7 +125,7 @@ export async function groupSceneFrames(
 
   for (const frame of frames) {
     await socket.call("RemoveSceneItem", {
-      sceneUuid,
+      sceneUuid: frame.sceneUuid,
       sceneItemId: frame.sceneItemId,
     });
     await socket.call("RemoveInput", { inputUuid: frame.inputUuid });
@@ -124,12 +139,34 @@ export async function ungroupSceneFrame(
   socket: OBSWebSocket,
   frame: SceneFrame
 ): Promise<void> {
-  const config = frame.compositeConfig;
-  if (!config) {
+  // Query fresh input settings and transform for the composite at ungroup time.
+  const [input, transformResponse] = await Promise.all([
+    socket.call("GetInputSettings", { inputUuid: frame.inputUuid }),
+    socket.call("GetSceneItemTransform", {
+      sceneUuid: frame.sceneUuid,
+      sceneItemId: frame.sceneItemId,
+    }),
+  ]);
+
+  const parsed = parseOBSOverlayURL(input.inputSettings, input.inputKind);
+  const rawConfig = parsed?.rawParams.config;
+  if (typeof rawConfig !== "string") {
     return;
   }
 
+  let config: CompositeConfig;
+  try {
+    config = parseCompositeConfig(rawConfig);
+  } catch {
+    return;
+  }
+
+  const bounds = transformToBounds(
+    transformResponse.sceneItemTransform as unknown as SceneItemTransform
+  );
   const sceneUuid = frame.sceneUuid;
+  const currentX = bounds.x;
+  const currentY = bounds.y;
 
   for (const child of config.frames) {
     const url = buildOBSOverlayURL(child.frameId, child.params);
@@ -150,25 +187,31 @@ export async function ungroupSceneFrame(
       inputHeight
     );
 
-    const transform: Record<string, unknown> = {
-      positionX: frame.x + child.x,
-      positionY: frame.y + child.y,
-      alignment: TOP_LEFT_ALIGNMENT,
-    };
-
     if (autoResize) {
-      transform.width = child.width;
-      transform.height = child.height;
+      await socket.call("SetSceneItemTransform", {
+        sceneUuid,
+        sceneItemId,
+        sceneItemTransform: {
+          positionX: currentX + COMPOSITE_PADDING + child.x,
+          positionY: currentY + COMPOSITE_PADDING + child.y,
+          alignment: TOP_LEFT_ALIGNMENT,
+          width: child.width,
+          height: child.height,
+        },
+      });
     } else {
-      transform.scaleX = child.width / nativeWidth;
-      transform.scaleY = child.height / nativeHeight;
+      await socket.call("SetSceneItemTransform", {
+        sceneUuid,
+        sceneItemId,
+        sceneItemTransform: {
+          positionX: currentX + COMPOSITE_PADDING + child.x,
+          positionY: currentY + COMPOSITE_PADDING + child.y,
+          alignment: TOP_LEFT_ALIGNMENT,
+          scaleX: child.width / nativeWidth,
+          scaleY: child.height / nativeHeight,
+        },
+      });
     }
-
-    await socket.call("SetSceneItemTransform", {
-      sceneUuid,
-      sceneItemId,
-      sceneItemTransform: transform,
-    });
   }
 
   await socket.call("RemoveSceneItem", {
@@ -197,13 +240,6 @@ export async function resolveSceneFrame(
   if (!parsed) {
     return undefined;
   }
-  const { sceneItemTransform } = await socket.call("GetSceneItemTransform", {
-    sceneUuid,
-    sceneItemId,
-  });
-  const bounds = transformToBounds(
-    sceneItemTransform as unknown as SceneItemTransform
-  );
 
   const frame: SceneFrame = {
     sceneItemId,
@@ -211,11 +247,6 @@ export async function resolveSceneFrame(
     inputUuid: item.sourceUuid,
     inputName: item.sourceName,
     frameId: parsed.frameId,
-    x: bounds.x,
-    y: bounds.y,
-    width: bounds.width,
-    height: bounds.height,
-    rawParams: parsed.rawParams,
   };
 
   if (parsed.frameId === COMPOSITE_FRAME_ID) {
@@ -231,7 +262,6 @@ export async function resolveSceneFrame(
 
   return frame;
 }
-
 
 async function createInputWithRetry(
   socket: OBSWebSocket,

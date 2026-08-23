@@ -190,8 +190,8 @@ describe("group frames selected in OBS", () => {
           inputKind: "browser_source",
           inputSettings: expect.objectContaining({
             url: expect.stringContaining("/frame/composite"),
-            width: 420,
-            height: 180,
+            width: 452,
+            height: 212,
           }),
         })
       );
@@ -202,10 +202,10 @@ describe("group frames selected in OBS", () => {
       expect.objectContaining({
         sceneItemId: 99,
         sceneItemTransform: expect.objectContaining({
-          positionX: 100,
-          positionY: 100,
-          width: 420,
-          height: 180,
+          positionX: 84,
+          positionY: 84,
+          width: 452,
+          height: 212,
           alignment: 5,
         }),
       })
@@ -224,8 +224,9 @@ describe("group frames selected in OBS", () => {
     const parsed = parseOBSOverlayURL(inputSettings, "browser_source")!;
     const config = parseCompositeConfig(parsed.rawParams.config as string);
     expect(config).toEqual({
-      width: 420,
-      height: 180,
+      version: 1,
+      width: 452,
+      height: 212,
       frames: [
         {
           frameId: "participantText",
@@ -270,6 +271,81 @@ describe("group frames selected in OBS", () => {
     );
   });
 
+  it("allows specifying a custom name for the group", async () => {
+    const user = userEvent.setup();
+
+    renderWithProviders(<FrameAdderPage />);
+    const socket = lastObsSocket();
+    respondToSceneItems(socket);
+
+    await user.click(screen.getByRole("tab", { name: "Group" }));
+
+    socket.emit("SceneItemSelected", { sceneUuid: "scene-1", sceneItemId: 1 });
+    socket.emit("SceneItemSelected", { sceneUuid: "scene-1", sceneItemId: 2 });
+
+    await screen.findByText(/Frame A/);
+    await screen.findByText(/Frame B/);
+
+    const nameInput = screen.getByLabelText("Name");
+    expect(nameInput).toHaveValue("Group");
+
+    await user.clear(nameInput);
+    await user.type(nameInput, "Custom Group Name");
+
+    await user.click(screen.getByRole("button", { name: "Group" }));
+
+    await waitFor(() => {
+      expect(socket.call).toHaveBeenCalledWith(
+        "CreateInput",
+        expect.objectContaining({
+          sceneUuid: "scene-1",
+          inputName: "Custom Group Name",
+        })
+      );
+    });
+  });
+
+  it("dedupes group name if a collision occurs on creation", async () => {
+    const user = userEvent.setup();
+
+    renderWithProviders(<FrameAdderPage />);
+    const socket = lastObsSocket();
+    respondToSceneItems(socket);
+
+    let createCount = 0;
+    socket.respondTo("CreateInput", (data) => {
+      const { inputName } = data as { inputName: string };
+      if (inputName.startsWith("Group")) {
+        createCount++;
+        if (createCount === 1) {
+          throw new OBSWebSocketError("name in use", 601);
+        }
+        return { inputUuid: "created-group-input", sceneItemId: 99 };
+      }
+      return { inputUuid: "created-input", sceneItemId: 99 };
+    });
+
+    await user.click(screen.getByRole("tab", { name: "Group" }));
+
+    socket.emit("SceneItemSelected", { sceneUuid: "scene-1", sceneItemId: 1 });
+    socket.emit("SceneItemSelected", { sceneUuid: "scene-1", sceneItemId: 2 });
+
+    await screen.findByText(/Frame A/);
+    await screen.findByText(/Frame B/);
+
+    await user.click(screen.getByRole("button", { name: "Group" }));
+
+    await waitFor(() => {
+      expect(socket.call).toHaveBeenCalledWith(
+        "CreateInput",
+        expect.objectContaining({
+          sceneUuid: "scene-1",
+          inputName: expect.stringMatching(/^Group_/),
+        })
+      );
+    });
+  });
+
   it("lets the user remove a frame from the group before grouping", async () => {
     const user = userEvent.setup();
 
@@ -293,6 +369,72 @@ describe("group frames selected in OBS", () => {
     expect(screen.getByText(/Frame B/)).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "Group" })).toBeDisabled();
   });
+
+  it("clears accumulated frames when the Clear button is clicked", async () => {
+    const user = userEvent.setup();
+
+    renderWithProviders(<FrameAdderPage />);
+    const socket = lastObsSocket();
+    respondToSceneItems(socket);
+
+    await user.click(screen.getByRole("tab", { name: "Group" }));
+
+    socket.emit("SceneItemSelected", { sceneUuid: "scene-1", sceneItemId: 1 });
+    socket.emit("SceneItemSelected", { sceneUuid: "scene-1", sceneItemId: 2 });
+
+    await screen.findByText(/Frame A/);
+    await screen.findByText(/Frame B/);
+
+    await user.click(screen.getByRole("button", { name: "Clear" }));
+
+    await waitFor(() => {
+      expect(screen.queryByText(/Frame A/)).not.toBeInTheDocument();
+      expect(screen.queryByText(/Frame B/)).not.toBeInTheDocument();
+    });
+    expect(
+      screen.getByText("Select frames in OBS to add them to the group.")
+    ).toBeInTheDocument();
+  });
+
+  it("clears accumulated frames when switching active scenes in OBS", async () => {
+    const user = userEvent.setup();
+
+    renderWithProviders(<FrameAdderPage />);
+    const socket = lastObsSocket();
+    respondToSceneItems(socket);
+
+    await user.click(screen.getByRole("tab", { name: "Group" }));
+
+    socket.emit("SceneItemSelected", { sceneUuid: "scene-1", sceneItemId: 1 });
+    await screen.findByText(/Frame A/);
+
+    socket.emit("CurrentProgramSceneChanged", { sceneName: "Other Scene" });
+
+    await waitFor(() => {
+      expect(screen.queryByText(/Frame A/)).not.toBeInTheDocument();
+    });
+    expect(
+      screen.getByText("Select frames in OBS to add them to the group.")
+    ).toBeInTheDocument();
+  });
+
+  it("ignores composite frames when selected in the Group tab", async () => {
+    const user = userEvent.setup();
+
+    renderWithProviders(<FrameAdderPage />);
+    const socket = lastObsSocket();
+    respondToSceneItems(socket);
+
+    await user.click(screen.getByRole("tab", { name: "Group" }));
+
+    // Item 3 is a composite frame
+    socket.emit("SceneItemSelected", { sceneUuid: "scene-1", sceneItemId: 3 });
+
+    expect(
+      screen.getByText("Select frames in OBS to add them to the group.")
+    ).toBeInTheDocument();
+    expect(screen.queryByText(/Composite/)).not.toBeInTheDocument();
+  });
 });
 
 describe("ungroup a composite frame", () => {
@@ -303,7 +445,7 @@ describe("ungroup a composite frame", () => {
     const socket = lastObsSocket();
     respondToSceneItems(socket);
 
-    await user.click(screen.getByRole("tab", { name: "Group" }));
+    await user.click(screen.getByRole("tab", { name: "Ungroup" }));
 
     socket.emit("SceneItemSelected", { sceneUuid: "scene-1", sceneItemId: 3 });
 
@@ -340,8 +482,8 @@ describe("ungroup a composite frame", () => {
       "SetSceneItemTransform",
       expect.objectContaining({
         sceneItemTransform: expect.objectContaining({
-          positionX: 100,
-          positionY: 50,
+          positionX: 116,
+          positionY: 66,
           width: 200,
           height: 50,
         }),
@@ -351,8 +493,8 @@ describe("ungroup a composite frame", () => {
       "SetSceneItemTransform",
       expect.objectContaining({
         sceneItemTransform: expect.objectContaining({
-          positionX: 100,
-          positionY: 150,
+          positionX: 116,
+          positionY: 166,
           width: 200,
           height: 50,
         }),
@@ -369,6 +511,50 @@ describe("ungroup a composite frame", () => {
     );
   });
 
+  it("queries the live position of the composite at ungroup time if moved after selection", async () => {
+    const user = userEvent.setup();
+
+    renderWithProviders(<FrameAdderPage />);
+    const socket = lastObsSocket();
+    respondToSceneItems(socket);
+
+    await user.click(screen.getByRole("tab", { name: "Ungroup" }));
+
+    socket.emit("SceneItemSelected", { sceneUuid: "scene-1", sceneItemId: 3 });
+    expect(await screen.findByText(/Composite/)).toBeInTheDocument();
+
+    // Simulate moving the composite in OBS before clicking Ungroup
+    socket.respondTo("GetSceneItemTransform", (data) => {
+      const { sceneItemId } = data as { sceneItemId: number };
+      if (sceneItemId === 3) {
+        return {
+          sceneItemTransform: {
+            positionX: 500,
+            positionY: 400,
+            width: 500,
+            height: 300,
+            alignment: 5,
+          },
+        };
+      }
+      return { sceneItemTransform: { positionX: 0, positionY: 0, width: 100, height: 100, alignment: 5 } };
+    });
+
+    await user.click(screen.getByRole("button", { name: "Ungroup" }));
+
+    await waitFor(() => {
+      expect(socket.call).toHaveBeenCalledWith(
+        "SetSceneItemTransform",
+        expect.objectContaining({
+          sceneItemTransform: expect.objectContaining({
+            positionX: 516, // 500 + COMPOSITE_PADDING(16) + child.x(0)
+            positionY: 416, // 400 + COMPOSITE_PADDING(16) + child.y(0)
+          }),
+        })
+      );
+    });
+  });
+
   it("retries with a suffixed name if a restored child input name collides", async () => {
     const user = userEvent.setup();
 
@@ -377,7 +563,7 @@ describe("ungroup a composite frame", () => {
     respondToSceneItems(socket);
 
     let createCount = 0;
-    socket.respondTo("CreateInput", (data) => {
+    socket.respondTo("CreateInput", () => {
       createCount++;
       if (createCount === 1) {
         throw new OBSWebSocketError("name in use", 601);
@@ -388,7 +574,7 @@ describe("ungroup a composite frame", () => {
       };
     });
 
-    await user.click(screen.getByRole("tab", { name: "Group" }));
+    await user.click(screen.getByRole("tab", { name: "Ungroup" }));
     socket.emit("SceneItemSelected", { sceneUuid: "scene-1", sceneItemId: 3 });
 
     expect(await screen.findByText(/Composite/)).toBeInTheDocument();
@@ -412,7 +598,7 @@ describe("ungroup a composite frame", () => {
     const socket = lastObsSocket();
     respondToSceneItems(socket);
 
-    await user.click(screen.getByRole("tab", { name: "Group" }));
+    await user.click(screen.getByRole("tab", { name: "Ungroup" }));
     socket.emit("SceneItemSelected", { sceneUuid: "scene-1", sceneItemId: 4 });
 
     expect(await screen.findByText(/Composite/)).toBeInTheDocument();
