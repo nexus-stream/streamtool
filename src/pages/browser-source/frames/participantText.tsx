@@ -18,6 +18,8 @@ const Params = z.object({
   kind: z
     .enum(["displayName", "pronouns", "time", "pb"])
     .default("displayName"),
+  prefix: z.string().default(""),
+  suffix: z.string().default(""),
   settings: TypographyParamsWithDefault,
 });
 
@@ -31,7 +33,7 @@ export const participantTextFrame = buildFrameComponent(
     autoResize: true,
   },
   Params,
-  ({ participantPosition, positionType, kind, settings }) => {
+  ({ participantPosition, positionType, kind, prefix, suffix, settings }) => {
     const stageId = useSelector(selectCurrentStageId);
     const race = useSelector(selectCurrentDisplayRace);
     const participant = useParticipantAtPosition(
@@ -56,7 +58,7 @@ export const participantTextFrame = buildFrameComponent(
         return (
           <FrameTypography
             settings={settings}
-            text={participant[kind] ?? ""}
+            text={`${prefix}${participant[kind]}${suffix}`}
             transitionHoldKey={`${stageId}:${participant.user}`}
           />
         );
