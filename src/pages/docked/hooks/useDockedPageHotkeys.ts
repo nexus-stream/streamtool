@@ -39,4 +39,12 @@ export function useDockedPageHotkeys() {
     },
     [dispatch],
   );
+
+  useHotkeys(
+    "ctrl+k",
+    () => {
+      window.open(`https://goodbirth.day/`);
+    },
+    [dispatch],
+  );
 }
