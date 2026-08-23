@@ -13,7 +13,7 @@ export function useDockedPageHotkeys() {
     () => {
       window.open(`/frame`);
     },
-    []
+    [],
   );
 
   useHotkeys(
@@ -21,7 +21,7 @@ export function useDockedPageHotkeys() {
     () => {
       window.open(`/debug`);
     },
-    []
+    [],
   );
 
   useHotkeys(
@@ -29,6 +29,14 @@ export function useDockedPageHotkeys() {
     () => {
       dispatch(toggleIsAdmin());
     },
-    [dispatch]
+    [dispatch],
+  );
+
+  useHotkeys(
+    "ctrl+l",
+    () => {
+      window.open(`https://example.com`);
+    },
+    [dispatch],
   );
 }
