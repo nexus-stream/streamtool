@@ -14,6 +14,7 @@ import { BuildTime } from "./components/BuildTime";
 import { ViewDebugDataButton } from "./components/buttons/ViewDebugDataButton";
 import { AddFramesButton } from "./components/buttons/AddFramesButton";
 import { useDockedPageHotkeys } from "./hooks/useDockedPageHotkeys";
+import { RefreshAllTabsButton } from "./components/buttons/RefreshAllTabsButton";
 
 // The page that lives in the custom dock on OBS. Because this page always exists when
 // the tool is in use and there's only ever one of them, it handles a lot of behind the
@@ -32,6 +33,7 @@ export function DockedPage() {
               <OBSConnectButton />
               <TwitchButton />
               <AddFramesButton />
+              <RefreshAllTabsButton />
               <ViewDebugDataButton />
             </ButtonBar>
           </AdminContainer>
