@@ -9,6 +9,7 @@ import { participantDoubleTextFrame } from "./participantDoubleText";
 import { commentatorDoubleTextFrame } from "./commentatorDoubleText";
 import { vodPlayerFrame } from "./vodPlayer";
 import { tagTextFrame } from "./tagText";
+import { compositeFrame } from "./composite";
 
 export const FRAMES: { [frameId: string]: FrameComponent } = {
   tagText: tagTextFrame,
@@ -21,4 +22,8 @@ export const FRAMES: { [frameId: string]: FrameComponent } = {
   commentatorAvatar: commentatorAvatarFrame,
   raceText: raceTextFrame,
   vodPlayer: vodPlayerFrame,
+  composite: compositeFrame,
 };
+
+export { encodeCompositeConfig, parseCompositeConfig } from "./composite";
+export type { CompositeConfig, CompositeFrameConfig } from "./composite";
