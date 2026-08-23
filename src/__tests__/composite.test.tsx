@@ -88,4 +88,36 @@ describe("composite frame", () => {
       within(frame.container).getByText("Invalid composite config")
     ).toBeInTheDocument();
   });
+
+  it("renders non-autoResize frames scaled inside their container", async () => {
+    const store = createTestStore();
+    seedRaceStage(store);
+
+    const config = encodeCompositeConfig({
+      width: 600,
+      height: 600,
+      frames: [
+        {
+          frameId: "participantAvatar",
+          params: { participantPosition: 1, positionType: "manual" },
+          width: 120,
+          height: 120,
+          x: 10,
+          y: 20,
+        },
+      ],
+    });
+
+    const frame = renderFrame(
+      store,
+      `/frame/composite?config=${encodeURIComponent(config)}`
+    );
+
+    const img = await within(frame.container).findByRole("img");
+    expect(img).toBeInTheDocument();
+    const scaledContainer = img.closest("div[style*='transform']") ?? img.parentElement?.parentElement;
+    expect(scaledContainer).toHaveStyle({
+      transform: "scale(0.5, 0.5)",
+    });
+  });
 });

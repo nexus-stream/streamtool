@@ -42,6 +42,25 @@ describe("creating stages", () => {
 
     expect(await screen.findByText("Main Stage")).toBeInTheDocument();
   });
+  it("creates a race stage from a therun.gg URL with hyphens in the race id", async () => {
+    const user = userEvent.setup();
+    const store = createTestStore();
+    const hyphenRaceFixture = { ...raceFixture, raceId: "race-123-abc" };
+    const users = Object.fromEntries(userFixtures.map((u) => [u.user, u]));
+    mockTheRunFetch(hyphenRaceFixture, users);
+
+    renderWithProviders(<EditorPage />, { store });
+
+    await openCreateModal(user);
+    await fillAndConfirm(
+      user,
+      "Hyphen Race Stage",
+      "https://therun.gg/races/race-123-abc"
+    );
+
+    expect(await screen.findByText("Hyphen Race Stage")).toBeInTheDocument();
+  });
+
 
   it("creates a VOD stage from a Twitch VOD URL and lists it", async () => {
     const user = userEvent.setup();

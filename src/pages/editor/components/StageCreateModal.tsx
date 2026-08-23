@@ -100,7 +100,7 @@ export function StageCreateModal({ onClose }: Props) {
 }
 
 function extractTheRunId(url: string): string | undefined {
-  const regex = /therun\.gg\/races\/([a-zA-Z0-9]+)/;
+  const regex = /therun\.gg\/races\/([a-zA-Z0-9-]+)/;
   const match = url.match(regex);
   return match?.[1];
 }

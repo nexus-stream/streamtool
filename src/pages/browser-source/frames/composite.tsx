@@ -22,6 +22,9 @@ const CompositeFrameConfigSchema = z.object({
   height: z.number().nonnegative(),
   x: z.number(),
   y: z.number(),
+  // The child's OBS input name, kept so "ungroup" can restore original names. The
+  // frame itself ignores this; only the grouping tool reads it.
+  name: z.string().optional(),
 });
 
 const CompositeConfigSchema = z.object({
@@ -85,6 +88,7 @@ export const compositeFrame = buildFrameComponent(
           position: relative;
           width: ${decoded.width}px;
           height: ${decoded.height}px;
+          overflow: hidden;
         `}
       >
         {decoded.frames.map((frame, index) => renderChild(frame, index))}
@@ -104,6 +108,7 @@ function renderChild(frame: CompositeFrameConfig, key: number): ReactNode {
     top: ${frame.y}px;
     width: ${frame.width}px;
     height: ${frame.height}px;
+    overflow: hidden;
   `;
 
   if (!childFrame) {
@@ -114,20 +119,49 @@ function renderChild(frame: CompositeFrameConfig, key: number): ReactNode {
     );
   }
 
-  try {
-    const params = childFrame.zodProps.parse(frame.params);
-    return (
-      <div key={key} css={style}>
-        <childFrame.fc {...params} />
-      </div>
-    );
-  } catch {
-    return (
-      <div key={key} css={style}>
+  const { width: nativeWidth, height: nativeHeight, autoResize } =
+    childFrame.displayProperties;
+  const shouldScale =
+    !autoResize &&
+    nativeWidth > 0 &&
+    nativeHeight > 0 &&
+    (frame.width !== nativeWidth || frame.height !== nativeHeight);
+
+  const content = (() => {
+    try {
+      const params = childFrame.zodProps.parse(frame.params);
+      return <childFrame.fc {...params} />;
+    } catch {
+      return (
         <errorFrame.fc
           message={`Invalid parameters for frame: ${frame.frameId}`}
         />
+      );
+    }
+  })();
+
+  if (shouldScale) {
+    const scaleX = frame.width / nativeWidth;
+    const scaleY = frame.height / nativeHeight;
+    return (
+      <div key={key} css={style}>
+        <div
+          css={css`
+            width: ${nativeWidth}px;
+            height: ${nativeHeight}px;
+            transform: scale(${scaleX}, ${scaleY});
+            transform-origin: top left;
+          `}
+        >
+          {content}
+        </div>
       </div>
     );
   }
+
+  return (
+    <div key={key} css={style}>
+      {content}
+    </div>
+  );
 }
