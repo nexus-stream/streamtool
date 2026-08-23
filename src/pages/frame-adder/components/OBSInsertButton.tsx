@@ -10,6 +10,7 @@ interface Props {
   name: string;
   width: number;
   height: number;
+  location: "top" | "bottom";
 }
 
 export function OBSInsertButton({
@@ -18,6 +19,7 @@ export function OBSInsertButton({
   name,
   width,
   height,
+  location,
 }: Props) {
   const socket = useOBSWebsocket();
 
@@ -54,7 +56,7 @@ export function OBSInsertButton({
         }
       }
     },
-    [frameName, height, socket, url, width]
+    [frameName, height, socket, url, width],
   );
 
   const onClick = useCallback(() => {
@@ -63,7 +65,7 @@ export function OBSInsertButton({
 
   return (
     <Button variant="outlined" onClick={onClick}>
-      Insert to Current Scene
+      Insert to Current Scene ({location})
     </Button>
   );
 }

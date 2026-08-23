@@ -202,8 +202,8 @@ describe("group frames selected in OBS", () => {
       expect.objectContaining({
         sceneItemId: 99,
         sceneItemTransform: expect.objectContaining({
-          positionX: 84,
-          positionY: 84,
+          positionX: 4, // 100 - COMPOSITE_PADDING(16) - 80
+          positionY: 164, // 100 - COMPOSITE_PADDING(16) + 80
           width: 452,
           height: 212,
           alignment: 5,
@@ -252,20 +252,19 @@ describe("group frames selected in OBS", () => {
         },
       ],
     });
-
-    expect(socket.call).toHaveBeenCalledWith(
+    expect(socket.call).not.toHaveBeenCalledWith(
       "RemoveSceneItem",
       expect.objectContaining({ sceneItemId: 1 })
     );
-    expect(socket.call).toHaveBeenCalledWith(
+    expect(socket.call).not.toHaveBeenCalledWith(
       "RemoveSceneItem",
       expect.objectContaining({ sceneItemId: 2 })
     );
-    expect(socket.call).toHaveBeenCalledWith(
+    expect(socket.call).not.toHaveBeenCalledWith(
       "RemoveInput",
       expect.objectContaining({ inputUuid: "input-1" })
     );
-    expect(socket.call).toHaveBeenCalledWith(
+    expect(socket.call).not.toHaveBeenCalledWith(
       "RemoveInput",
       expect.objectContaining({ inputUuid: "input-2" })
     );
