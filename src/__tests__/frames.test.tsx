@@ -121,3 +121,138 @@ describe("tag text frame", () => {
     ).toBeInTheDocument();
   });
 });
+
+describe("commentator discord frame", () => {
+  it("renders an iframe with the commentator's discord id", async () => {
+    const store = createTestStore();
+    seedRaceStage(store);
+    store.dispatch(
+      updateStage({
+        id: STAGE_ID,
+        changes: {
+          raceOverrides: {
+            commentators: [
+              {
+                user: "comm_one",
+                discordId: "123456789012345678",
+              },
+            ],
+          },
+        },
+      })
+    );
+
+    const frame = renderFrame(
+      store,
+      "/frame/commentatorDiscord?commentatorPosition=1"
+    );
+
+    const img = frame.container.querySelector("img[src='/Discord-Symbol-Blurple.png']");
+    expect(img).not.toBeNull();
+    const iframe = frame.container.querySelector("iframe");
+    expect(iframe).not.toBeNull();
+    expect(iframe?.getAttribute("src")).toBe(
+      "https://reactive.fugi.tech/basic/123456789012345678"
+    );
+  });
+
+  it("returns null if commentator has no discord id", async () => {
+    const store = createTestStore();
+    seedRaceStage(store);
+    store.dispatch(
+      updateStage({
+        id: STAGE_ID,
+        changes: {
+          raceOverrides: {
+            commentators: [
+              {
+                user: "comm_one",
+              },
+            ],
+          },
+        },
+      })
+    );
+
+    const frame = renderFrame(
+      store,
+      "/frame/commentatorDiscord?commentatorPosition=1"
+    );
+
+    expect(frame.container.querySelector("iframe")).toBeNull();
+  });
+});
+
+describe("commentator editor preview", () => {
+  it("renders discord iframe when discordId is present, even if avatar is also set", async () => {
+    const store = createTestStore();
+    seedRaceStage(store);
+    store.dispatch(
+      updateStage({
+        id: STAGE_ID,
+        changes: {
+          raceOverrides: {
+            commentators: [
+              {
+                user: "comm_one",
+                avatar: "https://example.com/avatar.png",
+                discordId: "123456789012345678",
+              },
+            ],
+          },
+        },
+      })
+    );
+
+    const editor = renderWithProviders(<EditorPage />, { store });
+    const img = editor.container.querySelector("img[src='/Discord-Symbol-Blurple.png']");
+    expect(img).not.toBeNull();
+    const iframe = editor.container.querySelector("iframe");
+    expect(iframe).not.toBeNull();
+    expect(iframe?.getAttribute("src")).toBe(
+      "https://reactive.fugi.tech/basic/123456789012345678"
+    );
+  });
+
+  it("renders avatar image when discordId is not present", async () => {
+    const store = createTestStore();
+    seedRaceStage(store);
+    store.dispatch(
+      updateStage({
+        id: STAGE_ID,
+        changes: {
+          raceOverrides: {
+            commentators: [
+              {
+                user: "comm_one",
+                avatar: "https://example.com/avatar.png",
+              },
+            ],
+          },
+        },
+      })
+    );
+
+    const editor = renderWithProviders(<EditorPage />, { store });
+    const iframe = editor.container.querySelector("iframe");
+    expect(iframe).toBeNull();
+    const img = editor.container.querySelector("img[src='https://example.com/avatar.png']");
+    expect(img).not.toBeNull();
+  });
+});
+
+describe("participant stream frame", () => {
+  it("renders Twitch embed iframe using profile login", async () => {
+    const store = createTestStore();
+    seedRaceStage(store);
+
+    const frame = renderFrame(
+      store,
+      "/frame/participantStream?participantPosition=1"
+    );
+
+    const iframe = frame.container.querySelector("iframe");
+    expect(iframe).not.toBeNull();
+    expect(iframe?.getAttribute("src")).toContain("channel=runner_one");
+  });
+});

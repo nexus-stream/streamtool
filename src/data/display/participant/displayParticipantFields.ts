@@ -24,7 +24,7 @@ export const DISPLAY_PARTICIPANT_FIELDS: {
   >;
 } = {
   user: (participant) => participant.user,
-  twitchUser: (participant) => participant.user,
+  twitchUser: (_, profile) => profile.login ?? "",
   displayName: (participant) => participant.user,
   pronouns: (_, profile) => profile.pronouns ?? null,
   avatar: (_, profile) => profile.picture ?? null,
