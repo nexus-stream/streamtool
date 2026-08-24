@@ -180,3 +180,19 @@ describe("commentator discord frame", () => {
     expect(frame.container.querySelector("iframe")).toBeNull();
   });
 });
+
+describe("participant stream frame", () => {
+  it("renders Twitch embed iframe using profile login", async () => {
+    const store = createTestStore();
+    seedRaceStage(store);
+
+    const frame = renderFrame(
+      store,
+      "/frame/participantStream?participantPosition=1"
+    );
+
+    const iframe = frame.container.querySelector("iframe");
+    expect(iframe).not.toBeNull();
+    expect(iframe?.getAttribute("src")).toContain("channel=runner_one");
+  });
+});
