@@ -58,6 +58,11 @@ export function CommentatorEditor({ commentator, onEdit, onDelete }: Props) {
             value={commentator.avatar ?? ""}
             onEdit={(newValue) => patch("avatar", newValue)}
           />
+          <CommentatorValueEditor
+            label="Discord ID"
+            value={commentator.discordId ?? ""}
+            onEdit={(newValue) => patch("discordId", newValue)}
+          />
           <Button variant="outlined" size="small" onClick={onDelete}>
             Delete
           </Button>

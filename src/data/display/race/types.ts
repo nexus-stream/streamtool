@@ -23,4 +23,5 @@ export interface Commentator {
   user: string;
   pronouns?: string;
   avatar?: string;
+  discordId?: string;
 }

@@ -121,3 +121,62 @@ describe("tag text frame", () => {
     ).toBeInTheDocument();
   });
 });
+
+describe("commentator discord frame", () => {
+  it("renders an iframe with the commentator's discord id", async () => {
+    const store = createTestStore();
+    seedRaceStage(store);
+    store.dispatch(
+      updateStage({
+        id: STAGE_ID,
+        changes: {
+          raceOverrides: {
+            commentators: [
+              {
+                user: "comm_one",
+                discordId: "123456789012345678",
+              },
+            ],
+          },
+        },
+      })
+    );
+
+    const frame = renderFrame(
+      store,
+      "/frame/commentatorDiscord?commentatorPosition=1"
+    );
+
+    const iframe = frame.container.querySelector("iframe");
+    expect(iframe).not.toBeNull();
+    expect(iframe?.getAttribute("src")).toBe(
+      "https://reactive.fugi.tech/basic/123456789012345678"
+    );
+  });
+
+  it("returns null if commentator has no discord id", async () => {
+    const store = createTestStore();
+    seedRaceStage(store);
+    store.dispatch(
+      updateStage({
+        id: STAGE_ID,
+        changes: {
+          raceOverrides: {
+            commentators: [
+              {
+                user: "comm_one",
+              },
+            ],
+          },
+        },
+      })
+    );
+
+    const frame = renderFrame(
+      store,
+      "/frame/commentatorDiscord?commentatorPosition=1"
+    );
+
+    expect(frame.container.querySelector("iframe")).toBeNull();
+  });
+});
