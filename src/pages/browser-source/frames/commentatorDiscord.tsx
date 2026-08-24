@@ -2,8 +2,7 @@ import { z } from "zod/v4";
 import { buildFrameComponent } from "../frame";
 import { useSelector } from "react-redux";
 import { selectCurrentDisplayRace } from "../../../data/display/selectors";
-import { css } from "@emotion/react";
-import { STYLES } from "../../../style/styles";
+import { CommentatorDiscord } from "../../../components/CommentatorDiscord";
 
 const Params = z.object({
   commentatorPosition: z.coerce.number().default(1),
@@ -28,18 +27,10 @@ export const commentatorDiscordFrame = buildFrameComponent(
     }
 
     return (
-      <div css={STYLES.fullSize}>
-        <iframe
-          css={iframeStyle}
-          src={`https://reactive.fugi.tech/basic/${commentator.discordId}`}
-        />
-      </div>
+      <CommentatorDiscord
+        discordId={commentator.discordId}
+        size="overlay"
+      />
     );
   }
 );
-
-const iframeStyle = css`
-  ${STYLES.fullSize};
-  display: block;
-  border: none;
-`;
