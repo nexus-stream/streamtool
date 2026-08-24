@@ -18,6 +18,8 @@ const Params = z.object({
   kind: z
     .enum(["displayName", "pronouns", "time", "pb"])
     .default("displayName"),
+  prefix: z.string().default(""),
+  suffix: z.string().default(""),
   settings: TypographyParamsWithDefault,
 });
 
@@ -31,12 +33,12 @@ export const participantTextFrame = buildFrameComponent(
     autoResize: true,
   },
   Params,
-  ({ participantPosition, positionType, kind, settings }) => {
+  ({ participantPosition, positionType, kind, prefix, suffix, settings }) => {
     const stageId = useSelector(selectCurrentStageId);
     const race = useSelector(selectCurrentDisplayRace);
     const participant = useParticipantAtPosition(
       positionType,
-      participantPosition
+      participantPosition,
     );
 
     if (!participant) {
@@ -56,13 +58,19 @@ export const participantTextFrame = buildFrameComponent(
         return (
           <FrameTypography
             settings={settings}
-            text={participant[kind] ?? ""}
+            text={[prefix, participant[kind], suffix]
+              .map(sanitizeText)
+              .join("")}
             transitionHoldKey={`${stageId}:${participant.user}`}
           />
         );
     }
-  }
+  },
 );
+
+function sanitizeText(text?: string | null): string {
+  return text ?? "";
+}
 
 // eslint-disable-next-line react-refresh/only-export-components
 function ParticipantTextTimer({

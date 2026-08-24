@@ -13,8 +13,7 @@ import { setStage, setCurrentStageId } from "../data/stages/stageSlice";
 // Shared fixtures for seeding a "current race stage" into a test store. Kept tiny
 // and stable so journey tests focus on behavior, not data plumbing.
 //
-// extractTheRunId in StageCreateModal matches /therun\.gg\/races\/([a-zA-Z0-9]+)/,
-// so race ids used in journey tests must stay alphanumeric (no hyphens).
+// extractTheRunId in StageCreateModal matches /therun\.gg\/races\/([a-zA-Z0-9-]+)/.
 export const RACE_ID = "race123";
 export const STAGE_ID = "stage-1";
 export const STAGE_2_ID = "stage-2";

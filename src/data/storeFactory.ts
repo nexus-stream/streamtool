@@ -6,6 +6,7 @@ import obsReducer from "./obs/obsSlice";
 import twitchReducer from "./twitch/twitchSlice";
 import configReducer from "./config/configSlice";
 import editorReducer from "./editor/editorSlice";
+import { tabReloadMiddleware } from "./app/tabReloadMiddleware";
 import {
   createStateSyncMiddleware,
   initMessageListener,
@@ -79,11 +80,11 @@ export function createAppStore(options: AppStoreOptions = {}) {
         return middleware.concat(
           createStateSyncMiddleware({
             blacklist: ["persist/PERSIST", "persist/PURGE", "persist/REHYDRATE"],
-          })
+          }),
+          tabReloadMiddleware
         );
       }
-
-      return middleware;
+      return middleware.concat(tabReloadMiddleware);
     },
   });
 

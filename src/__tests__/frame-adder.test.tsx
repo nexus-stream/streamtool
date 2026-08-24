@@ -23,7 +23,7 @@ describe("add a frame to OBS", () => {
     await user.click(await screen.findByRole("option", { name: "Participant Text" }));
 
     await user.click(
-      await screen.findByRole("button", { name: "Insert to Current Scene" })
+      await screen.findByRole("button", { name: "Insert to Current Scene (bottom)" })
     );
 
     expect(socket.call).toHaveBeenCalledWith(
@@ -62,7 +62,7 @@ describe("add a frame to OBS", () => {
     await user.click(screen.getByLabelText("Frame"));
     await user.click(await screen.findByRole("option", { name: "Participant Text" }));
     await user.click(
-      await screen.findByRole("button", { name: "Insert to Current Scene" })
+      await screen.findByRole("button", { name: "Insert to Current Scene (bottom)" })
     );
 
     await waitFor(() => {

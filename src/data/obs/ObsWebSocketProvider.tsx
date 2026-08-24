@@ -27,7 +27,8 @@ export function ObsWebSocketProvider({ children }: Props) {
         .connect(`ws://127.0.0.1:${port}`, password, {
           eventSubscriptions:
             EventSubscription.SceneItemTransformChanged |
-            EventSubscription.SceneItems,
+            EventSubscription.SceneItems |
+            EventSubscription.Scenes,
         })
         .then(() => true)
         .catch(() => false);

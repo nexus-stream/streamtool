@@ -8,6 +8,7 @@ import {
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { TitleBar, VerticalContent } from "../../../components/Layout";
 import { Avatar } from "../../../components/Avatar";
+import { CommentatorDiscord } from "../../../components/CommentatorDiscord";
 import { useCallback } from "react";
 import { CommentatorValueEditor } from "./values/CommentatorValueEditor";
 import { Commentator } from "../../../data/display/race/types";
@@ -35,7 +36,14 @@ export function CommentatorEditor({ commentator, onEdit, onDelete }: Props) {
     <Accordion>
       <AccordionSummary expandIcon={<ExpandMoreIcon />}>
         <TitleBar>
-          <Avatar src={commentator.avatar} size="small" />
+          {commentator.discordId ? (
+            <CommentatorDiscord
+              discordId={commentator.discordId}
+              size="small"
+            />
+          ) : (
+            <Avatar src={commentator.avatar} size="small" />
+          )}
           <Typography component="span" alignContent="center">
             {commentator.user}
           </Typography>
@@ -57,6 +65,11 @@ export function CommentatorEditor({ commentator, onEdit, onDelete }: Props) {
             label="Avatar"
             value={commentator.avatar ?? ""}
             onEdit={(newValue) => patch("avatar", newValue)}
+          />
+          <CommentatorValueEditor
+            label="Discord ID"
+            value={commentator.discordId ?? ""}
+            onEdit={(newValue) => patch("discordId", newValue)}
           />
           <Button variant="outlined" size="small" onClick={onDelete}>
             Delete
