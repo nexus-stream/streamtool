@@ -6,6 +6,7 @@ import {
 } from "../../../../../data/races/raceSlice";
 import { addRaceFromId } from "../../../../../data/races/thunks";
 import { LiveUpdateMessage } from "./types";
+import { useTheRunStatusReporter } from "./TheRunWebSocketContext";
 
 interface Props {
   raceId: string;
@@ -16,6 +17,7 @@ interface Props {
 // is destroyed.
 export function RaceLiveUpdater({ raceId }: Props) {
   const dispatch = useAppDispatch();
+  const { registerStatus, unregisterStatus } = useTheRunStatusReporter();
 
   useEffect(() => {
     // Re-fetch race data on init to replace stale data on a page reload. This will
@@ -24,8 +26,24 @@ export function RaceLiveUpdater({ raceId }: Props) {
   }, [dispatch, raceId]);
 
   useEffect(() => {
+    registerStatus(raceId, "connecting");
     const ws = new WebSocket(buildWebsocketEndpoint(raceId));
-    ws.addEventListener("message", (event) => {
+
+    const onOpen = () => {
+      registerStatus(raceId, "connected");
+    };
+
+    const onClose = () => {
+      registerStatus(raceId, "idle");
+    };
+
+    const onError = () => {
+      registerStatus(raceId, "error");
+    };
+
+    const onMessage = (event: MessageEvent) => {
+      // Message received proves connection is active
+      registerStatus(raceId, "connected");
       const message: LiveUpdateMessage = JSON.parse(event.data);
       switch (message.type) {
         case "raceUpdate":
@@ -35,12 +53,22 @@ export function RaceLiveUpdater({ raceId }: Props) {
           dispatch(updateParticipant(message.data));
           break;
       }
-    });
+    };
+
+    ws.addEventListener("open", onOpen);
+    ws.addEventListener("close", onClose);
+    ws.addEventListener("error", onError);
+    ws.addEventListener("message", onMessage);
 
     return () => {
+      ws.removeEventListener("open", onOpen);
+      ws.removeEventListener("close", onClose);
+      ws.removeEventListener("error", onError);
+      ws.removeEventListener("message", onMessage);
       ws.close();
+      unregisterStatus(raceId);
     };
-  }, [dispatch, raceId]);
+  }, [dispatch, raceId, registerStatus, unregisterStatus]);
 
   return null;
 }
