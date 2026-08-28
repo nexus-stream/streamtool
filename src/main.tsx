@@ -27,7 +27,7 @@ import "@fontsource/roboto-mono/700.css";
 import { ObsConnectPage } from "./pages/obs-connect/ObsConnectPage";
 import { TwitchWebhookPage } from "./pages/twitch-webhook/TwitchWebhookPage";
 import { DebugPage } from "./pages/debug/DebugPage";
-
+import { StageManagerPage } from "./pages/stage-manager/StageManagerPage";
 const darkTheme = createTheme({
   palette: {
     mode: "dark",
@@ -51,6 +51,7 @@ createRoot(document.getElementById("root")!).render(
                 <Route path="/frame/:frameId" element={<BrowserSourcePage />} />
                 <Route path="/twitch" element={<TwitchWebhookPage />} />
                 <Route path="/debug" element={<DebugPage />} />
+                <Route path="/stage-manager" element={<StageManagerPage />} />
               </Routes>
             </BrowserRouter>
           </PersistGate>
